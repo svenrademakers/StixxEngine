@@ -38,6 +38,7 @@ namespace
 	        std::abort();
 	    }
 	}
+
 }
 
 void ShaderGl::Load(ShaderProvider& provider)
@@ -57,11 +58,16 @@ void ShaderGl::Load(ShaderProvider& provider)
 
 	// shader Program
 	id = glCreateProgram();
-	glAttachShader(*id, vertex);
-	glAttachShader(*id, fragment);
-	glLinkProgram(*id);
-	AbortOnProgramError(*id);
+	glAttachShader(id, vertex);
+	glAttachShader(id, fragment);
+	glLinkProgram(id);
+	AbortOnProgramError(id);
 
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
+}
+
+void ShaderGl::Use()
+{
+	glUseProgram(*id);
 }

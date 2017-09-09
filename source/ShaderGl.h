@@ -21,9 +21,10 @@ public:
 
 	//shader
 	virtual void Load(ShaderProvider& provider) override;
+	virtual void Use() override;
 
 private:
-	boost::optional<unsigned int> id;
+	unsigned int id;
 };
 
 #endif /* SHADERGL_H_ */

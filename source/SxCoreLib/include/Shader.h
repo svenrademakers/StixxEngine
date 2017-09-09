@@ -9,11 +9,14 @@ public:
 	virtual const char* FragmentShader() const = 0;
 };
 
+namespace graphics
+{
 class Shader
 {
 public:
 	virtual void Load(ShaderProvider& provider) = 0;
+	virtual void Use();
 	virtual ~Shader(){};
 };
-
+}
 #endif /* SHADER_H_ */
