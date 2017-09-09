@@ -6,7 +6,6 @@
 #include <GLFW/glfw3.h>
 
 #include "ShaderGl.h"
-#include "GameContainerMac.h"
 
 #define WINDOW_WIDHT 800
 #define WINDOW_HEIGHT 600
@@ -87,9 +86,25 @@ static void InitGLFW()
         std::cerr << "glfwInit returned false" << std::endl;
         std::abort();
     }
-    
+
     glfwSetErrorCallback(error_callback);
 }
+//
+//void Loader(std::string& fileName)
+//{
+//	Assimp::Importer importer;
+//	const aiScene* scene = importer.ReadFile( fileName.c_str(),
+//	  aiProcess_CalcTangentSpace       |
+//	  aiProcess_Triangulate            |
+//	  aiProcess_JoinIdenticalVertices  |
+//	  aiProcess_SortByPType);
+//
+//   if(!scene)
+//   {
+//	   std::cerr << "Couldn't load model ";
+//	   std::abort();
+//   }
+//}
 
 int main(void)
 {
@@ -98,7 +113,7 @@ int main(void)
     InitGLEW();
 
 	static ShaderProviderDummy dummy;
-	static ShaderGl myFirstShader;
+	static graphics::ShaderGl myFirstShader;
 	myFirstShader.Load(dummy);
 
     while (!glfwWindowShouldClose(mainWindowHandle))

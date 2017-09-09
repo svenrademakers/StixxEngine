@@ -41,33 +41,36 @@ namespace
 
 }
 
-void ShaderGl::Load(ShaderProvider& provider)
+namespace graphics
 {
-	const char* vertexSource = provider.VertexShader();
-	const char* fragmentSource = provider.FragmentShader();
+	void ShaderGl::Load(ShaderProvider& provider)
+	{
+		const char* vertexSource = provider.VertexShader();
+		const char* fragmentSource = provider.FragmentShader();
 
-	GLuint vertex = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertex, 1, &vertexSource, NULL);
-	glCompileShader(vertex);
-	AbortOnError(vertex);
+		GLuint vertex = glCreateShader(GL_VERTEX_SHADER);
+		glShaderSource(vertex, 1, &vertexSource, NULL);
+		glCompileShader(vertex);
+		AbortOnError(vertex);
 
-	GLuint fragment = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragment, 1, &fragmentSource, NULL);
-	glCompileShader(fragment);
-	AbortOnError(fragment);
+		GLuint fragment = glCreateShader(GL_FRAGMENT_SHADER);
+		glShaderSource(fragment, 1, &fragmentSource, NULL);
+		glCompileShader(fragment);
+		AbortOnError(fragment);
 
-	// shader Program
-	id = glCreateProgram();
-	glAttachShader(id, vertex);
-	glAttachShader(id, fragment);
-	glLinkProgram(id);
-	AbortOnProgramError(id);
+		// shader Program
+		id = glCreateProgram();
+		glAttachShader(id, vertex);
+		glAttachShader(id, fragment);
+		glLinkProgram(id);
+		AbortOnProgramError(id);
 
-	glDeleteShader(vertex);
-	glDeleteShader(fragment);
-}
+		glDeleteShader(vertex);
+		glDeleteShader(fragment);
+	}
 
-void ShaderGl::Use()
-{
-	glUseProgram(*id);
+	void ShaderGl::Use()
+	{
+		glUseProgram(id);
+	}
 }

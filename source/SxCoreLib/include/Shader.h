@@ -15,7 +15,7 @@ class Shader
 {
 public:
 	virtual void Load(ShaderProvider& provider) = 0;
-	virtual void Use();
+	virtual void Use() = 0;
 	virtual ~Shader(){};
 };
 }
