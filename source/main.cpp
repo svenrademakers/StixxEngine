@@ -50,11 +50,12 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 
 static GLFWwindow* CreateWindow()
 {
-	if (!glfwInit())
-	{
-		std::cerr << "glfwInit returned false" << std::endl;
-		std::abort();
-	}
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+#ifdef __APPLE__
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+#endif
 
 	GLFWwindow* window = glfwCreateWindow(WINDOW_WIDHT, WINDOW_HEIGHT, "Svens Awsome Game", NULL, NULL);
 	if (!window)
@@ -65,28 +66,40 @@ static GLFWwindow* CreateWindow()
 	}
 
 	glfwMakeContextCurrent(window);
-	glewExperimental=true;
-
-	if (glewInit() != GLEW_OK)
-	{
-		std::cerr << "Failed to initialize GLEW" << std::endl;
-		std::abort();
-	}
     glfwSetKeyCallback(window, key_callback);
     return window;
 }
 
+static void InitGLEW()
+{
+    glewExperimental=true;
+    if (glewInit() != GLEW_OK)
+    {
+        std::cerr << "Failed to initialize GLEW" << std::endl;
+        std::abort();
+    }
+}
+
+static void InitGLFW()
+{
+    if (!glfwInit())
+    {
+        std::cerr << "glfwInit returned false" << std::endl;
+        std::abort();
+    }
+    
+    glfwSetErrorCallback(error_callback);
+}
+
 int main(void)
 {
-	glfwSetErrorCallback(error_callback);
-
-	static GameContainerMac container;
-	GLFWwindow* mainWindowHandle = CreateWindow();
+    InitGLFW();
+    GLFWwindow* mainWindowHandle = CreateWindow();
+    InitGLEW();
 
 	static ShaderProviderDummy dummy;
 	static ShaderGl myFirstShader;
 	myFirstShader.Load(dummy);
-
 
     while (!glfwWindowShouldClose(mainWindowHandle))
     {
