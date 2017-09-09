@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.8)
 project (opengl_game_engine)
 
-
 add_subdirectory(external/glfw)
+find_package(GLEW REQUIRED)
 
 add_executable(TheGame MACOSX_BUNDLE main.cpp)
 
@@ -17,4 +17,4 @@ find_library(OPENGL OpenGl)
 find_library(IOKIT IOKit)
 find_library(COREVIDEO CoreVideo)
 
-target_link_libraries(TheGame glfw3 ${COCOA} ${OPENGL} ${COREVIDEO} ${IOKIT} ${GLFW_STATIC_LIBRARIES} ${GLEW_LIBRARIES})
+target_link_libraries(TheGame glfw3 ${COCOA} ${OPENGL} ${COREVIDEO} ${IOKIT} ${GLFW_LIBRARIES} ${GLEW_LIBRARIES})
