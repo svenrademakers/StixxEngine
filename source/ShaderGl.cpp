@@ -34,7 +34,7 @@ namespace
 	    glGetProgramiv(program, GL_LINK_STATUS, &success);
 	    if (!success) {
 	        glGetProgramInfoLog(program, buffer.size(), NULL, buffer.data());
-	        std::cerr << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << buffer.data() << std::endl;
+	        std::cerr << "Shader Program Linking failed\n" << buffer.data() << std::endl;
 	        std::abort();
 	    }
 	}

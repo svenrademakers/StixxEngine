@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
 
-add_subdirectory(../external/glfw)
 find_package(GLEW REQUIRED)
 
 add_executable(orangeBox_example MACOSX_BUNDLE main.cpp)

@@ -2,7 +2,7 @@
 find_package(Boost 1.65 REQUIRED)
 
 add_library(SxCoreLib
-	src/Shader.cpp)
+	src/Dummy.cpp)
 	
 target_compile_features(SxCoreLib PUBLIC cxx_override cxx_inheriting_constructors)
 

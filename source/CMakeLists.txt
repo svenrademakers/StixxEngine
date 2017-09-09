@@ -20,3 +20,5 @@ find_library(IOKIT IOKit)
 find_library(COREVIDEO CoreVideo)
 
 target_link_libraries(TheGame SxCoreLib glfw ${COCOA} ${OPENGL} ${COREVIDEO} ${IOKIT} ${GLFW_LIBRARIES} ${GLEW_LIBRARIES})
+
+add_subdirectory(examples)
