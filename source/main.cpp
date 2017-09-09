@@ -1,55 +1,106 @@
-#include <GLFW/glfw3.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <iostream>
+
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+
+#include "ShaderGl.h"
+#include "GameContainerMac.h"
+
+#define WINDOW_WIDHT 800
+#define WINDOW_HEIGHT 600
+
+class ShaderProviderDummy
+	: public ShaderProvider
+{
+public:
+	const char* VertexShader() const override
+	{
+
+		return "#version 330 core\n"
+			    "layout (location = 0) in vec3 aPos;\n"
+			    "void main()\n"
+			    "{\n"
+			    "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+			    "}\0";
+	}
+
+	const char* FragmentShader() const override
+	{
+		return "#version 330 core\n"
+			    "out vec4 FragColor;\n"
+			    "void main()\n"
+			    "{\n"
+			    "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+			    "}\n\0";
+	}
+};
+
 static void error_callback(int error, const char* description)
 {
-    fputs(description, stderr);
+    std::cerr << "error: " << error << " : " << description << std::endl;
 }
+
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GL_TRUE);
 }
+
+static GLFWwindow* CreateWindow()
+{
+	if (!glfwInit())
+	{
+		std::cerr << "glfwInit returned false" << std::endl;
+		std::abort();
+	}
+
+	GLFWwindow* window = glfwCreateWindow(WINDOW_WIDHT, WINDOW_HEIGHT, "Svens Awsome Game", NULL, NULL);
+	if (!window)
+	{
+		glfwTerminate();
+		std::cerr << "Window Error" << std::endl;
+		std::abort();
+	}
+
+	glfwMakeContextCurrent(window);
+	glewExperimental=true;
+
+	if (glewInit() != GLEW_OK)
+	{
+		std::cerr << "Failed to initialize GLEW" << std::endl;
+		std::abort();
+	}
+    glfwSetKeyCallback(window, key_callback);
+    return window;
+}
+
 int main(void)
 {
-    GLFWwindow* window;
-    glfwSetErrorCallback(error_callback);
-    if (!glfwInit())
-        exit(EXIT_FAILURE);
-    window = glfwCreateWindow(640, 480, "Simple example", NULL, NULL);
-    if (!window)
+	glfwSetErrorCallback(error_callback);
+
+	static GameContainerMac container;
+	GLFWwindow* mainWindowHandle = CreateWindow();
+
+	static ShaderProviderDummy dummy;
+	static ShaderGl myFirstShader;
+	myFirstShader.Load(dummy);
+
+
+    while (!glfwWindowShouldClose(mainWindowHandle))
     {
-        glfwTerminate();
-        exit(EXIT_FAILURE);
-    }
-    glfwMakeContextCurrent(window);
-    glfwSetKeyCallback(window, key_callback);
-    while (!glfwWindowShouldClose(window))
-    {
-        float ratio;
-        int width, height;
-        glfwGetFramebufferSize(window, &width, &height);
-        ratio = width / (float) height;
-        glViewport(0, 0, width, height);
-        glClear(GL_COLOR_BUFFER_BIT);
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-        glOrtho(-ratio, ratio, -1.f, 1.f, 1.f, -1.f);
-        glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity();
-        glRotatef((float) glfwGetTime() * 50.f, 0.f, 0.f, 1.f);
-        glBegin(GL_TRIANGLES);
-        glColor3f(1.f, 0.f, 0.f);
-        glVertex3f(-0.6f, -0.4f, 0.f);
-        glColor3f(0.f, 1.f, 0.f);
-        glVertex3f(0.6f, -0.4f, 0.f);
-        glColor3f(0.f, 0.f, 1.f);
-        glVertex3f(0.f, 0.6f, 0.f);
-        glEnd();
-        glfwSwapBuffers(window);
+     	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+     	glClear(GL_COLOR_BUFFER_BIT);
+
+     	//TODO
+
+     	glfwSwapBuffers(mainWindowHandle);
         glfwPollEvents();
     }
-    glfwDestroyWindow(window);
+
+    glfwDestroyWindow(mainWindowHandle);
     glfwTerminate();
-    exit(EXIT_SUCCESS);
+    return EXIT_SUCCESS;
 }
+

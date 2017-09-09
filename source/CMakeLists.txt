@@ -6,7 +6,7 @@ find_package(GLEW REQUIRED)
 
 add_subdirectory(SxCoreLib)
 
-add_executable(TheGame MACOSX_BUNDLE main.cpp ShaderGl.cpp)
+add_executable(TheGame MACOSX_BUNDLE main.cpp ShaderGl.cpp GameContainerMac.cpp)
 
 target_include_directories(TheGame 
 	PUBLIC
@@ -19,4 +19,4 @@ find_library(OPENGL OpenGl)
 find_library(IOKIT IOKit)
 find_library(COREVIDEO CoreVideo)
 
-target_link_libraries(TheGame SxCoreLib glfw3 ${COCOA} ${OPENGL} ${COREVIDEO} ${IOKIT} ${GLFW_LIBRARIES} ${GLEW_LIBRARIES})
+target_link_libraries(TheGame SxCoreLib glfw ${COCOA} ${OPENGL} ${COREVIDEO} ${IOKIT} ${GLFW_LIBRARIES} ${GLEW_LIBRARIES})
