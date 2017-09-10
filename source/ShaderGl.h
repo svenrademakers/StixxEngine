@@ -21,7 +21,7 @@ namespace graphics
 		virtual ~ShaderGl(){};
 
 		//shader
-		virtual void Load(ShaderProvider& provider) override;
+		virtual void Load(ShaderRaw& vertex, ShaderRaw& fragment) override;
 		virtual void Use() override;
 
 	private:

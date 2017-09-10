@@ -1,40 +1,19 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
+#include <vector>
+#include <string>
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
 #include "ShaderGl.h"
+#include "ShaderRaw.hpp"
 
 #define WINDOW_WIDHT 800
 #define WINDOW_HEIGHT 600
 
-class ShaderProviderDummy
-	: public ShaderProvider
-{
-public:
-	const char* VertexShader() const override
-	{
 
-		return "#version 330 core\n"
-			    "layout (location = 0) in vec3 aPos;\n"
-			    "void main()\n"
-			    "{\n"
-			    "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-			    "}\0";
-	}
-
-	const char* FragmentShader() const override
-	{
-		return "#version 330 core\n"
-			    "out vec4 FragColor;\n"
-			    "void main()\n"
-			    "{\n"
-			    "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-			    "}\n\0";
-	}
-};
 
 static void error_callback(int error, const char* description)
 {
@@ -89,22 +68,6 @@ static void InitGLFW()
 
     glfwSetErrorCallback(error_callback);
 }
-//
-//void Loader(std::string& fileName)
-//{
-//	Assimp::Importer importer;
-//	const aiScene* scene = importer.ReadFile( fileName.c_str(),
-//	  aiProcess_CalcTangentSpace       |
-//	  aiProcess_Triangulate            |
-//	  aiProcess_JoinIdenticalVertices  |
-//	  aiProcess_SortByPType);
-//
-//   if(!scene)
-//   {
-//	   std::cerr << "Couldn't load model ";
-//	   std::abort();
-//   }
-//}
 
 int main(void)
 {
@@ -112,9 +75,15 @@ int main(void)
     GLFWwindow* mainWindowHandle = CreateWindow();
     InitGLEW();
 
-	static ShaderProviderDummy dummy;
+    std::string path(R"(/Users/svenrademakers/opengl_game_engine/source/shaders/)");
+    std::string vertex(path + "main.shdr");
+    std::string fragment(path + "fragment.shdr");
+
+    graphics::ShaderDataLoader fragmentFile(fragment);
+    graphics::ShaderDataLoader vertexFile(vertex);
+
 	static graphics::ShaderGl myFirstShader;
-	myFirstShader.Load(dummy);
+	myFirstShader.Load(vertexFile, fragmentFile);
 
     while (!glfwWindowShouldClose(mainWindowHandle))
     {

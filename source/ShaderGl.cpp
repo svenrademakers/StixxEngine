@@ -10,6 +10,7 @@
 #include <iostream>
 #include <array>
 #include "ShaderGl.h"
+#include "ShaderRaw.hpp"
 
 namespace
 {
@@ -43,18 +44,15 @@ namespace
 
 namespace graphics
 {
-	void ShaderGl::Load(ShaderProvider& provider)
+	void ShaderGl::Load(ShaderRaw& vertexData, ShaderRaw& fragmentData)
 	{
-		const char* vertexSource = provider.VertexShader();
-		const char* fragmentSource = provider.FragmentShader();
-
 		GLuint vertex = glCreateShader(GL_VERTEX_SHADER);
-		glShaderSource(vertex, 1, &vertexSource, NULL);
+		glShaderSource(vertex, 1, vertexData.Shader(), NULL);
 		glCompileShader(vertex);
 		AbortOnError(vertex);
 
 		GLuint fragment = glCreateShader(GL_FRAGMENT_SHADER);
-		glShaderSource(fragment, 1, &fragmentSource, NULL);
+		glShaderSource(fragment, 1, fragmentData.Shader(), NULL);
 		glCompileShader(fragment);
 		AbortOnError(fragment);
 

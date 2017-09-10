@@ -14,7 +14,9 @@ target_include_directories(TheGame
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 		$<BUILD_INTERFACE:${GLFW_SOURCE_DIR}/include>
 		$<BUILD_INTERFACE:${GLEW_INCLUDE_DIRS}>
-		$<BUILD_INTERFACE:${ASSIMP_INCLUDE_DIR}>)
+		$<BUILD_INTERFACE:${ASSIMP_INCLUDE_DIR}>
+	PRIVATE
+		$<BUILD_INTERFACE:/shaders>)
 		
 find_library(COCOA Cocoa)
 find_library(OPENGL OpenGl)
@@ -23,4 +25,4 @@ find_library(COREVIDEO CoreVideo)
 
 target_link_libraries(TheGame SxCoreLib glfw ${ASSIMP_LIBRARY} ${COCOA} ${OPENGL} ${COREVIDEO} ${IOKIT} ${GLFW_LIBRARIES} ${GLEW_LIBRARIES})
 
-add_subdirectory(examples)
+#add_subdirectory(examples)
