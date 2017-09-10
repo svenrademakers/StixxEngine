@@ -7,10 +7,10 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <ShaderLoader.hpp>
 #include <iostream>
 #include <array>
 #include "ShaderGl.h"
-#include "ShaderRaw.hpp"
 
 namespace
 {
@@ -42,7 +42,7 @@ namespace
 
 }
 
-namespace graphics
+namespace sxgraphics
 {
 	void ShaderGl::Load(ShaderRaw& vertexData, ShaderRaw& fragmentData)
 	{

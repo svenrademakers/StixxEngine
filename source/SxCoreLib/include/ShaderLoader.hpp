@@ -1,16 +1,16 @@
 /*
- * ShaderFile.hpp
+ * ShaderLoader.hpp
  *
  *  Created on: 10 Sep 2017
  *      Author: svenrademakers
  */
 
-#ifndef SHADERFILE_HPP_
-#define SHADERFILE_HPP_
+#ifndef SHADERLOADER_HPP_
+#define SHADERLOADER_HPP_
 
 #include <string>
 
-namespace graphics
+namespace sxgraphics
 {
 
 class ShaderRaw
@@ -37,4 +37,4 @@ private:
 };
 }
 
-#endif /* SXCORELIB_INCLUDE_SHADERFILE_HPP_ */
+#endif /* SHADERLOADER_HPP_ */

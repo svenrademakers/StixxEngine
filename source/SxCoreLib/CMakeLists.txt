@@ -2,7 +2,7 @@
 find_package(Boost 1.65 REQUIRED)
 
 add_library(SxCoreLib
-	src/ShaderRaw.cpp)
+	src/ShaderLoader.cpp)
 	
 target_compile_features(SxCoreLib PUBLIC cxx_override cxx_inheriting_constructors)
 target_link_libraries(SxCoreLib glm)

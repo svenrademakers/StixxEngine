@@ -7,13 +7,13 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include "ShaderLoader.hpp"
 #include "ShaderGl.h"
-#include "ShaderRaw.hpp"
+
+#include "MeshGL.h"
 
 #define WINDOW_WIDHT 800
 #define WINDOW_HEIGHT 600
-
-
 
 static void error_callback(int error, const char* description)
 {
@@ -69,28 +69,59 @@ static void InitGLFW()
     glfwSetErrorCallback(error_callback);
 }
 
+static void LoadShaders(sxgraphics::Shader& shader)
+{
+    std::string path(R"(/Users/svenrademakers/opengl_game_engine/source/shaders/)");
+    std::string vertex(path + "main.shdr");
+    std::string fragment(path + "fragment.shdr");
+
+    sxgraphics::ShaderDataLoader fragmentFile(fragment);
+    sxgraphics::ShaderDataLoader vertexFile(vertex);
+
+    shader.Load(vertexFile, fragmentFile);
+}
+
+static unsigned int indices[] = {  // note that we start from 0!
+    0, 1, 3,  // first Triangle
+    1, 2, 3   // second Triangle
+};
+
 int main(void)
 {
     InitGLFW();
     GLFWwindow* mainWindowHandle = CreateWindow();
     InitGLEW();
 
-    std::string path(R"(/Users/svenrademakers/opengl_game_engine/source/shaders/)");
-    std::string vertex(path + "main.shdr");
-    std::string fragment(path + "fragment.shdr");
+	sxgraphics::ShaderGl shader;
+	LoadShaders(shader);
 
-    graphics::ShaderDataLoader fragmentFile(fragment);
-    graphics::ShaderDataLoader vertexFile(vertex);
+	std::vector<sxgraphics::Vertex> vertices;
 
-	static graphics::ShaderGl myFirstShader;
-	myFirstShader.Load(vertexFile, fragmentFile);
+	sxgraphics::Vertex topr;
+	topr.Position =  {0.5f,  0.5f, 0.0f};
+	vertices.push_back(topr);
+
+	topr.Position =  { 0.5f, -0.5f, 0.0f};
+	vertices.push_back(topr);
+
+	topr.Position =  {-0.5f, -0.5f, 0.0f};
+	vertices.push_back(topr);
+
+	topr.Position =  {-0.5f,  0.5f, 0.0f};
+	vertices.push_back(topr);
+
+	std::vector<GLuint> indicesCol(std::begin(indices), std::end(indices));
+	std::vector<sxgraphics::Texture> textures;
+
+	static sxgraphics::MeshGL cube(vertices, indicesCol, textures);
 
     while (!glfwWindowShouldClose(mainWindowHandle))
     {
      	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
      	glClear(GL_COLOR_BUFFER_BIT);
 
-     	//TODO
+     	shader.Use();
+     	cube.Draw(shader);
 
      	glfwSwapBuffers(mainWindowHandle);
         glfwPollEvents();

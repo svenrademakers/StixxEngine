@@ -10,11 +10,15 @@
 
 #include "Mesh.h"
 #include <vector>
+#include <string>
+
 #include <GL/glew.h>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+namespace sxgraphics
+{
 struct Vertex {
     // position
     glm::vec3 Position;
@@ -28,23 +32,32 @@ struct Vertex {
     glm::vec3 Bitangent;
 };
 
+struct Texture
+{
+	GLuint id;
+	std::string type;
+};
+
 class MeshGL
-	: public graphics::Mesh
+	: public Mesh
 {
 public:
-	MeshGL(const std::vector<Vertex>& vertices, const std::vector<GLuint>& indices);
+	MeshGL(const std::vector<Vertex>& vertices, const std::vector<GLuint>& indices,
+			const std::vector<Texture>& textures);
 	virtual ~MeshGL();
 
 	void Load() override;
-	void Draw(graphics::Shader& shader) override;
+	void Draw(Shader& shader) override;
 
 private:
 	std::vector<Vertex> vertices;
     std::vector<GLuint> indices;
+    std::vector<Texture> textures;
 
     GLuint vertexArrayHandle;
     GLuint vertexBufferHandle;
     GLuint elementBufferHandle;
 };
+}
 
 #endif /* MESHGL_H_ */

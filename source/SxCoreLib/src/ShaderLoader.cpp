@@ -6,9 +6,9 @@
  */
 #include <fstream>
 
-#include "ShaderRaw.hpp"
+#include "ShaderLoader.hpp"
 
-namespace graphics
+namespace sxgraphics
 {
 ShaderDataLoader::ShaderDataLoader(std::string fileName)
 	: data(LoadFile(fileName))

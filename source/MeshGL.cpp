@@ -7,13 +7,18 @@
 
 #include <MeshGL.h>
 
-MeshGL::MeshGL(const std::vector<Vertex>& vertices, const std::vector<GLuint>& indices)
+namespace sxgraphics
+{
+MeshGL::MeshGL(const std::vector<Vertex>& vertices, const std::vector<GLuint>& indices, const std::vector<Texture>& textures)
 	: vertices(vertices)
 	, indices(indices)
+	, textures(textures)
 	, vertexArrayHandle(0)
 	, vertexBufferHandle(0)
 	, elementBufferHandle(0)
- {}
+ {
+	Load();
+ }
 
 MeshGL::~MeshGL()
 {}
@@ -30,7 +35,7 @@ void MeshGL::Load()
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferHandle);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), &indices[0], GL_STATIC_DRAW);
 
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
@@ -48,10 +53,13 @@ void MeshGL::Load()
     glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Bitangent));
 
     glBindVertexArray(0);
-
 }
 
-void MeshGL::Draw(graphics::Shader& shader)
+void MeshGL::Draw(Shader& shader)
 {
-
+    // draw mesh
+    glBindVertexArray(vertexArrayHandle);
+    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+}
 }

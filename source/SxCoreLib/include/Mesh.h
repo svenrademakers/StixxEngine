@@ -3,7 +3,7 @@
 
 #include "Shader.h"
 
-namespace graphics
+namespace sxgraphics
 {
 	class Mesh
 	{

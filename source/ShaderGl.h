@@ -10,14 +10,14 @@
 
 #include "Shader.h"
 
-namespace graphics
+namespace sxgraphics
 {
 	class ShaderGl
 		 : public Shader
 	{
 	public:
 		ShaderGl() = default;
-		ShaderGl(const ShaderGl&) = delete;
+		//ShaderGl(const ShaderGl&) = delete;
 		virtual ~ShaderGl(){};
 
 		//shader
