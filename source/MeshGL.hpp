@@ -5,8 +5,8 @@
  *      Author: svenrademakers
  */
 
-#ifndef MESHGL_H_
-#define MESHGL_H_
+#ifndef MESHGL_HPP_
+#define MESHGL_HPP_
 
 #include "Mesh.h"
 #include <vector>
@@ -60,4 +60,4 @@ private:
 };
 }
 
-#endif /* MESHGL_H_ */
+#endif /* MESHGL_HPP_ */

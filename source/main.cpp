@@ -6,11 +6,10 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include "MeshGL.hpp"
+#include "ShaderGL.hpp"
 
 #include "ShaderLoader.hpp"
-#include "ShaderGl.h"
-
-#include "MeshGL.h"
 
 #define WINDOW_WIDHT 800
 #define WINDOW_HEIGHT 600
@@ -92,7 +91,7 @@ int main(void)
     GLFWwindow* mainWindowHandle = CreateWindow();
     InitGLEW();
 
-	sxgraphics::ShaderGl shader;
+	sxgraphics::ShaderGL shader;
 	LoadShaders(shader);
 
 	std::vector<sxgraphics::Vertex> vertices;

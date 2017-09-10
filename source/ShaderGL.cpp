@@ -1,16 +1,17 @@
 /*
- * ShaderGl.cpp
+ * ShaderGL.cpp
  *
  *  Created on: 9 Sep 2017
  *      Author: svenrademakers
  */
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include <ShaderLoader.hpp>
 #include <iostream>
 #include <array>
-#include "ShaderGl.h"
+
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include "ShaderGL.hpp"
+#include "ShaderLoader.hpp"
 
 namespace
 {
@@ -44,7 +45,7 @@ namespace
 
 namespace sxgraphics
 {
-	void ShaderGl::Load(ShaderRaw& vertexData, ShaderRaw& fragmentData)
+	void ShaderGL::Load(ShaderRaw& vertexData, ShaderRaw& fragmentData)
 	{
 		GLuint vertex = glCreateShader(GL_VERTEX_SHADER);
 		glShaderSource(vertex, 1, vertexData.Shader(), NULL);
@@ -67,7 +68,7 @@ namespace sxgraphics
 		glDeleteShader(fragment);
 	}
 
-	void ShaderGl::Use()
+	void ShaderGL::Use()
 	{
 		glUseProgram(id);
 	}

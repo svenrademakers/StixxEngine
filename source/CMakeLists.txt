@@ -7,7 +7,7 @@ add_subdirectory(external/glfw)
 add_subdirectory(external/glm)
 add_subdirectory(SxCoreLib)
 
-add_executable(TheGame MACOSX_BUNDLE main.cpp ShaderGl.cpp MeshGL.cpp)
+add_executable(TheGame MACOSX_BUNDLE main.cpp ShaderGL.cpp MeshGL.cpp)
 
 target_include_directories(TheGame 
 	PUBLIC

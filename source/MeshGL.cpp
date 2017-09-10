@@ -5,7 +5,7 @@
  *      Author: svenrademakers
  */
 
-#include <MeshGL.h>
+#include <MeshGL.hpp>
 
 namespace sxgraphics
 {

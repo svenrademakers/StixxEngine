@@ -5,20 +5,20 @@
  *      Author: svenrademakers
  */
 
-#ifndef SHADERGL_H_
-#define SHADERGL_H_
+#ifndef SHADERGL_HPP_
+#define SHADERGL_HPP_
 
 #include "Shader.h"
 
 namespace sxgraphics
 {
-	class ShaderGl
+	class ShaderGL
 		 : public Shader
 	{
 	public:
-		ShaderGl() = default;
+		ShaderGL() = default;
 		//ShaderGl(const ShaderGl&) = delete;
-		virtual ~ShaderGl(){};
+		virtual ~ShaderGL(){};
 
 		//shader
 		virtual void Load(ShaderRaw& vertex, ShaderRaw& fragment) override;
@@ -29,4 +29,4 @@ namespace sxgraphics
 	};
 }
 
-#endif /* SHADERGL_H_ */
+#endif /* SHADERGL_HPP_ */
