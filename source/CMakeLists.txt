@@ -7,7 +7,7 @@ add_subdirectory(external/glfw)
 add_subdirectory(external/glm)
 add_subdirectory(SxCoreLib)
 
-add_executable(TheGame MACOSX_BUNDLE main.cpp ShaderGL.cpp MeshGL.cpp)
+add_executable(TheGame MACOSX_BUNDLE main.cpp ShaderGL.cpp MeshGL.cpp MeshLoaderAssimp.cpp)
 
 target_include_directories(TheGame 
 	PUBLIC
@@ -23,6 +23,6 @@ find_library(OPENGL OpenGl)
 find_library(IOKIT IOKit)
 find_library(COREVIDEO CoreVideo)
 
-target_link_libraries(TheGame SxCoreLib glfw ${ASSIMP_LIBRARY} ${COCOA} ${OPENGL} ${COREVIDEO} ${IOKIT} ${GLFW_LIBRARIES} ${GLEW_LIBRARIES})
+target_link_libraries(TheGame SxCoreLib glfw /usr/local/lib/libassimp.dylib ${COCOA} ${OPENGL} ${COREVIDEO} ${IOKIT} ${GLFW_LIBRARIES} ${GLEW_LIBRARIES})
 
 #add_subdirectory(examples)

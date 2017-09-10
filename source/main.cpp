@@ -6,10 +6,14 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+
+#include <glm/gtc/type_ptr.hpp>
+
 #include "MeshGL.hpp"
 #include "ShaderGL.hpp"
 
 #include "ShaderLoader.hpp"
+#include "MeshLoaderAssimp.hpp"
 
 #define WINDOW_WIDHT 800
 #define WINDOW_HEIGHT 600
@@ -80,10 +84,25 @@ static void LoadShaders(sxgraphics::Shader& shader)
     shader.Load(vertexFile, fragmentFile);
 }
 
-static unsigned int indices[] = {  // note that we start from 0!
-    0, 1, 3,  // first Triangle
-    1, 2, 3   // second Triangle
-};
+static void LoadMesh(sxgraphics::Mesh& mesh)
+{
+    std::string path(R"(/Users/svenrademakers/opengl_game_engine/resources/cube.obj)");
+
+    std::vector<sxgraphics::Vertex> vertices;
+    std::vector<unsigned int> indices;
+    std::vector<sxgraphics::Texture> textures;
+
+    MeshLoaderAssimp loader(path);
+    loader.Next(vertices, indices, textures);
+
+    mesh.Vertices(vertices);
+    mesh.Indices(indices);
+    mesh.Textures(textures);
+}
+
+static void SetPerspective()
+{
+}
 
 int main(void)
 {
@@ -94,33 +113,25 @@ int main(void)
 	sxgraphics::ShaderGL shader;
 	LoadShaders(shader);
 
-	std::vector<sxgraphics::Vertex> vertices;
+	sxgraphics::MeshGL mesh;
+	LoadMesh(mesh);
 
-	sxgraphics::Vertex topr;
-	topr.Position =  {0.5f,  0.5f, 0.0f};
-	vertices.push_back(topr);
-
-	topr.Position =  { 0.5f, -0.5f, 0.0f};
-	vertices.push_back(topr);
-
-	topr.Position =  {-0.5f, -0.5f, 0.0f};
-	vertices.push_back(topr);
-
-	topr.Position =  {-0.5f,  0.5f, 0.0f};
-	vertices.push_back(topr);
-
-	std::vector<GLuint> indicesCol(std::begin(indices), std::end(indices));
-	std::vector<sxgraphics::Texture> textures;
-
-	static sxgraphics::MeshGL cube(vertices, indicesCol, textures);
+	mesh.Load();
+//	glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)WINDOW_WIDHT / (float)WINDOW_HEIGHT, 0.1f, 100.0f);
+//	glUniformMatrix4fv(glGetUniformLocation(shader.id, "projection"), 1, GL_FALSE, &projection[0][0]);
 
     while (!glfwWindowShouldClose(mainWindowHandle))
     {
      	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-     	glClear(GL_COLOR_BUFFER_BIT);
+     	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+//     	glm::mat4 modelTrans;
+//     	modelTrans = glm::rotate(modelTrans, static_cast<float>(glfwGetTime()), glm::vec3(0.5f, 1.0f, 0.0f));
+//        unsigned int modelLoc = glGetUniformLocation(shader.id, "model");
+//        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelTrans));
 
      	shader.Use();
-     	cube.Draw(shader);
+     	mesh.Draw(shader);
 
      	glfwSwapBuffers(mainWindowHandle);
         glfwPollEvents();

@@ -19,35 +19,22 @@
 
 namespace sxgraphics
 {
-struct Vertex {
-    // position
-    glm::vec3 Position;
-    // normal
-    glm::vec3 Normal;
-    // texCoords
-    glm::vec2 TexCoords;
-    // tangent
-    glm::vec3 Tangent;
-    // bitangent
-    glm::vec3 Bitangent;
-};
-
-struct Texture
-{
-	GLuint id;
-	std::string type;
-};
 
 class MeshGL
 	: public Mesh
 {
 public:
-	MeshGL(const std::vector<Vertex>& vertices, const std::vector<GLuint>& indices,
-			const std::vector<Texture>& textures);
+	MeshGL();
+	MeshGL(const MeshGL&) = delete;
+
 	virtual ~MeshGL();
 
 	void Load() override;
 	void Draw(Shader& shader) override;
+
+    void Vertices(const std::vector<sxgraphics::Vertex>& vertices) override;
+    void Indices(const std::vector<unsigned int>& indices) override;
+    void Textures(const std::vector<sxgraphics::Texture>& textures) override;
 
 private:
 	std::vector<Vertex> vertices;
