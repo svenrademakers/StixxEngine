@@ -1,9 +1,9 @@
-[submodule "source/external/glfw"]
-	path = source/external/glfw
+[submodule "source/stixxCore/external/glfw"]
+	path = source/stixxCore/external/glfw
 	url = https://github.com/glfw/glfw.git
-[submodule "source/external/assimp"]
-	path = source/external/assimp
+[submodule "source/stixxCore/external/assimp"]
+	path = source/stixxCore/external/assimp
 	url = https://github.com/assimp/assimp.git
-[submodule "source/external/glm"]
-	path = source/external/glm
+[submodule "source/stixxCore/external/glm"]
+	path = source/stixxCore/external/glm
 	url = https://github.com/g-truc/glm.git
