@@ -12,11 +12,11 @@ endif()
 add_subdirectory(external/glfw)
 add_subdirectory(external/glm)
 
-add_library(stixxCore
+add_library(StixxCore
 	src/ShaderLoader.cpp
 	src/MeshLoaderAssimp.cpp)
 
-target_include_directories(stixxCore
+target_include_directories(StixxCore
 	PUBLIC
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interfaces>
@@ -27,19 +27,19 @@ target_include_directories(stixxCore
 		$<BUILD_INTERFACE:${GLEW_INCLUDE_DIRS}>
 		$<BUILD_INTERFACE:${ASSIMP_INCLUDE_DIRS}>)
 
-target_compile_features(stixxCore PUBLIC cxx_override cxx_inheriting_constructors)
-target_link_libraries(stixxCore glm ${ASSIMP_LIBRARIES} ${GLFW_LIBRARIES} ${GLEW_LIBRARIES})
+target_compile_features(StixxCore PUBLIC cxx_override cxx_inheriting_constructors)
+target_link_libraries(StixxCore glm ${ASSIMP_LIBRARIES} ${GLFW_LIBRARIES} ${GLEW_LIBRARIES})
 
 
 install(DIRECTORY include interfaces DESTINATION include/stixx)
 
-install(TARGETS stixxCore
-		EXPORT 	stixxCore-targets
+install(TARGETS StixxCore
+		EXPORT 	StixxCore-targets
     	ARCHIVE  DESTINATION lib
     	LIBRARY  DESTINATION lib
     	RUNTIME  DESTINATION bin)
 
-install(EXPORT stixxCore-targets FILE stixxCore-config.cmake DESTINATION lib/cmake/stixxCore)
+install(EXPORT StixxCore-targets FILE StixxCore-config.cmake DESTINATION lib/cmake/StixxCore)
 
 #find_package(GTest REQUIRED)
 
