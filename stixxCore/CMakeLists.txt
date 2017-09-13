@@ -1,11 +1,11 @@
 
 if (WIN32)
-	add_subdirectory(external/assimp)
+	set(ASSIMP_INCLUDE_DIRS C:/Program\ Files/Assimp/include)
+	set(ASSIMP_LIBRARIES C:/Program\ Files/assimp/lib/x64/assimp.lib)
 	set(GLEWPATH ${CMAKE_CURRENT_SOURCE_DIR}/external/glew-2.1.0)
 	set(GLEW_INCLUDE_DIRS ${GLEWPATH}/include)
 	set(GLEW_LIBRARIES	 ${GLEWPATH}/lib/Release/x64/glew32.lib)
 else()
-	find_package(GLEW REQUIRED)
 	find_package(assimp REQUIRED)
 endif()
 
