@@ -10,5 +10,6 @@ pipelines:
     develop:
     - step:
         script:
+        - git submodule update --init
         - cmake -DCMAKE_BUILD_TYPE=Release
         - make
