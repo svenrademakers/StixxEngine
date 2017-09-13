@@ -10,16 +10,5 @@ pipelines:
     develop:
     - step:
         script:
-        - cat $PWD
-        - cat $BUILD_DIR
-        - cd $BUILD_DIR
-        - cmake ../stixx -DCMAKE_BUILD_TYPE=Release
-        - make
-    feature/*:
-    - step:
-        script:
-        - cat $PWD
-        - cat $BUILD_DIR
-        - cd $BUILD_DIR
-        - cmake ../stixx -DCMAKE_BUILD_TYPE=Debug
+        - cmake stixx -DCMAKE_BUILD_TYPE=Release
         - make
