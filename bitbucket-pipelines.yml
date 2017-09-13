@@ -4,10 +4,10 @@
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
 image: pmathia0/gcc-cmake-vulkan:latest
- 
+
 pipelines:
   branches:
-    develop feature/*:
+    develop:
     - step:
         script:
         - cd ..
