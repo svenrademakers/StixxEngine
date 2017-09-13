@@ -7,10 +7,11 @@ image: pmathia0/gcc-cmake-vulkan:latest
 
 pipelines:
   branches:
-    develop:
+    develop feature/*:
     - step:
         script:
-        - cd ..
-        - mkdir build && cd build
+        - cat $PWD
+        - cat $BUILD_DIR
+        - cd $BUILD_DIR
         - cmake ../stixx -DCMAKE_BUILD_TYPE=Debug
         - make
