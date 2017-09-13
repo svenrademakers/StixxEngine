@@ -10,5 +10,6 @@ pipelines:
     develop:
     - step:
         script:
-        - cmake stixx -DCMAKE_BUILD_TYPE=Release
+        - mkdir $BUILD_DIR/../out_of_source_build && cd $BUILD_DIR/../out_of_source_build
+        - cmake ../stixx -DCMAKE_BUILD_TYPE=Release
         - make
