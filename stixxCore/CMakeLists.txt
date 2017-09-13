@@ -1,7 +1,15 @@
 
-#find_package(Boost 1.65 REQUIRED)
-find_package(assimp REQUIRED)
-find_package(GLEW REQUIRED)
+add_subdirectory(external/assimp)
+find_package(assimp REQUIRED HINTS ${CMAKE_CURRENT_BINARY_DIR}/external/assimp)
+
+if (WIN32)
+	set(GLEWPATH ${CMAKE_CURRENT_SOURCE_DIR}/external/glew-2.1.0)
+	set(GLEW_INCLUDE_DIRS ${GLEWPATH}/include)
+	set(GLEW_LIBRARIES	 ${GLEWPATH}/lib/Release/x64/glew32.lib)
+else()
+	find_package(GLEW REQUIRED)
+endif()
+
 add_subdirectory(external/glfw)
 add_subdirectory(external/glm)
 
@@ -13,19 +21,21 @@ target_include_directories(stixxCore
 	PUBLIC
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interfaces>
- 		$<INSTALL_INTERFACE:include/stixx>
+ 		$<INSTALL_INTERFACE:stixx>
 	PRIVATE
-		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>)
-		#$<BUILD_INTERFACE: ${Boost_INCLUDE_DIR}>)
+		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
+		$<BUILD_INTERFACE:${GLFW_SOURCE_DIR}/include>
+		$<BUILD_INTERFACE:${GLEW_INCLUDE_DIRS}>
+		$<BUILD_INTERFACE:${ASSIMP_INCLUDE_DIR}>)
 	
 target_compile_features(stixxCore PUBLIC cxx_override cxx_inheriting_constructors)
-target_link_libraries(stixxCore glm)
+target_link_libraries(stixxCore glm ${ASSIMP_LIBRARIES} ${GLFW_LIBRARIES} ${GLEW_LIBRARIES})
 
 	
-install(DIRECTORY include DESTINATION include/stixx)
+install(DIRECTORY include interfaces DESTINATION include/stixx)
 
 install(TARGETS stixxCore 
-		EXPORT 	StixxCore-targets
+		EXPORT 	stixxCore-targets
     	ARCHIVE  DESTINATION lib
     	LIBRARY  DESTINATION lib
     	RUNTIME  DESTINATION bin)
