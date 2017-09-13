@@ -10,13 +10,13 @@
 
 #include "Mesh.h"
 
-namespace sxgraphics
+namespace sx
 {
 	class MeshLoader
 	{
 	public:
 		virtual ~MeshLoader() {};
-		virtual bool Next(std::vector<sxgraphics::Vertex>&, std::vector<unsigned int>&, std::vector<sxgraphics::Texture>&) = 0;
+		virtual bool Next(std::vector<sx::Vertex>&, std::vector<unsigned int>&, std::vector<sx::Texture>&) = 0;
 	};
 }
 

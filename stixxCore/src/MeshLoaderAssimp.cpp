@@ -28,7 +28,7 @@ MeshLoaderAssimp::~MeshLoaderAssimp()
 {
 }
 
-bool MeshLoaderAssimp::Next(std::vector<sxgraphics::Vertex>& vertices, std::vector<unsigned int>& indices, std::vector<sxgraphics::Texture>& textures)
+bool MeshLoaderAssimp::Next(std::vector<sx::Vertex>& vertices, std::vector<unsigned int>& indices, std::vector<sx::Texture>& textures)
 {
 	if (index == scene->mNumMeshes)
 	return false;
@@ -37,14 +37,14 @@ bool MeshLoaderAssimp::Next(std::vector<sxgraphics::Vertex>& vertices, std::vect
     return true;
 }
 
-void MeshLoaderAssimp::processMesh(std::vector<sxgraphics::Vertex>& vertices, std::vector<unsigned int>& indices, std::vector<sxgraphics::Texture>& textures)
+void MeshLoaderAssimp::processMesh(std::vector<sx::Vertex>& vertices, std::vector<unsigned int>& indices, std::vector<sx::Texture>& textures)
 {
     aiMesh* mesh = scene->mMeshes[index];
 
     // Walk through each of the mesh's vertices
     for(unsigned int i = 0; i < mesh->mNumVertices; i++)
     {
-    	sxgraphics::Vertex vertex;
+    	sx::Vertex vertex;
         glm::vec3 vector; // we declare a placeholder vector since assimp uses its own vector class that doesn't directly convert to glm's vec3 class so we transfer the data to this placeholder glm::vec3 first.
         // positions
         vector.x = mesh->mVertices[i].x;

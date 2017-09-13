@@ -8,7 +8,7 @@
 
 #include "ShaderLoader.hpp"
 
-namespace sxgraphics
+namespace sx
 {
 ShaderDataLoader::ShaderDataLoader(std::string fileName)
 	: data(LoadFile(fileName))

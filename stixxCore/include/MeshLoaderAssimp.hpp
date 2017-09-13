@@ -1,12 +1,6 @@
-/*
- * AssetLoaderAssimp.h
- *
- *  Created on: 10 Sep 2017
- *      Author: svenrademakers
- */
-
 #ifndef MESHLOADERASSIMP_HPP_
 #define MESHLOADERASSIMP_HPP_
+
 #include <vector>
 #include <string>
 
@@ -16,17 +10,17 @@
 #include <MeshLoader.hpp>
 
 class MeshLoaderAssimp
-	: public sxgraphics::MeshLoader
+	: public sx::MeshLoader
 {
 public:
 	MeshLoaderAssimp(const std::string& fileName);
 	virtual ~MeshLoaderAssimp();
 
 public:
-	bool Next(std::vector<sxgraphics::Vertex>&, std::vector<unsigned int>&, std::vector<sxgraphics::Texture>&) override;
+	bool Next(std::vector<sx::Vertex>&, std::vector<unsigned int>&, std::vector<sx::Texture>&) override;
 
 private:
-	void processMesh(std::vector<sxgraphics::Vertex>& vertices, std::vector<unsigned int>& indices, std::vector<sxgraphics::Texture>& textures);
+	void processMesh(std::vector<sx::Vertex>& vertices, std::vector<unsigned int>& indices, std::vector<sx::Texture>& textures);
     //std::vector<sxgraphics::Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);
 
 private:

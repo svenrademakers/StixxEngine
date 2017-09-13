@@ -5,7 +5,7 @@
 #include <glm/glm.hpp>
 #include "Shader.h"
 
-namespace sxgraphics
+namespace sx
 {
 	struct Vertex {
 		glm::vec3 Position;
@@ -29,9 +29,9 @@ namespace sxgraphics
 		virtual void Load() = 0;
 		virtual void Draw(Shader& shader) = 0;
 
-	    virtual void Vertices(const std::vector<sxgraphics::Vertex>& vertices) = 0;
+	    virtual void Vertices(const std::vector<sx::Vertex>& vertices) = 0;
 	    virtual void Indices(const std::vector<unsigned int>& indices) = 0;
-	    virtual void Textures(const std::vector<sxgraphics::Texture>& textures) = 0;
+	    virtual void Textures(const std::vector<sx::Texture>& textures) = 0;
 	};
 }
 #endif

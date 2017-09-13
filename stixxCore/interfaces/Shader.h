@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace sxgraphics
+namespace sx
 {
 class ShaderRaw;
 

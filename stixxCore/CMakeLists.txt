@@ -1,4 +1,3 @@
-
 if (WIN32)
 	set(ASSIMP_INCLUDE_DIRS C:/Program\ Files/Assimp/include)
 	set(ASSIMP_LIBRARIES C:/Program\ Files/assimp/lib/x64/assimp.lib)
@@ -13,8 +12,13 @@ add_subdirectory(external/glfw)
 add_subdirectory(external/glm)
 
 add_library(StixxCore
+	include/Observer.hpp
+	include/Application.hpp
+	include/MeshLoaderAssimp.hpp
+	src/Observer.cpp
 	src/ShaderLoader.cpp
-	src/MeshLoaderAssimp.cpp)
+	src/MeshLoaderAssimp.cpp
+)
 
 target_include_directories(StixxCore
 	PUBLIC
@@ -29,7 +33,6 @@ target_include_directories(StixxCore
 
 target_compile_features(StixxCore PUBLIC cxx_override cxx_inheriting_constructors)
 target_link_libraries(StixxCore glm ${ASSIMP_LIBRARIES} ${GLFW_LIBRARIES} ${GLEW_LIBRARIES})
-
 
 install(DIRECTORY include interfaces DESTINATION include/stixx)
 
