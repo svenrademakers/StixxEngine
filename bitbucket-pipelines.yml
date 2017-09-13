@@ -10,6 +10,5 @@ pipelines:
     develop:
     - step:
         script:
-        - mkdir $BUILD_DIR/../out_of_source_build && cd $BUILD_DIR/../out_of_source_build
-        - cmake $BUILD_DIR -DCMAKE_BUILD_TYPE=Release
+        - cmake -DCMAKE_BUILD_TYPE=Release
         - make
