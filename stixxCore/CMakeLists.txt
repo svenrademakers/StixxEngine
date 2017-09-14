@@ -8,12 +8,16 @@ else()
 	find_package(assimp REQUIRED)
 endif()
 
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 add_subdirectory(external/glfw)
+
 add_subdirectory(external/glm)
 
 add_library(StixxCore
 	include/Observer.hpp
-	include/Application.hpp
+	include/Renderer.hpp
 	include/MeshLoaderAssimp.hpp
 	include/Window.hpp
 	include/WindowGlfw.hpp
@@ -30,12 +34,11 @@ target_include_directories(StixxCore
  		$<INSTALL_INTERFACE:stixx>
 	PRIVATE
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
-		$<BUILD_INTERFACE:${GLFW_SOURCE_DIR}/include>
 		$<BUILD_INTERFACE:${GLEW_INCLUDE_DIRS}>
 		$<BUILD_INTERFACE:${ASSIMP_INCLUDE_DIRS}>)
 
 target_compile_features(StixxCore PUBLIC cxx_override cxx_inheriting_constructors)
-target_link_libraries(StixxCore glm ${ASSIMP_LIBRARIES} ${GLFW_LIBRARIES} ${GLEW_LIBRARIES})
+target_link_libraries(StixxCore glm glfw ${ASSIMP_LIBRARIES} ${GLEW_LIBRARIES})
 
 install(DIRECTORY include interfaces DESTINATION include/stixx)
 
