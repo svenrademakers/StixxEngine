@@ -15,9 +15,12 @@ add_library(StixxCore
 	include/Observer.hpp
 	include/Application.hpp
 	include/MeshLoaderAssimp.hpp
+	include/Window.hpp
+	include/WindowGlfw.hpp
 	src/Observer.cpp
 	src/ShaderLoader.cpp
 	src/MeshLoaderAssimp.cpp
+	src/WindowGlfw.cpp
 )
 
 target_include_directories(StixxCore
