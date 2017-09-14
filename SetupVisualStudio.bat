@@ -6,5 +6,5 @@ if exist ..\build_vs (
 )
 
 chdir ..\build_vs
-cmake ..\stixx
+cmake ..\stixx -G "Visual Studio 15 2017 Win64"
 pause
