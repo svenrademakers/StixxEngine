@@ -4,9 +4,11 @@ namespace sx
 {
 	Observer::Observer(Subject<Observer>& subject)
 	{
-		subject.Attach(*this);
+		subject.Attach(this);
 	}
 
 	Observer::~Observer()
-	{}
+	{
+		subject.Detach(this);
+	}
 }
