@@ -5,7 +5,16 @@
 
 namespace sx
 {
+	class WindowGlfw;
+
+	class WindowVisitor
+	{
+	public:
+		virtual void CreateSurface(WindowGlfw& window) const = 0;
+	};
+
 	class Renderer
+		: public WindowVisitor
 	{
 	public:
 		virtual ~Renderer(){};

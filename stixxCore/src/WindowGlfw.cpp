@@ -1,5 +1,6 @@
 #include <sstream>
 #include "WindowGlfw.hpp"
+#include <GLFW/glfw3.h>
 
 namespace
 {
@@ -20,6 +21,7 @@ namespace
 namespace sx
 {
 	WindowGlfw::WindowGlfw(const char * name, uint16_t width, uint16_t height)
+		: name(name)
 	{
 		if (!glfwInit())
 		{
@@ -41,8 +43,40 @@ namespace sx
 		glfwSetKeyCallback(window, key_callback);
 	}	
 
+	const char* WindowGlfw::Name()
+	{
+		return name;
+	}
+	
 	bool WindowGlfw::ShouldClose()
 	{
 		return glfwWindowShouldClose(window);
 	}
+
+	std::vector<const char*> WindowGlfw::InstanceExtensions()
+	{
+		uint32_t count = 0;
+		const char** glfwExtensions;
+		glfwExtensions = glfwGetRequiredInstanceExtensions(&count);
+		
+		if (glfwExtensions == nullptr)
+			std::runtime_error("error retrieving Instance Extensions");
+
+		std::vector<const char*> extensions;
+		extensions.insert(extensions.end(), glfwExtensions, glfwExtensions + count);
+
+		return extensions;
+	}
+
+	void WindowGlfw::Accept(WindowVisitor& renderer)
+	{
+		renderer.CreateSurface(*this);
+	}
+
+	GLFWwindow* WindowGlfw::GetHandle()
+	{
+		return window;
+	}
+
+
 }
