@@ -3,6 +3,7 @@
 namespace sx
 {
 	Observer::Observer(Subject<Observer>& subject)
+		: subject(subject)
 	{
 		subject.Attach(this);
 	}

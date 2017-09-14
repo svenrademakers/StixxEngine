@@ -14,15 +14,25 @@ namespace sx
 	{
 	public:
 		Observer(Subject<Observer>& subject);
+		Observer(const Observer&) = delete;
+		Observer& operator=(const Observer&) = delete;
 		virtual ~Observer();
+
+	private:
+		Subject<Observer>& subject;
 	};
 
 	template<typename T>
 	class Subject
 	{
 	public:
-		void Attach(const Observer* observer);
-		void Detach(const Observer* observer);
+		Subject() = default;
+		Subject(const Subject&) = delete;
+		Subject& operator=(const Subject&) = delete;
+		virtual ~Subject();
+
+		void Attach(Observer* observer);
+		void Detach(Observer* observer);
 
 		void NotifyObservers(const std::function<void(T&)>& call);
 
@@ -31,15 +41,19 @@ namespace sx
 	};
 
 	template<typename T>
-	void Subject<T>::Attach(const Observer* observer)
+	Subject<T>::~Subject()
+	{ }
+
+	template<typename T>
+	void Subject<T>::Attach(Observer* observer)
 	{
-		observers[observer];
+		observers.insert(observer);
 	}
 	
 	template<typename T>
-	void Subject<T>::Detach(const Observer* observer)
+	void Subject<T>::Detach(Observer* observer)
 	{
-		if(observers.find() != observers.end())
+		if(observers.find(observer) != observers.end())
 			observers.erase(observer);
 	}
 
