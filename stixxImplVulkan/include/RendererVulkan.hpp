@@ -12,24 +12,13 @@ namespace sx
 		: public Renderer
 	{
 	public:
-		RendererVulkan(Window& window);
+		RendererVulkan(Window& window, const std::vector<uint32_t>& vertex, const std::vector<uint32_t>& fragment);
 		RendererVulkan(const RendererVulkan&) = delete;
 		RendererVulkan& operator = (const RendererVulkan&) = delete;
 		virtual ~RendererVulkan();
 
 		void CreateSurface(WindowGlfw& window) const override;
 		void Draw() override;
-
-	private:
-		void CreateLogicDevice() const;
-		void CreateSwapChain() const;
-		void CreateImageViews() const;
-		void CreateRenderPass() const;
-		void createGraphicsPipeline() const;
-		void CreateFramebuffers() const;
-		void CreateCommandPool() const;
-		void CreateCommandBuffers() const;
-		void CreateSemaphores() const;
 
 	private:
 		Window& window;
