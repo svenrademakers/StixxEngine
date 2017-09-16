@@ -1,9 +1,6 @@
 if (WIN32)
 	set(ASSIMP_INCLUDE_DIRS C:/Program\ Files/Assimp/include)
 	set(ASSIMP_LIBRARIES C:/Program\ Files/assimp/lib/x64/assimp.lib)
-	set(GLEWPATH ${CMAKE_CURRENT_SOURCE_DIR}/external/glew-2.1.0)
-	set(GLEW_INCLUDE_DIRS ${GLEWPATH}/include)
-	set(GLEW_LIBRARIES	 ${GLEWPATH}/lib/Release/x64/glew32.lib)
 else()
 	find_package(assimp REQUIRED)
 endif()
@@ -12,7 +9,6 @@ set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 add_subdirectory(external/glfw)
-
 add_subdirectory(external/glm)
 
 file(GLOB_RECURSE sources src/*.cpp)
@@ -30,11 +26,10 @@ target_include_directories(StixxCore
  		$<INSTALL_INTERFACE:stixx>
 	PRIVATE
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
-		$<BUILD_INTERFACE:${GLEW_INCLUDE_DIRS}>
 		$<BUILD_INTERFACE:${ASSIMP_INCLUDE_DIRS}>)
 
 target_compile_features(StixxCore PUBLIC cxx_override cxx_inheriting_constructors)
-target_link_libraries(StixxCore glm glfw ${ASSIMP_LIBRARIES} ${GLEW_LIBRARIES})
+target_link_libraries(StixxCore glm glfw ${ASSIMP_LIBRARIES})
 
 install(DIRECTORY include interfaces DESTINATION include)
 
