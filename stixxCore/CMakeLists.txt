@@ -15,18 +15,12 @@ add_subdirectory(external/glfw)
 
 add_subdirectory(external/glm)
 
+file(GLOB_RECURSE sources src/*.cpp)
+file(GLOB_RECURSE headers includes/*.hpp)
+
 add_library(StixxCore
-	include/Observer.hpp
-	include/Renderer.hpp
-	include/MeshLoaderAssimp.hpp
-	include/Window.hpp
-	include/WindowGlfw.hpp
-	include/FileSystem.hpp
-	src/Observer.cpp
-	src/ShaderLoader.cpp
-	src/MeshLoaderAssimp.cpp
-	src/WindowGlfw.cpp
-	src/FileSystem.cpp
+	${sources}
+	${headers}
 )
 
 target_include_directories(StixxCore
@@ -42,7 +36,7 @@ target_include_directories(StixxCore
 target_compile_features(StixxCore PUBLIC cxx_override cxx_inheriting_constructors)
 target_link_libraries(StixxCore glm glfw ${ASSIMP_LIBRARIES} ${GLEW_LIBRARIES})
 
-install(DIRECTORY include interfaces DESTINATION include/stixx)
+install(DIRECTORY include interfaces DESTINATION include)
 
 install(TARGETS StixxCore
 		EXPORT 	StixxCore-targets

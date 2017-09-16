@@ -1,10 +1,11 @@
 add_library(StixxImplVulkan
 	include/RendererVulkan.hpp
 	src/RendererVulkan.cpp
+	${shaders}
 )
-
-set(VULKAN_INCL "C:/VulkanSDK/1.0.57.0/Include")
-set(VULKAN_LIBS "C:/VulkanSDK/1.0.57.0/Lib/vulkan-1.Lib")
+set(VULKAN_ROOT "C:/VulkanSDK/1.0.57.0")
+set(VULKAN_INCL ${VULKAN_ROOT}/Include)
+set(VULKAN_LIBS ${VULKAN_ROOT}/Lib/vulkan-1.Lib)
 
 target_include_directories(StixxImplVulkan
 	PUBLIC

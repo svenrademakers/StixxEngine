@@ -3,4 +3,5 @@ project (stixx)
 
 add_subdirectory(stixxCore)
 add_subdirectory(stixxImplVulkan)
+add_subdirectory(stixxShaders)
 add_subdirectory(examples)
