@@ -1,17 +1,6 @@
-[submodule "stixxCore/external/assimp"]
-	path = stixxCore/external/assimp
-	url = https://github.com/assimp/assimp.git
 [submodule "stixxCore/external/glm"]
 	path = stixxCore/external/glm
-
 	url = https://github.com/g-truc/glm.git
-
-[submodule "stixxCore/external/glfw"]
-	
-	path = stixxCore/external/glfw
-	
+[submodule "stixxCore/external/glfw"]	
+	path = stixxCore/external/glfw	
 	url = https://github.com/glfw/glfw.git
-
-[submodule "stixxCore/external/glew"]
-	path = stixxCore/external/glew
-	url = https://github.com/nigels-com/glew.git
