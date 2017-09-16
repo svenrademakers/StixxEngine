@@ -11,7 +11,7 @@ int main(void)
 {
 	static sx::FileSystemStd fileSystem;
 	static sx::WindowGlfw window("Hello Triangle", 800, 600);
-	static sx::RendererVulkan renderer(window, fileSystem.LoadFile("shaders/vertex.spv"), fileSystem.LoadFile("shaders/fragment.spv"));
+	static sx::RendererVulkan renderer(window, fileSystem.LoadFile("vertex.spv"), fileSystem.LoadFile("fragment.spv"));
 
 	renderer.Draw();
 
