@@ -1,12 +1,13 @@
 #include "RenderPassVulkan.hpp"
+#include "SurfaceVulkan.hpp"
 
 namespace sx
 {
-	RenderPassVulkan::RenderPassVulkan(const VkDevice& device, const VkFormat& format)
+	RenderPassVulkan::RenderPassVulkan(DeviceVulkan& device, SwapchainVulkan& swapchain)
 		: device(device)
 	{
 		VkAttachmentDescription colorAttachment = {};
-		colorAttachment.format = format;
+		colorAttachment.format = swapchain.Format();
 		colorAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
 		colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
 		colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
@@ -41,13 +42,34 @@ namespace sx
 		renderPassInfo.dependencyCount = 1;
 		renderPassInfo.pDependencies = &dependency;
 
-		if (vkCreateRenderPass(device, &renderPassInfo, nullptr, &renderPass) != VK_SUCCESS)
+		if (vkCreateRenderPass(device.Device(), &renderPassInfo, nullptr, &renderPass) != VK_SUCCESS)
 			throw std::runtime_error("failed to create render pass!");
+
+			std::vector<VkFramebuffer> swapChainFramebuffers;
+
+			frameBuffers.resize(swapchain.ImageViews().size());
+
+			for (size_t i = 0; i < swapchain.ImageViews().size(); i++)
+			{
+			VkImageView attachments[] = { swapchain.ImageViews()[i]};
+
+			VkFramebufferCreateInfo framebufferInfo = {};
+			framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
+			framebufferInfo.renderPass = renderPass;
+			framebufferInfo.attachmentCount = 1;
+			framebufferInfo.pAttachments = attachments;
+			framebufferInfo.width = swapchain.Extent().width;
+			framebufferInfo.height = swapchain.Extent().height;
+			framebufferInfo.layers = 1;
+
+			if (vkCreateFramebuffer(device.Device(), &framebufferInfo, nullptr, &swapChainFramebuffers[i]) != VK_SUCCESS)
+				throw std::runtime_error("failed to create framebuffer!");
+			}
 	}
 
 	RenderPassVulkan::~RenderPassVulkan()
 	{
-		vkDestroyRenderPass(device, renderPass, nullptr);
+		vkDestroyRenderPass(device.Device(), renderPass, nullptr);
 	}
 
 	const VkRenderPass& RenderPassVulkan::RenderPass()
@@ -55,5 +77,8 @@ namespace sx
 		return renderPass;
 	}
 
-
+	const std::vector<VkFramebuffer>& RenderPassVulkan::FrameBuffers()
+	{
+		return frameBuffers;
+	}
 }

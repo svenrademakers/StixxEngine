@@ -1,18 +1,16 @@
 #ifndef RENDERER_VULKAN_HPP
 #define RENDERER_VULKAN_HPP
 
-#include <string>
-
-#include "WindowGlfw.hpp"
 #include "Renderer.hpp"
-
+#include "PipelineVulkan.hpp"
+#include "DeviceVulkan.hpp"
 namespace sx
 {
 	class RendererVulkan
 		: public Renderer
 	{
 	public:
-		RendererVulkan(Window& window, const std::vector<uint32_t>& vertex, const std::vector<uint32_t>& fragment);
+		RendererVulkan(DeviceVulkan& device, PipelineVulkan& pipeline, RenderPassVulkan& renderpass, SwapchainVulkan& swapchain);
 		RendererVulkan(const RendererVulkan&) = delete;
 		RendererVulkan& operator = (const RendererVulkan&) = delete;
 		virtual ~RendererVulkan();
@@ -20,7 +18,9 @@ namespace sx
 		void Draw() override;
 
 	private:
-		Window& window;
+		DeviceVulkan& device;
+		PipelineVulkan& pipeline;
+		SwapchainVulkan& swapchain;
 	};
 }
 

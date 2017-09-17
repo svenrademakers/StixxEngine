@@ -6,27 +6,26 @@
 #include "WindowGlfw.hpp"
 #include "SurfaceVulkan.hpp"
 #include "DeviceVulkan.hpp"
+#include "SwapchainVulkan.hpp"
 #include "RenderPassVulkan.hpp"
 #include "PipelineVulkan.hpp"
 #include "FileSystem.hpp"
+#include "RendererVulkan.hpp"
 
 int main(void)
 {
 	static sx::FileSystemStd fileSystem;
-	static sx::WindowGlfw window("Hello Triangle", 800, 600);
 
+	static sx::WindowGlfw window("Hello Triangle", 800, 600);
 	static sx::InstanceVulkan instance("stixx", "Hello Triangle", window.InstanceExtensions());
 	static sx::SurfaceVulkan surface(instance, *window.GetHandle());
-
 	static sx::DeviceVulkan device(instance, surface);
-	auto deviceHandle = device.Device();
-	//static sx::RenderPassVulkan renderpass(deviceHandle, surface.Format());
-	//static sx::RenderPassVulkan)
 
-	//static sx::RenderPassVulkan renderPass(device, surface.)
-	//static sx::PipelineVulkan(device.Device(), renderPass)
+	static sx::SwapchainVulkan swapchain(device, surface);
+	static sx::RenderPassVulkan renderpass(device, swapchain);
 
-	//static sx::RendererVulkan renderer(window, fileSystem.LoadFile("vertex.spv"), fileSystem.LoadFile("fragment.spv"));
+	static sx::PipelineVulkan pipeline(device, renderpass, surface, fileSystem.LoadFile("vertex.spv"), fileSystem.LoadFile("fragment.spv"));
+	static sx::RendererVulkan renderer(device, pipeline, renderpass, swapchain);
 
 	//renderer.Draw();
 

@@ -10,16 +10,23 @@ namespace sx
 	class SurfaceVulkan
 	{
 	public:
-		SurfaceVulkan::SurfaceVulkan(InstanceVulkan& instance, GLFWwindow& window);
+		SurfaceVulkan(InstanceVulkan& instance, GLFWwindow& window);
 		SurfaceVulkan(const SurfaceVulkan&) = delete;
 		SurfaceVulkan& operator = (const SurfaceVulkan&) = delete;
 		virtual ~SurfaceVulkan() = default;
 
 		const VkSurfaceKHR& Surface();
-		const VkSurfaceFormatKHR Format();
+		const VkFormat Format();
+		uint32_t ImageCount();
+		VkExtent2D& Extent();
+		VkColorSpaceKHR ColorSpace();
+		VkSurfaceTransformFlagBitsKHR CurrentTransform();
 
 	private:
-		VkSurfaceKHR surface;		
+		VkSurfaceKHR surface;
+		uint32_t imageCount;
+		VkExtent2D extent;
+		VkSurfaceTransformFlagBitsKHR surfaceTransformFlagBitsKHR;
 	};
 }
 

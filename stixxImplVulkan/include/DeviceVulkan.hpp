@@ -15,6 +15,9 @@ namespace sx
 		virtual ~DeviceVulkan();
 
 		const VkDevice& Device();
+		uint32_t QueueFamiliy();
+
+		const VkQueue& Queue();
 
 	private:
 		VkDeviceQueueCreateInfo CreateGraphicsQueue(const VkPhysicalDevice& device) const;
@@ -23,6 +26,7 @@ namespace sx
 	private:
 		VkDevice device;
 		VkQueue graphicsQueue;
+		uint32_t queueFamily;
 
 	};
 }

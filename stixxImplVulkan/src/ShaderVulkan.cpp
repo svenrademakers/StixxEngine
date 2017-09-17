@@ -1,15 +1,15 @@
 #include "ShaderVulkan.hpp"
 namespace sx
 {
-	ShaderFragmentVulkan::ShaderFragmentVulkan(const VkDevice& device, const std::vector<uint32_t>& data)
+	ShaderFragmentVulkan::ShaderFragmentVulkan(DeviceVulkan& device, const std::vector<uint32_t>& data)
 		: ShaderVulkan(device, VK_SHADER_STAGE_FRAGMENT_BIT, data)
 	{}
 
-	ShaderVertexVulkan::ShaderVertexVulkan(const VkDevice& device, const std::vector<uint32_t>& data)
+	ShaderVertexVulkan::ShaderVertexVulkan(DeviceVulkan& device, const std::vector<uint32_t>& data)
 		: ShaderVulkan(device, VK_SHADER_STAGE_VERTEX_BIT, data)
 	{}
 
-	ShaderVulkan::ShaderVulkan(const VkDevice& device, VkShaderStageFlagBits shaderStageFlagBits, const std::vector<uint32_t>& data)
+	ShaderVulkan::ShaderVulkan(DeviceVulkan& device, VkShaderStageFlagBits shaderStageFlagBits, const std::vector<uint32_t>& data)
 		: device(device)
 		, shaderStageFlagBits(shaderStageFlagBits)
 	{
@@ -17,13 +17,13 @@ namespace sx
 		shaderModuleCreateInfo.codeSize = data.size();
 		shaderModuleCreateInfo.pCode = data.data();
 
-		if (vkCreateShaderModule(device, &shaderModuleCreateInfo, nullptr, &shaderModule) != VK_SUCCESS)
+		if (vkCreateShaderModule(device.Device(), &shaderModuleCreateInfo, nullptr, &shaderModule) != VK_SUCCESS)
 			throw std::runtime_error("failed to create shader module!");
 	}
 
 	ShaderVulkan::~ShaderVulkan()
 	{
-		vkDestroyShaderModule(device, shaderModule, nullptr);
+		vkDestroyShaderModule(device.Device(), shaderModule, nullptr);
 	}
 
 	VkPipelineShaderStageCreateInfo ShaderVulkan::GetConfiguration()
