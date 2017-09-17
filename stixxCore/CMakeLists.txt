@@ -12,7 +12,7 @@ add_subdirectory(external/glfw)
 add_subdirectory(external/glm)
 
 file(GLOB_RECURSE sources src/*.cpp)
-file(GLOB_RECURSE headers includes/*.hpp)
+file(GLOB_RECURSE headers include/*.hpp)
 
 add_library(StixxCore
 	${sources}

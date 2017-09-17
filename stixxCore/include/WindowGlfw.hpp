@@ -2,8 +2,7 @@
 #define WINDOW_GLFW_HPP
 
 #include "Window.hpp"
-
-struct GLFWwindow;
+#include <GLFW/glfw3.h>
 
 namespace sx
 {
@@ -16,7 +15,6 @@ namespace sx
 		const char* Name() override;
 		bool ShouldClose() override;
 		std::vector<const char*> InstanceExtensions() override;
-		void Accept(WindowVisitor& renderer) override;
 
 		GLFWwindow* GetHandle();
 	private:

@@ -17,7 +17,6 @@ namespace sx
 		RendererVulkan& operator = (const RendererVulkan&) = delete;
 		virtual ~RendererVulkan();
 
-		void CreateSurface(WindowGlfw& window) const override;
 		void Draw() override;
 
 	private:

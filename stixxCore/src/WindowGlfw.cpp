@@ -68,11 +68,6 @@ namespace sx
 		return extensions;
 	}
 
-	void WindowGlfw::Accept(WindowVisitor& renderer)
-	{
-		renderer.CreateSurface(*this);
-	}
-
 	GLFWwindow* WindowGlfw::GetHandle()
 	{
 		return window;
