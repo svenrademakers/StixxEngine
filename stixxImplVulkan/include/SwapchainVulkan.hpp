@@ -14,9 +14,7 @@ namespace sx
 	{
 	public:
 		SwapchainVulkan(DeviceVulkan& device, SurfaceVulkan&  surface);
-		SwapchainVulkan(const SwapchainVulkan&) = delete;
-		SwapchainVulkan& operator = (const SwapchainVulkan&) = delete;
-		virtual ~SwapchainVulkan() = default;
+		virtual ~SwapchainVulkan();
 
 	public:
 		std::vector<VkImageView>& ImageViews();

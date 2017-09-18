@@ -27,8 +27,11 @@ int main(void)
 
 	static sx::RendererVulkan renderer(device, pipeline, renderpass, swapchain);
 
-	while(!window.ShouldClose())
+	while (!window.ShouldClose())
+	{
+		window.Poll();
 		renderer.Draw();
+	}
 
 	vkDeviceWaitIdle(*device);
 

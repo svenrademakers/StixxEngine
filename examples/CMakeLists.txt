@@ -1,5 +1,2 @@
 add_executable(hello_triangle helloTriangle.cpp)
 target_link_libraries(hello_triangle StixxImplVulkan StixxCore)
-
-add_executable(hello_triangle2 gay.cpp)
-target_link_libraries(hello_triangle2 StixxImplVulkan StixxCore)

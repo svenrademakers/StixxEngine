@@ -76,7 +76,9 @@ namespace sx
 
 	RendererVulkan::~RendererVulkan()
 	{
-
+		vkDestroySemaphore(*device, renderFinishedSemaphore, nullptr);
+		vkDestroySemaphore(*device, imageAvailableSemaphore, nullptr);
+		vkDestroyCommandPool(*device, commandPool, nullptr);
 	}
 	
 
