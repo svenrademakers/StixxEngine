@@ -6,11 +6,10 @@
 image: pmathia0/gcc-cmake-vulkan:latest
 
 pipelines:
-# TODO make it compile on linux
-#  branches:
-#  develop:
-#    - step:
-#        script:
-#        - git submodule update --init
-#        - cmake -DCMAKE_BUILD_TYPE=Release
-#        - make
+ branches:
+  develop:
+    - step:
+        script:
+        - git submodule update --init
+        - cmake -DCMAKE_BUILD_TYPE=Release
+        - make
