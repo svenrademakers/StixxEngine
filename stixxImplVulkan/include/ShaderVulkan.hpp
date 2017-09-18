@@ -4,14 +4,15 @@
 #include <vector>
 #include <vulkan\vulkan.hpp>
 #include "DeviceVulkan.hpp"
+#include "HandleExposer.hpp"
+
 namespace sx
 {
 	class ShaderVulkan
+		: HandleExposer<VkShaderModule>
 	{
 	public:
-		ShaderVulkan(DeviceVulkan& device, VkShaderStageFlagBits shaderStageBits, const std::vector<uint32_t>& data);
-		ShaderVulkan(const ShaderVulkan&) = delete;
-		ShaderVulkan& operator= (const ShaderVulkan&) = delete;
+		ShaderVulkan(DeviceVulkan& device, VkShaderStageFlagBits shaderStageBits, const std::vector<char>& data);
 		virtual ~ShaderVulkan();
 
 		VkPipelineShaderStageCreateInfo GetConfiguration();
@@ -20,21 +21,20 @@ namespace sx
 		DeviceVulkan& device;
 		VkShaderStageFlagBits shaderStageFlagBits;
 		VkShaderModuleCreateInfo shaderModuleCreateInfo;
-		VkShaderModule shaderModule;
 	};
 
 	class ShaderVertexVulkan
 		: public ShaderVulkan
 	{
 	public:
-		ShaderVertexVulkan(DeviceVulkan& device, const std::vector<uint32_t>& data);
+		ShaderVertexVulkan(DeviceVulkan& device, const std::vector<char>& data);
 	};
 
 	class ShaderFragmentVulkan
 		: public ShaderVulkan
 	{
 	public:
-		ShaderFragmentVulkan(DeviceVulkan& device, const std::vector<uint32_t>& data);
+		ShaderFragmentVulkan(DeviceVulkan& device, const std::vector<char>& data);
 	};
 
 }

@@ -4,18 +4,17 @@
 #include <string>
 #include "InstanceVulkan.hpp"
 #include "WindowGlfw.hpp"
+#include "HandleExposer.hpp"
 
 namespace sx
 {
-	class SurfaceVulkan
+	class SurfaceVulkan 
+		: public HandleExposer<VkSurfaceKHR>
 	{
 	public:
 		SurfaceVulkan(InstanceVulkan& instance, GLFWwindow& window);
-		SurfaceVulkan(const SurfaceVulkan&) = delete;
-		SurfaceVulkan& operator = (const SurfaceVulkan&) = delete;
-		virtual ~SurfaceVulkan() = default;
+		virtual ~SurfaceVulkan();
 
-		const VkSurfaceKHR& Surface();
 		const VkFormat Format();
 		uint32_t ImageCount();
 		VkExtent2D& Extent();
@@ -23,7 +22,8 @@ namespace sx
 		VkSurfaceTransformFlagBitsKHR CurrentTransform();
 
 	private:
-		VkSurfaceKHR surface;
+		InstanceVulkan& instance;
+
 		uint32_t imageCount;
 		VkExtent2D extent;
 		VkSurfaceTransformFlagBitsKHR surfaceTransformFlagBitsKHR;

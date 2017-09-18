@@ -30,5 +30,7 @@ int main(void)
 	while(!window.ShouldClose())
 		renderer.Draw();
 
+	vkDeviceWaitIdle(*device);
+
 	return 0;
 }

@@ -11,9 +11,11 @@ namespace sx
 	{
 	public:
 		WindowGlfw(const char * name, uint16_t width, uint16_t height);
+		virtual ~WindowGlfw();
 
 		const char* Name() override;
 		bool ShouldClose() override;
+		void Poll();
 		std::vector<const char*> InstanceExtensions() override;
 
 		GLFWwindow* GetHandle();

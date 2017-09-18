@@ -18,22 +18,17 @@ namespace sx
 		InstanceInfo.enabledExtensionCount = static_cast<uint32_t>(extensions.size());
 		InstanceInfo.ppEnabledExtensionNames = extensions.data();
 		InstanceInfo.enabledLayerCount = 0;
-		if (vkCreateInstance(&InstanceInfo, nullptr, &instance) != VK_SUCCESS)
+		if (vkCreateInstance(&InstanceInfo, nullptr, &handle) != VK_SUCCESS)
 			throw std::runtime_error("failed to create instance.");
 
 		uint32_t deviceCount = 1;
-		if (vkEnumeratePhysicalDevices(instance, &deviceCount, &physicalDevice) != VK_SUCCESS)
+		if (vkEnumeratePhysicalDevices(handle, &deviceCount, &physicalDevice) != VK_SUCCESS)
 			throw std::runtime_error("failed to enumerate devices.");
 	}
 
 	InstanceVulkan::~InstanceVulkan()
 	{
-		vkDestroyInstance(instance, nullptr);
-	}
-
-	const VkInstance& InstanceVulkan::Instance()
-	{
-		return instance;
+		vkDestroyInstance(handle, nullptr);
 	}
 
 	const VkPhysicalDevice& InstanceVulkan::PhysicalDevice()

@@ -6,55 +6,57 @@ namespace sx
 {
 	DeviceVulkan::DeviceVulkan(InstanceVulkan& instance, SurfaceVulkan& surface)
 	{
-		const char* swapChainExtension = VK_KHR_SWAPCHAIN_EXTENSION_NAME;
-		VkDeviceQueueCreateInfo queueCreateInfoVector = CreateGraphicsQueue(instance.PhysicalDevice());
-		queueFamily = queueCreateInfoVector.queueFamilyIndex;
-		VkPhysicalDeviceFeatures deviceFeatures = {};
+		queueFamilyIndex = GetGraphicsFamilyIndex(instance.PhysicalDevice());
 
+		float queuePriority = 1.0f;
+		VkDeviceQueueCreateInfo queueCreateInfo = {};
+		queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+		queueCreateInfo.queueFamilyIndex = queueFamilyIndex;
+		queueCreateInfo.queueCount = 2;
+		queueCreateInfo.pQueuePriorities = &queuePriority;
+
+		VkPhysicalDeviceFeatures deviceFeatures = {};
+		vkGetPhysicalDeviceFeatures(instance.PhysicalDevice(), &deviceFeatures);
+
+		std::vector<const char*> enableExtensions{ VK_KHR_SWAPCHAIN_EXTENSION_NAME };
+		
 		VkDeviceCreateInfo DeviceInfo = {};
 		DeviceInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
 		DeviceInfo.queueCreateInfoCount = 1;
-		DeviceInfo.pQueueCreateInfos = &queueCreateInfoVector;
-		DeviceInfo.pEnabledFeatures = &deviceFeatures;
+		DeviceInfo.pQueueCreateInfos = &queueCreateInfo;
 		DeviceInfo.enabledExtensionCount = 1;
-		DeviceInfo.ppEnabledExtensionNames = &swapChainExtension;
-		DeviceInfo.enabledLayerCount = 0;
+		DeviceInfo.ppEnabledExtensionNames = enableExtensions.data();
+		DeviceInfo.pEnabledFeatures = nullptr;
 
-		if (vkCreateDevice(instance.PhysicalDevice(), &DeviceInfo, nullptr, &device) != VK_SUCCESS || device == nullptr)
+		if (vkCreateDevice(instance.PhysicalDevice(), &DeviceInfo, nullptr, &handle) != VK_SUCCESS)
 			throw std::runtime_error("failed to find GPUs with Vulkan support!");
 
 		VkBool32 presentSupport = false;
-		vkGetPhysicalDeviceSurfaceSupportKHR(instance.PhysicalDevice(), queueFamily, surface.Surface(), &presentSupport);
+		vkGetPhysicalDeviceSurfaceSupportKHR(instance.PhysicalDevice(), queueFamilyIndex, *surface, &presentSupport);
 
 		if (!presentSupport)
 			throw std::runtime_error("deviceQueue family does not support present support");
 
-		vkGetDeviceQueue(device, queueFamily, 0, &graphicsQueue);
-		vkGetDeviceQueue(device, queueFamily, 0, &presentQueue);
-
+		vkGetDeviceQueue(handle, queueFamilyIndex, 0, &graphicsQueue);
+		vkGetDeviceQueue(handle, queueFamilyIndex, 0, &presentQueue);
 	}
 
 	DeviceVulkan::~DeviceVulkan()
 	{
-		vkDestroyDevice(device, nullptr);
+		vkDestroyDevice(handle, nullptr);
 	}
 
-	const VkDevice& DeviceVulkan::Device()
+	QueuePair DeviceVulkan::GraphicsQueue()
 	{
-		return device;
+		return { queueFamilyIndex, graphicsQueue };
 	}
 
-	uint32_t DeviceVulkan::QueueFamiliy()
+	QueuePair DeviceVulkan::PresentQueue()
 	{
-		return queueFamily;
+		return { queueFamilyIndex, presentQueue };
 	}
 
-	const std::vector<VkQueue> DeviceVulkan::Queues()
-	{
-		return { graphicsQueue, presentQueue };
-	}
-
-	VkDeviceQueueCreateInfo DeviceVulkan::CreateGraphicsQueue(const VkPhysicalDevice& device) const
+	uint32_t DeviceVulkan::GetGraphicsFamilyIndex(const VkPhysicalDevice& device) const
 	{
 		uint32_t queueFamilyCount = 0;
 		vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, nullptr);
@@ -68,13 +70,6 @@ namespace sx
 		if (graphicsQueue == queueFamilies.end())
 			throw std::runtime_error("cannot find Graphics queue family.");
 
-		float queuePriority = 1.0f;
-		VkDeviceQueueCreateInfo queueCreateInfo = {};
-		queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-		queueCreateInfo.queueFamilyIndex = static_cast<uint32_t>(std::distance(queueFamilies.begin(), graphicsQueue));
-		queueCreateInfo.queueCount = 1;
-		queueCreateInfo.pQueuePriorities = &queuePriority;
-		return queueCreateInfo;
+		return static_cast<uint32_t>(std::distance(queueFamilies.begin(), graphicsQueue));
 	}
-
 }

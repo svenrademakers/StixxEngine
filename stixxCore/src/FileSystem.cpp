@@ -3,16 +3,22 @@
 
 namespace sx
 {
-	std::vector<uint32_t> FileSystemStd::LoadFile(const std::string& fileName)
+	std::vector<char> FileSystemStd::LoadFile(const std::string& fileName)
 	{
 		std::ifstream file(fileName, std::ios::ate | std::ios::binary);
-		file.seekg(0, std::ios::end);
-		std::vector<uint32_t> data(file.tellg());
-		file.seekg(0, std::ios::beg);
 
-		data.assign((std::istreambuf_iterator<char>(file)),
-			std::istreambuf_iterator<char>());
+		if (!file.is_open()) {
+			throw std::runtime_error("failed to open file!");
+		}
 
-		return data;
+		size_t fileSize = (size_t)file.tellg();
+		std::vector<char> buffer(fileSize);
+
+		file.seekg(0);
+		file.read(buffer.data(), fileSize);
+
+		file.close();
+
+		return buffer;
 	}
 }

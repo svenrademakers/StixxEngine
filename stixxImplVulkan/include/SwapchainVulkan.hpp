@@ -5,10 +5,12 @@
 #include <vulkan\vulkan.h>
 #include "DeviceVulkan.hpp"
 #include "SurfaceVulkan.hpp"
+#include "HandleExposer.hpp"
 
 namespace sx
 {
 	class SwapchainVulkan
+		: public HandleExposer<VkSwapchainKHR>
 	{
 	public:
 		SwapchainVulkan(DeviceVulkan& device, SurfaceVulkan&  surface);
@@ -22,15 +24,13 @@ namespace sx
 		// mmhh
 		VkFormat Format();
 		VkExtent2D Extent();
-		const VkSwapchainKHR& Swapchain();
 
 	private:
 		DeviceVulkan& device;
-		VkSwapchainKHR swapChain;
 		std::vector<VkImageView> swapChainImageViews;
 		VkFormat format;
 		VkExtent2D extent;
 	};
 }
 
-#endif /* RENDERERVULKAN_HPP */
+#endif /* SWAPCHAIN_VULKAN_HPP */

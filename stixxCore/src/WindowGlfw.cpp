@@ -43,9 +43,20 @@ namespace sx
 		glfwSetKeyCallback(window, key_callback);
 	}	
 
+	WindowGlfw::~WindowGlfw()
+	{
+		glfwDestroyWindow(window);
+		glfwTerminate();
+	}
+
 	const char* WindowGlfw::Name()
 	{
 		return name;
+	}
+
+	void WindowGlfw::Poll()
+	{
+		glfwPollEvents();
 	}
 	
 	bool WindowGlfw::ShouldClose()

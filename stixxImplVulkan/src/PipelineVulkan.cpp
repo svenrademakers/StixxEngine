@@ -1,12 +1,17 @@
 #include "PipelineVulkan.hpp"
 
+namespace
+{
+}
 namespace sx
 {
-	PipelineVulkan::PipelineVulkan(DeviceVulkan& device, RenderPassVulkan& renderpass, SurfaceVulkan& surface, const std::vector<uint32_t>& vertex, const std::vector<uint32_t>& fragment)
+	PipelineVulkan::PipelineVulkan(DeviceVulkan& device, RenderPassVulkan& renderpass, SurfaceVulkan& surface, const std::vector<char>& vertex, const std::vector<char>& fragment)
 		: device(device)
 	{
 		sx::ShaderVertexVulkan vertexShader(device, vertex);
 		sx::ShaderFragmentVulkan fragmentShader(device, fragment);
+		
+		VkPipelineShaderStageCreateInfo shaderStages[] = { vertexShader.GetConfiguration(), fragmentShader.GetConfiguration() };
 
 		VkPipelineVertexInputStateCreateInfo vertexInputInfo = {};
 		vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
@@ -72,10 +77,8 @@ namespace sx
 		pipelineLayoutInfo.setLayoutCount = 0;
 		pipelineLayoutInfo.pushConstantRangeCount = 0;
 
-		if (vkCreatePipelineLayout(device.Device(), &pipelineLayoutInfo, nullptr, &pipelineLayout) != VK_SUCCESS)
+		if (vkCreatePipelineLayout(*device, &pipelineLayoutInfo, nullptr, &pipelineLayout) != VK_SUCCESS)
 			throw std::runtime_error("failed to create pipeline layout!");
-
-		VkPipelineShaderStageCreateInfo shaderStages[] = { vertexShader.GetConfiguration(), fragmentShader.GetConfiguration() };
 
 		VkGraphicsPipelineCreateInfo pipelineInfo = {};
 		pipelineInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
@@ -88,23 +91,18 @@ namespace sx
 		pipelineInfo.pMultisampleState = &multisampling;
 		pipelineInfo.pColorBlendState = &colorBlending;
 		pipelineInfo.layout = pipelineLayout;
-		pipelineInfo.renderPass = renderpass.RenderPass();
+		pipelineInfo.renderPass = *renderpass;
 		pipelineInfo.subpass = 0;
 		pipelineInfo.basePipelineHandle = VK_NULL_HANDLE;
 
-		auto result = vkCreateGraphicsPipelines(device.Device(), VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &graphicsPipeline);
+		auto result = vkCreateGraphicsPipelines(*device, VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &handle);
 		if (result != VK_SUCCESS)
 			throw std::runtime_error("failed to create graphics pipeline!");
 	}
 
 	PipelineVulkan::~PipelineVulkan()
 	{
-		vkDestroyPipeline(device.Device(), graphicsPipeline, nullptr);
-		vkDestroyPipelineLayout(device.Device(), pipelineLayout, nullptr);
-	}
-
-	const VkPipeline& PipelineVulkan::Pipeline()
-	{
-		return graphicsPipeline;
+		vkDestroyPipeline(*device, handle, nullptr);
+		vkDestroyPipelineLayout(*device, pipelineLayout, nullptr);
 	}
 }

@@ -42,37 +42,36 @@ namespace sx
 		renderPassInfo.dependencyCount = 1;
 		renderPassInfo.pDependencies = &dependency;
 
-		if (vkCreateRenderPass(device.Device(), &renderPassInfo, nullptr, &renderPass) != VK_SUCCESS)
+		if (vkCreateRenderPass(*device, &renderPassInfo, nullptr, &handle) != VK_SUCCESS)
 			throw std::runtime_error("failed to create render pass!");
 
-			frameBuffers.resize(swapchain.ImageViews().size());
+		frameBuffers.resize(swapchain.ImageViews().size());
 
-			for (size_t i = 0; i < swapchain.ImageViews().size(); i++)
-			{
+		for (size_t i = 0; i < swapchain.ImageViews().size(); i++)
+		{
 			VkImageView attachments[] = { swapchain.ImageViews()[i]};
 
 			VkFramebufferCreateInfo framebufferInfo = {};
 			framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
-			framebufferInfo.renderPass = renderPass;
+			framebufferInfo.renderPass = handle;
 			framebufferInfo.attachmentCount = 1;
 			framebufferInfo.pAttachments = attachments;
 			framebufferInfo.width = swapchain.Extent().width;
 			framebufferInfo.height = swapchain.Extent().height;
 			framebufferInfo.layers = 1;
 
-			if (vkCreateFramebuffer(device.Device(), &framebufferInfo, nullptr, &frameBuffers[i]) != VK_SUCCESS)
+			if (vkCreateFramebuffer(*device, &framebufferInfo, nullptr, &frameBuffers[i]) != VK_SUCCESS)
 				throw std::runtime_error("failed to create framebuffer!");
-			}
+		}
 	}
 
 	RenderPassVulkan::~RenderPassVulkan()
 	{
-		vkDestroyRenderPass(device.Device(), renderPass, nullptr);
-	}
+		for (size_t i = 0; i < frameBuffers.size(); i++) {
+			vkDestroyFramebuffer(*device, frameBuffers[i], nullptr);
+		}
 
-	const VkRenderPass& RenderPassVulkan::RenderPass()
-	{
-		return renderPass;
+		vkDestroyRenderPass(*device, handle, nullptr);
 	}
 
 	const std::vector<VkFramebuffer>& RenderPassVulkan::FrameBuffers()

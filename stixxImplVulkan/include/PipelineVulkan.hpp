@@ -6,21 +6,19 @@
 #include "ShaderVulkan.hpp"
 #include "RenderPassVulkan.hpp"
 #include "SurfaceVulkan.hpp"
+#include "HandleExposer.hpp"
+
 namespace sx
 {
 	class PipelineVulkan
+		: public HandleExposer<VkPipeline>
 	{
 	public:
-		PipelineVulkan(DeviceVulkan& device, RenderPassVulkan& renderpass, SurfaceVulkan& surface, const std::vector<uint32_t>& vertex, const std::vector<uint32_t>& fragment);
-		PipelineVulkan(const PipelineVulkan&) = delete;
-		PipelineVulkan& operator=(const PipelineVulkan&) = delete;
+		PipelineVulkan(DeviceVulkan& device, RenderPassVulkan& renderpass, SurfaceVulkan& surface, const std::vector<char>& vertex, const std::vector<char>& fragment);
 		virtual ~PipelineVulkan();
-
-		const VkPipeline& Pipeline();
 
 	private:
 		DeviceVulkan& device;
-		VkPipeline graphicsPipeline;
 		VkPipelineLayout pipelineLayout;
 	};
 }

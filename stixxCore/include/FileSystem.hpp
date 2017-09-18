@@ -10,14 +10,14 @@ namespace sx
 	{
 	public:
 		virtual ~FileSystem() {};
-		virtual std::vector<uint32_t> LoadFile(const std::string& fileName) = 0;
+		virtual std::vector<char> LoadFile(const std::string& fileName) = 0;
 	};
 
 	class FileSystemStd
 		: public  FileSystem
 	{
 	public:
-		virtual std::vector<uint32_t> LoadFile(const std::string& fileName) override;
+		virtual std::vector<char> LoadFile(const std::string& fileName) override;
 	};
 }
 

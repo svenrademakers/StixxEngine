@@ -8,7 +8,9 @@
 namespace
 {
 	VkCommandPool commandPool;
-	VkSemaphore vkSemaphore;
+	VkSemaphore imageAvailableSemaphore;
+	VkSemaphore renderFinishedSemaphore;
+
 	std::vector<VkCommandBuffer> commandBuffers;
 }
 
@@ -21,9 +23,9 @@ namespace sx
 	{
 		VkCommandPoolCreateInfo poolInfo = {};
 		poolInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
-		poolInfo.queueFamilyIndex = device.QueueFamiliy();
+		poolInfo.queueFamilyIndex = device.GraphicsQueue().first;
 
-		if (vkCreateCommandPool(device.Device(), &poolInfo, nullptr, &commandPool) != VK_SUCCESS) 
+		if (vkCreateCommandPool(*device, &poolInfo, nullptr, &commandPool) != VK_SUCCESS) 
 			throw std::runtime_error("failed to create command pool!");
 
 		commandBuffers.resize(swapchain.ImageViews().size());
@@ -34,7 +36,7 @@ namespace sx
 		allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
 		allocInfo.commandBufferCount = (uint32_t)commandBuffers.size();
 
-		if (vkAllocateCommandBuffers(device.Device(), &allocInfo, commandBuffers.data()) != VK_SUCCESS)
+		if (vkAllocateCommandBuffers(*device, &allocInfo, commandBuffers.data()) != VK_SUCCESS)
 			throw std::runtime_error("failed to allocate command buffers!");
 
 		for (size_t i = 0; i < commandBuffers.size(); i++) 
@@ -47,7 +49,7 @@ namespace sx
 
 			VkRenderPassBeginInfo renderPassInfo = {};
 			renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-			renderPassInfo.renderPass = renderPass.RenderPass();
+			renderPassInfo.renderPass = *renderPass;
 			renderPassInfo.framebuffer = renderPass.FrameBuffers()[i];
 			renderPassInfo.renderArea.offset = { 0, 0 };
 			renderPassInfo.renderArea.extent = swapchain.Extent();
@@ -57,7 +59,7 @@ namespace sx
 			renderPassInfo.pClearValues = &clearColor;
 
 			vkCmdBeginRenderPass(commandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
-			vkCmdBindPipeline(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.Pipeline());
+			vkCmdBindPipeline(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, *pipeline);
 			vkCmdDraw(commandBuffers[i], 3, 1, 0, 0);
 			vkCmdEndRenderPass(commandBuffers[i]);
 			if (vkEndCommandBuffer(commandBuffers[i]) != VK_SUCCESS)
@@ -67,62 +69,48 @@ namespace sx
 		VkSemaphoreCreateInfo semaphoreInfo = {};
 		semaphoreInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
 
-		if (vkCreateSemaphore(device.Device(), &semaphoreInfo, nullptr, &vkSemaphore) != VK_SUCCESS)
+		if (vkCreateSemaphore(*device, &semaphoreInfo, nullptr, &imageAvailableSemaphore) != VK_SUCCESS ||
+			vkCreateSemaphore(*device, &semaphoreInfo, nullptr, &renderFinishedSemaphore) != VK_SUCCESS)
 			throw std::runtime_error("failed to create semaphores!");
 	}
 
 	RendererVulkan::~RendererVulkan()
 	{
-		//vkDestroyCommandPool(device, commandPool, nullptr);
 
-		//for (size_t i = 0; i < swapChainFramebuffers.size(); i++) 
-		//{
-		//	vkDestroyFramebuffer(device, swapChainFramebuffers[i], nullptr);
-		//}
-
-		//for (size_t i = 0; i < swapChainImageViews.size(); i++) 
-		//{
-		//	vkDestroyImageView(device, swapChainImageViews[i], nullptr);
-		//}
-
-		//vkDestroySwapchainKHR(device, swapChain, nullptr);
-		//vkDestroyDevice(device, nullptr);
-		//vkDestroySurfaceKHR(instance, surface, nullptr);
 	}
 	
 
 
 	void RendererVulkan::Draw()
 	{
-		uint32_t imageIndex;
-		vkAcquireNextImageKHR(device.Device(), swapchain.Swapchain(), std::numeric_limits<uint64_t>::max(), vkSemaphore, VK_NULL_HANDLE, &imageIndex);
+			uint32_t imageIndex;
+			vkAcquireNextImageKHR(*device, *swapchain, std::numeric_limits<uint64_t>::max(), imageAvailableSemaphore, VK_NULL_HANDLE, &imageIndex);
 
-		VkSubmitInfo submitInfo = {};
-		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+			VkSubmitInfo submitInfo = {};
+			submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 
-		VkPipelineStageFlags waitStages = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
-		submitInfo.waitSemaphoreCount = 1;
-		submitInfo.pWaitSemaphores = &vkSemaphore;
-		submitInfo.pWaitDstStageMask = &waitStages;
-		submitInfo.commandBufferCount = 1;
-		submitInfo.pCommandBuffers = &commandBuffers[imageIndex];
-		submitInfo.signalSemaphoreCount = 1;
-		submitInfo.pSignalSemaphores = &vkSemaphore;
+			VkPipelineStageFlags waitStages = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+			submitInfo.waitSemaphoreCount = 1;
+			submitInfo.pWaitSemaphores = &imageAvailableSemaphore;
+			submitInfo.pWaitDstStageMask = &waitStages;
+			submitInfo.commandBufferCount = 1;
+			submitInfo.pCommandBuffers = &commandBuffers[imageIndex];
+			submitInfo.signalSemaphoreCount = 1;
+			submitInfo.pSignalSemaphores = &renderFinishedSemaphore;
 
-	//	if (vkQueueSubmit(device.Queue(), 1, &submitInfo, VK_NULL_HANDLE) != VK_SUCCESS)
-			throw std::runtime_error("failed to submit draw command buffer!");
+			if (vkQueueSubmit(device.GraphicsQueue().second, 1, &submitInfo, VK_NULL_HANDLE) != VK_SUCCESS)
+				throw std::runtime_error("failed to submit draw command buffer!");
 
-		VkPresentInfoKHR presentInfo = {};
-		presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
-		presentInfo.waitSemaphoreCount = 1;
-		presentInfo.pWaitSemaphores = &vkSemaphore;
-		presentInfo.swapchainCount = 1;
-		presentInfo.pSwapchains = &swapchain.Swapchain();
-		presentInfo.pImageIndices = &imageIndex;
+			VkPresentInfoKHR presentInfo = {};
+			presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
+			presentInfo.waitSemaphoreCount = 1;
+			presentInfo.pWaitSemaphores = &renderFinishedSemaphore;
+			presentInfo.swapchainCount = 1;
+			presentInfo.pSwapchains = &*swapchain;
+			presentInfo.pImageIndices = &imageIndex;
 
-	//	vkQueuePresentKHR(device.Queue(), &presentInfo);
-     // vkQueueWaitIdle(device.Queue());
-		vkDeviceWaitIdle(device.Device());
+			vkQueuePresentKHR(device.PresentQueue().second, &presentInfo);
+			vkQueueWaitIdle(device.PresentQueue().second);
 	}
 }
 

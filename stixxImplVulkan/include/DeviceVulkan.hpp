@@ -3,33 +3,30 @@
 
 #include "InstanceVulkan.hpp"
 #include "SurfaceVulkan.hpp"
+#include "HandleExposer.hpp"
 
 namespace sx
 {
+	typedef std::pair<uint32_t, const VkQueue&> QueuePair;
+
 	class DeviceVulkan
+		: public HandleExposer<VkDevice>
 	{
 	public:
 		DeviceVulkan(InstanceVulkan& instance, SurfaceVulkan& surface);
-		DeviceVulkan(const DeviceVulkan&) = delete;
-		DeviceVulkan& operator = (const DeviceVulkan&) = delete;
 		virtual ~DeviceVulkan();
 
-		const VkDevice& Device();
-		uint32_t QueueFamiliy();
-
-		const std::vector<VkQueue> Queues();
+		QueuePair GraphicsQueue();
+		QueuePair PresentQueue();
 
 	private:
-		VkDeviceQueueCreateInfo CreateGraphicsQueue(const VkPhysicalDevice& device) const;
-
+		uint32_t GetGraphicsFamilyIndex(const VkPhysicalDevice& device) const;
 
 	private:
-		VkDevice device;
 		VkQueue graphicsQueue;
 		VkQueue presentQueue;
 
-		uint32_t queueFamily;
-
+		uint32_t queueFamilyIndex;
 	};
 }
 
