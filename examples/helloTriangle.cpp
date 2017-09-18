@@ -23,11 +23,12 @@ int main(void)
 
 	static sx::SwapchainVulkan swapchain(device, surface);
 	static sx::RenderPassVulkan renderpass(device, swapchain);
+	static sx::PipelineVulkan pipeline(device, renderpass, surface, fileSystem.LoadFile(R"(C:\Users\Sven\Documents\build_vs\stixxShaders\vert.spv)"), fileSystem.LoadFile(R"(C:\Users\Sven\Documents\build_vs\stixxShaders\frag.spv)"));
 
-	static sx::PipelineVulkan pipeline(device, renderpass, surface, fileSystem.LoadFile("vertex.spv"), fileSystem.LoadFile("fragment.spv"));
 	static sx::RendererVulkan renderer(device, pipeline, renderpass, swapchain);
 
-	//renderer.Draw();
+	while(!window.ShouldClose())
+		renderer.Draw();
 
 	return 0;
 }

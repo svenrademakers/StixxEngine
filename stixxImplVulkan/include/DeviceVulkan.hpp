@@ -17,7 +17,7 @@ namespace sx
 		const VkDevice& Device();
 		uint32_t QueueFamiliy();
 
-		const VkQueue& Queue();
+		const std::vector<VkQueue> Queues();
 
 	private:
 		VkDeviceQueueCreateInfo CreateGraphicsQueue(const VkPhysicalDevice& device) const;
@@ -26,6 +26,8 @@ namespace sx
 	private:
 		VkDevice device;
 		VkQueue graphicsQueue;
+		VkQueue presentQueue;
+
 		uint32_t queueFamily;
 
 	};

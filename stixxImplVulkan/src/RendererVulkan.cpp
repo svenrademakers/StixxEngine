@@ -109,7 +109,7 @@ namespace sx
 		submitInfo.signalSemaphoreCount = 1;
 		submitInfo.pSignalSemaphores = &vkSemaphore;
 
-		if (vkQueueSubmit(device.Queue(), 1, &submitInfo, VK_NULL_HANDLE) != VK_SUCCESS)
+	//	if (vkQueueSubmit(device.Queue(), 1, &submitInfo, VK_NULL_HANDLE) != VK_SUCCESS)
 			throw std::runtime_error("failed to submit draw command buffer!");
 
 		VkPresentInfoKHR presentInfo = {};
@@ -120,8 +120,8 @@ namespace sx
 		presentInfo.pSwapchains = &swapchain.Swapchain();
 		presentInfo.pImageIndices = &imageIndex;
 
-		vkQueuePresentKHR(device.Queue(), &presentInfo);
-		vkQueueWaitIdle(device.Queue());
+	//	vkQueuePresentKHR(device.Queue(), &presentInfo);
+     // vkQueueWaitIdle(device.Queue());
 		vkDeviceWaitIdle(device.Device());
 	}
 }

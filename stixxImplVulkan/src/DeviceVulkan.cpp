@@ -9,14 +9,17 @@ namespace sx
 		const char* swapChainExtension = VK_KHR_SWAPCHAIN_EXTENSION_NAME;
 		VkDeviceQueueCreateInfo queueCreateInfoVector = CreateGraphicsQueue(instance.PhysicalDevice());
 		queueFamily = queueCreateInfoVector.queueFamilyIndex;
+		VkPhysicalDeviceFeatures deviceFeatures = {};
 
 		VkDeviceCreateInfo DeviceInfo = {};
 		DeviceInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
 		DeviceInfo.queueCreateInfoCount = 1;
 		DeviceInfo.pQueueCreateInfos = &queueCreateInfoVector;
-		DeviceInfo.pEnabledFeatures = nullptr;
+		DeviceInfo.pEnabledFeatures = &deviceFeatures;
 		DeviceInfo.enabledExtensionCount = 1;
 		DeviceInfo.ppEnabledExtensionNames = &swapChainExtension;
+		DeviceInfo.enabledLayerCount = 0;
+
 		if (vkCreateDevice(instance.PhysicalDevice(), &DeviceInfo, nullptr, &device) != VK_SUCCESS || device == nullptr)
 			throw std::runtime_error("failed to find GPUs with Vulkan support!");
 
@@ -27,6 +30,8 @@ namespace sx
 			throw std::runtime_error("deviceQueue family does not support present support");
 
 		vkGetDeviceQueue(device, queueFamily, 0, &graphicsQueue);
+		vkGetDeviceQueue(device, queueFamily, 0, &presentQueue);
+
 	}
 
 	DeviceVulkan::~DeviceVulkan()
@@ -44,9 +49,9 @@ namespace sx
 		return queueFamily;
 	}
 
-	const VkQueue& DeviceVulkan::Queue()
+	const std::vector<VkQueue> DeviceVulkan::Queues()
 	{
-		return graphicsQueue;
+		return { graphicsQueue, presentQueue };
 	}
 
 	VkDeviceQueueCreateInfo DeviceVulkan::CreateGraphicsQueue(const VkPhysicalDevice& device) const

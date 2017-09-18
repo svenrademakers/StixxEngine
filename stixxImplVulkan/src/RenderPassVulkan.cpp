@@ -45,8 +45,6 @@ namespace sx
 		if (vkCreateRenderPass(device.Device(), &renderPassInfo, nullptr, &renderPass) != VK_SUCCESS)
 			throw std::runtime_error("failed to create render pass!");
 
-			std::vector<VkFramebuffer> swapChainFramebuffers;
-
 			frameBuffers.resize(swapchain.ImageViews().size());
 
 			for (size_t i = 0; i < swapchain.ImageViews().size(); i++)
@@ -62,7 +60,7 @@ namespace sx
 			framebufferInfo.height = swapchain.Extent().height;
 			framebufferInfo.layers = 1;
 
-			if (vkCreateFramebuffer(device.Device(), &framebufferInfo, nullptr, &swapChainFramebuffers[i]) != VK_SUCCESS)
+			if (vkCreateFramebuffer(device.Device(), &framebufferInfo, nullptr, &frameBuffers[i]) != VK_SUCCESS)
 				throw std::runtime_error("failed to create framebuffer!");
 			}
 	}
