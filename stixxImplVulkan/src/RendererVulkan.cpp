@@ -1,43 +1,57 @@
 #include <algorithm>
 #include "RendererVulkan.hpp"
 #include "PipelineVulkan.hpp"
+#include <vulkan\vulkan.hpp>
 
 #include <vulkan\vulkan.h>
 #include <GLFW/glfw3.h>
 
 namespace
 {
-	VkCommandPool commandPool;
+	vk::CommandPool commandPool;
+	vk::Queue graphicsQueue;
+
 	VkSemaphore imageAvailableSemaphore;
 	VkSemaphore renderFinishedSemaphore;
+	std::vector<vk::CommandBuffer> commandBuffers;
 
-	std::vector<VkCommandBuffer> commandBuffers;
+	uint32_t QueueFamily(vk::PhysicalDevice& device, vk::QueueFlags type)
+	{
+		uint32_t queueFamilyCount = 0;
+		auto devices = device.getQueueFamilyProperties();
+
+		auto Queue = std::find_if(devices.begin(), devices.end(), [type](const vk::QueueFamilyProperties& properties) {
+			return (properties.queueCount > 0) && (type & properties.queueFlags);
+		});
+
+		if (Queue == devices.end())
+			throw std::runtime_error("cannot find queue family");
+
+		return  static_cast<uint32_t>(std::distance(devices.begin(), Queue));
+	}
 }
 
 namespace sx
 {
-	RendererVulkan::RendererVulkan(DeviceVulkan& device, PipelineVulkan& pipeline, RenderPassVulkan& renderPass, SwapchainVulkan& swapchain)
-		: device(device)
+	RendererVulkan::RendererVulkan(DeviceVulkan& adevice, PipelineVulkan& pipeline, RenderPassVulkan& renderPass, SwapchainVulkan& swapchain, vk::PhysicalDevice& physicalDevice)
+		: device(*adevice)
 		, pipeline(pipeline)
 		, swapchain(swapchain)
+		, graphicsFamilyIndex(QueueFamily(physicalDevice, vk::QueueFlagBits::eGraphics))
 	{
-		VkCommandPoolCreateInfo poolInfo = {};
-		poolInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
-		poolInfo.queueFamilyIndex = device.GraphicsQueue().first;
+		commandPool = device.createCommandPool(vk::CommandPoolCreateInfo(
+			vk::CommandPoolCreateFlags(vk::CommandPoolCreateFlagBits::eResetCommandBuffer),	
+			graphicsFamilyIndex), nullptr);
+		
+		commandBuffers = device.allocateCommandBuffers(
+			vk::CommandBufferAllocateInfo(
+				commandPool,
+				vk::CommandBufferLevel::ePrimary,
+				swapchain.ImageViews().size()
+			)
+		);
 
-		if (vkCreateCommandPool(*device, &poolInfo, nullptr, &commandPool) != VK_SUCCESS) 
-			throw std::runtime_error("failed to create command pool!");
-
-		commandBuffers.resize(swapchain.ImageViews().size());
-
-		VkCommandBufferAllocateInfo allocInfo = {};
-		allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-		allocInfo.commandPool = commandPool;
-		allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-		allocInfo.commandBufferCount = (uint32_t)commandBuffers.size();
-
-		if (vkAllocateCommandBuffers(*device, &allocInfo, commandBuffers.data()) != VK_SUCCESS)
-			throw std::runtime_error("failed to allocate command buffers!");
+		graphicsQueue = device.getQueue(graphicsFamilyIndex, 0);
 
 		for (size_t i = 0; i < commandBuffers.size(); i++) 
 		{
@@ -69,16 +83,16 @@ namespace sx
 		VkSemaphoreCreateInfo semaphoreInfo = {};
 		semaphoreInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
 
-		if (vkCreateSemaphore(*device, &semaphoreInfo, nullptr, &imageAvailableSemaphore) != VK_SUCCESS ||
-			vkCreateSemaphore(*device, &semaphoreInfo, nullptr, &renderFinishedSemaphore) != VK_SUCCESS)
+		if (vkCreateSemaphore(device, &semaphoreInfo, nullptr, &imageAvailableSemaphore) != VK_SUCCESS ||
+			vkCreateSemaphore(device, &semaphoreInfo, nullptr, &renderFinishedSemaphore) != VK_SUCCESS)
 			throw std::runtime_error("failed to create semaphores!");
 	}
 
 	RendererVulkan::~RendererVulkan()
 	{
-		vkDestroySemaphore(*device, renderFinishedSemaphore, nullptr);
-		vkDestroySemaphore(*device, imageAvailableSemaphore, nullptr);
-		vkDestroyCommandPool(*device, commandPool, nullptr);
+		vkDestroySemaphore(device, renderFinishedSemaphore, nullptr);
+		vkDestroySemaphore(device, imageAvailableSemaphore, nullptr);
+		vkDestroyCommandPool(device, commandPool, nullptr);
 	}
 	
 
@@ -86,21 +100,22 @@ namespace sx
 	void RendererVulkan::Draw()
 	{
 			uint32_t imageIndex;
-			vkAcquireNextImageKHR(*device, *swapchain, std::numeric_limits<uint64_t>::max(), imageAvailableSemaphore, VK_NULL_HANDLE, &imageIndex);
+			vkAcquireNextImageKHR(device, *swapchain, std::numeric_limits<uint64_t>::max(), imageAvailableSemaphore, VK_NULL_HANDLE, &imageIndex);
 
 			VkSubmitInfo submitInfo = {};
 			submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 
+			VkCommandBuffer cmd = commandBuffers[imageIndex];
 			VkPipelineStageFlags waitStages = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
 			submitInfo.waitSemaphoreCount = 1;
 			submitInfo.pWaitSemaphores = &imageAvailableSemaphore;
 			submitInfo.pWaitDstStageMask = &waitStages;
 			submitInfo.commandBufferCount = 1;
-			submitInfo.pCommandBuffers = &commandBuffers[imageIndex];
+			submitInfo.pCommandBuffers = &cmd;
 			submitInfo.signalSemaphoreCount = 1;
 			submitInfo.pSignalSemaphores = &renderFinishedSemaphore;
 
-			if (vkQueueSubmit(device.GraphicsQueue().second, 1, &submitInfo, VK_NULL_HANDLE) != VK_SUCCESS)
+			if (vkQueueSubmit(graphicsQueue, 1, &submitInfo, VK_NULL_HANDLE) != VK_SUCCESS)
 				throw std::runtime_error("failed to submit draw command buffer!");
 
 			VkPresentInfoKHR presentInfo = {};
@@ -111,8 +126,8 @@ namespace sx
 			presentInfo.pSwapchains = &*swapchain;
 			presentInfo.pImageIndices = &imageIndex;
 
-			vkQueuePresentKHR(device.PresentQueue().second, &presentInfo);
-			vkQueueWaitIdle(device.PresentQueue().second);
+			vkQueuePresentKHR(graphicsQueue, &presentInfo);
+			vkQueueWaitIdle(graphicsQueue);
 	}
 }
 

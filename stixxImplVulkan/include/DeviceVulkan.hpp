@@ -16,9 +16,6 @@ namespace sx
 		DeviceVulkan(InstanceVulkan& instance, SurfaceVulkan& surface);
 		virtual ~DeviceVulkan();
 
-		QueuePair GraphicsQueue();
-		QueuePair PresentQueue();
-
 	private:
 		uint32_t GetGraphicsFamilyIndex(const VkPhysicalDevice& device) const;
 

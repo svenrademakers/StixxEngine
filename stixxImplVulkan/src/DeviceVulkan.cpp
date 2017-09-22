@@ -36,24 +36,11 @@ namespace sx
 
 		if (!presentSupport)
 			throw std::runtime_error("deviceQueue family does not support present support");
-
-		vkGetDeviceQueue(handle, queueFamilyIndex, 0, &graphicsQueue);
-		vkGetDeviceQueue(handle, queueFamilyIndex, 0, &presentQueue);
 	}
 
 	DeviceVulkan::~DeviceVulkan()
 	{
 		vkDestroyDevice(handle, nullptr);
-	}
-
-	QueuePair DeviceVulkan::GraphicsQueue()
-	{
-		return { queueFamilyIndex, graphicsQueue };
-	}
-
-	QueuePair DeviceVulkan::PresentQueue()
-	{
-		return { queueFamilyIndex, presentQueue };
 	}
 
 	uint32_t DeviceVulkan::GetGraphicsFamilyIndex(const VkPhysicalDevice& device) const

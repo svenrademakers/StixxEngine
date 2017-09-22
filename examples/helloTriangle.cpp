@@ -25,7 +25,8 @@ int main(void)
 	static sx::RenderPassVulkan renderpass(device, swapchain);
 	static sx::PipelineVulkan pipeline(device, renderpass, surface, fileSystem.LoadFile(R"(C:\Users\Sven\Documents\build_vs\stixxShaders\vert.spv)"), fileSystem.LoadFile(R"(C:\Users\Sven\Documents\build_vs\stixxShaders\frag.spv)"));
 
-	static sx::RendererVulkan renderer(device, pipeline, renderpass, swapchain);
+	vk::PhysicalDevice pdev = const_cast<VkPhysicalDevice>(instance.PhysicalDevice());
+	static sx::RendererVulkan renderer(device, pipeline, renderpass, swapchain, pdev);
 
 	while (!window.ShouldClose())
 	{
