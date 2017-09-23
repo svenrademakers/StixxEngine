@@ -1,7 +1,6 @@
 #ifndef PIPELINE_VULKAN_HPP
 #define PIPELINE_VULKAN_HPP
 
-#include <vulkan\vulkan.hpp>
 #include "DeviceVulkan.hpp"
 #include "ShaderVulkan.hpp"
 #include "RenderPassVulkan.hpp"

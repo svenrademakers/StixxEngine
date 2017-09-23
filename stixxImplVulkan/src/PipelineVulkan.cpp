@@ -1,8 +1,7 @@
 #include "PipelineVulkan.hpp"
+#include <stdexcept>
 
-namespace
-{
-}
+
 namespace sx
 {
 	PipelineVulkan::PipelineVulkan(DeviceVulkan& device, RenderPassVulkan& renderpass, SurfaceVulkan& surface, const std::vector<char>& vertex, const std::vector<char>& fragment)

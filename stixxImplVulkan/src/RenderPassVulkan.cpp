@@ -1,5 +1,6 @@
 #include "RenderPassVulkan.hpp"
 #include "SurfaceVulkan.hpp"
+#include <stdexcept>
 
 namespace sx
 {

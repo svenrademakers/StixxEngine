@@ -1,15 +1,14 @@
 file(GLOB_RECURSE sources src/*.cpp)
 file(GLOB_RECURSE headers include/*.hpp)
-
+set(CMAKE_CXX_STANDARD 14)
 add_library(StixxImplVulkan
 	${sources}
 	${headers}
 	${shaders}
 ) 
 
-set(VULKAN_ROOT "C:/VulkanSDK/1.0.57.0")
-set(VULKAN_INCL ${VULKAN_ROOT}/Include)
-set(VULKAN_LIBS ${VULKAN_ROOT}/Lib/vulkan-1.Lib)
+set(VULKAN_INCL $ENV{VULKAN_SDK}/include)
+file(GLOB_RECURSE VULKAN_LIBS $ENV{VULKAN_SDK}/lib/*)
 
 target_include_directories(StixxImplVulkan
 	PUBLIC
@@ -20,7 +19,7 @@ target_include_directories(StixxImplVulkan
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>)
 
 target_link_libraries(StixxImplVulkan StixxCore ${VULKAN_LIBS})
-
+target_compile_features(StixxImplVulkan PUBLIC cxx_override cxx_inheriting_constructors)
 install(DIRECTORY include DESTINATION include/stixx)
 
 install(TARGETS StixxImplVulkan

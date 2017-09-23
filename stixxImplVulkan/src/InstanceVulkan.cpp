@@ -1,3 +1,4 @@
+#include  <stdexcept>
 #include "InstanceVulkan.hpp"
 
 namespace sx

@@ -1,10 +1,9 @@
 #ifndef RENDERPASS_VULKAN_HPP
 #define RENDERPASS_VULKAN_HPP
 
-#include <vulkan\vulkan.hpp>
 #include "DeviceVulkan.hpp"
 #include "SurfaceVulkan.hpp"
-#include "SwapChainVulkan.hpp"
+#include "SwapchainVulkan.hpp"
 #include "HandleExposer.hpp"
 
 namespace sx

@@ -1,15 +1,9 @@
-if (WIN32)
-	set(ASSIMP_INCLUDE_DIRS C:/Program\ Files/Assimp/include)
-	set(ASSIMP_LIBRARIES C:/Program\ Files/assimp/lib/x64/assimp.lib)
-else()
-	find_package(assimp REQUIRED)
-endif()
+find_package(assimp REQUIRED)
+#find_package(glm REQUIRED)
 
-set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
-set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
-set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 add_subdirectory(external/glfw)
-add_subdirectory(external/glm)
+#add_subdirectory(external/glm)
+#find_package(glfw3 REQUIRED)
 
 file(GLOB_RECURSE sources src/*.cpp)
 file(GLOB_RECURSE headers include/*.hpp)
@@ -29,7 +23,7 @@ target_include_directories(StixxCore
 		$<BUILD_INTERFACE:${ASSIMP_INCLUDE_DIRS}>)
 
 target_compile_features(StixxCore PUBLIC cxx_override cxx_inheriting_constructors)
-target_link_libraries(StixxCore glm glfw ${ASSIMP_LIBRARIES})
+target_link_libraries(StixxCore glfw ${ASSIMP_LIBRARIES})
 
 install(DIRECTORY include interfaces DESTINATION include)
 

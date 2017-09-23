@@ -2,7 +2,7 @@
 #define SHADER_VULKAN_HPP
 
 #include <vector>
-#include <vulkan\vulkan.hpp>
+
 #include "DeviceVulkan.hpp"
 #include "HandleExposer.hpp"
 

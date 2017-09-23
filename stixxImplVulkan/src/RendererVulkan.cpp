@@ -1,21 +1,20 @@
 #include <algorithm>
 #include "RendererVulkan.hpp"
 #include "PipelineVulkan.hpp"
-#include <vulkan\vulkan.hpp>
-
-#include <vulkan\vulkan.h>
+#include <vulkan/vulkan.hpp>
 #include <GLFW/glfw3.h>
 
 namespace
 {
 	vk::CommandPool commandPool;
 	vk::Queue graphicsQueue;
+	vk::Device device;
 
 	VkSemaphore imageAvailableSemaphore;
 	VkSemaphore renderFinishedSemaphore;
 	std::vector<vk::CommandBuffer> commandBuffers;
 
-	uint32_t QueueFamily(vk::PhysicalDevice& device, vk::QueueFlags type)
+	uint32_t QueueFamily(vk::PhysicalDevice device, vk::QueueFlags type)
 	{
 		uint32_t queueFamilyCount = 0;
 		auto devices = device.getQueueFamilyProperties();
@@ -33,12 +32,12 @@ namespace
 
 namespace sx
 {
-	RendererVulkan::RendererVulkan(DeviceVulkan& adevice, PipelineVulkan& pipeline, RenderPassVulkan& renderPass, SwapchainVulkan& swapchain, vk::PhysicalDevice& physicalDevice)
-		: device(*adevice)
-		, pipeline(pipeline)
+	RendererVulkan::RendererVulkan(DeviceVulkan& adevice, PipelineVulkan& pipeline, RenderPassVulkan& renderPass, SwapchainVulkan& swapchain, const VkPhysicalDevice& physicalDevice)
+		: pipeline(pipeline)
 		, swapchain(swapchain)
 		, graphicsFamilyIndex(QueueFamily(physicalDevice, vk::QueueFlagBits::eGraphics))
 	{
+		device = *adevice;
 		commandPool = device.createCommandPool(vk::CommandPoolCreateInfo(
 			vk::CommandPoolCreateFlags(vk::CommandPoolCreateFlagBits::eResetCommandBuffer),	
 			graphicsFamilyIndex), nullptr);

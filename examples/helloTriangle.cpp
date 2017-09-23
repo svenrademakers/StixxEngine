@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
-
 #include "InstanceVulkan.hpp"
 #include "WindowGlfw.hpp"
 #include "SurfaceVulkan.hpp"
@@ -25,13 +24,12 @@ int main(void)
 	static sx::RenderPassVulkan renderpass(device, swapchain);
 	static sx::PipelineVulkan pipeline(device, renderpass, surface, fileSystem.LoadFile(R"(C:\Users\Sven\Documents\build_vs\stixxShaders\vert.spv)"), fileSystem.LoadFile(R"(C:\Users\Sven\Documents\build_vs\stixxShaders\frag.spv)"));
 
-	vk::PhysicalDevice pdev = const_cast<VkPhysicalDevice>(instance.PhysicalDevice());
-	static sx::RendererVulkan renderer(device, pipeline, renderpass, swapchain, pdev);
+	static sx::RendererVulkan renderer(device, pipeline, renderpass, swapchain, instance.PhysicalDevice());
 
 	while (!window.ShouldClose())
 	{
 		window.Poll();
-		renderer.Draw();
+//		renderer.Draw();
 	}
 
 	vkDeviceWaitIdle(*device);

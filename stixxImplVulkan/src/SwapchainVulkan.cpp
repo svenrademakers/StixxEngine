@@ -1,4 +1,5 @@
 #include "SwapchainVulkan.hpp"
+#include <stdexcept>
 
 namespace sx
 {

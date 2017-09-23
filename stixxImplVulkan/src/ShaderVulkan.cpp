@@ -1,4 +1,6 @@
 #include "ShaderVulkan.hpp"
+#include <stdexcept>
+
 namespace sx
 {
 	ShaderFragmentVulkan::ShaderFragmentVulkan(DeviceVulkan& device, const std::vector<char>& data)

@@ -1,5 +1,6 @@
 #include "SurfaceVulkan.hpp"
 #include <algorithm>
+#include <stdexcept>
 
 namespace sx
 {
