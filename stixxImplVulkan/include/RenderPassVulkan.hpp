@@ -12,13 +12,14 @@ namespace sx
 		: public HandleExposer<VkRenderPass>
 	{
 	public:
-		RenderPassVulkan(DeviceVulkan& device, SwapchainVulkan& swapchain);
+		RenderPassVulkan() = default;
 		virtual ~RenderPassVulkan();
 
+		void Init(vk::Device& device, SwapchainVulkan& swapchain);
 		const std::vector<VkFramebuffer>& FrameBuffers();
 
 	private:
-		DeviceVulkan& device;
+		VkDevice device;
 		std::vector<VkFramebuffer> frameBuffers;
 	};
 

@@ -27,7 +27,10 @@ namespace sx
 		{
 			std::runtime_error("glfwInit returned false");
 		}
+		if (!glfwVulkanSupported()) {
+			std::runtime_error("GAAY");
 
+		}
 		glfwSetErrorCallback(error_callback);
 		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);

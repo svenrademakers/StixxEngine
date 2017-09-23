@@ -12,13 +12,13 @@ namespace sx
 		: HandleExposer<VkShaderModule>
 	{
 	public:
-		ShaderVulkan(DeviceVulkan& device, VkShaderStageFlagBits shaderStageBits, const std::vector<char>& data);
+		ShaderVulkan(vk::Device& device, VkShaderStageFlagBits shaderStageBits, const std::vector<uint32_t>& data);
 		virtual ~ShaderVulkan();
 
 		VkPipelineShaderStageCreateInfo GetConfiguration();
 
 	private:
-		DeviceVulkan& device;
+		VkDevice device;
 		VkShaderStageFlagBits shaderStageFlagBits;
 		VkShaderModuleCreateInfo shaderModuleCreateInfo;
 	};
@@ -27,14 +27,14 @@ namespace sx
 		: public ShaderVulkan
 	{
 	public:
-		ShaderVertexVulkan(DeviceVulkan& device, const std::vector<char>& data);
+		ShaderVertexVulkan(vk::Device& device, const std::vector<uint32_t>& data);
 	};
 
 	class ShaderFragmentVulkan
 		: public ShaderVulkan
 	{
 	public:
-		ShaderFragmentVulkan(DeviceVulkan& device, const std::vector<char>& data);
+		ShaderFragmentVulkan(vk::Device& device, const std::vector<uint32_t>& data);
 	};
 
 }

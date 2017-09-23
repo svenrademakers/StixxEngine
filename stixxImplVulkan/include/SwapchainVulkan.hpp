@@ -13,8 +13,10 @@ namespace sx
 		: public HandleExposer<VkSwapchainKHR>
 	{
 	public:
-		SwapchainVulkan(DeviceVulkan& device, SurfaceVulkan&  surface);
+		SwapchainVulkan() = default;
 		virtual ~SwapchainVulkan();
+
+		void Init(vk::Device& device, SurfaceVulkan&  surface);
 
 	public:
 		std::vector<VkImageView>& ImageViews();
@@ -24,11 +26,12 @@ namespace sx
 		VkExtent2D Extent();
 
 	private:
-		DeviceVulkan& device;
 		std::vector<VkImageView> swapChainImageViews;
 		VkFormat format;
 		VkExtent2D extent;
+		VkDevice device;
 	};
 }
 
 #endif /* SWAPCHAIN_VULKAN_HPP */
+

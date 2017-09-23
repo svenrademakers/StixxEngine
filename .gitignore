@@ -1,2 +1,4 @@
 
 buildgcc/
+
+cmake-build-debug/

@@ -3,9 +3,18 @@
 
 namespace sx
 {
-	SwapchainVulkan::SwapchainVulkan(DeviceVulkan& device, SurfaceVulkan& surface)
-		: device(device)
+	SwapchainVulkan::~SwapchainVulkan()
 	{
+		for (size_t i = 0; i < swapChainImageViews.size(); i++) {
+			vkDestroyImageView(device, swapChainImageViews[i], nullptr);
+		}
+
+		vkDestroySwapchainKHR(device, handle, nullptr);
+	}
+
+	void SwapchainVulkan::Init(vk::Device& device, SurfaceVulkan&  surface)
+	{
+        this->device = device;
 		VkSwapchainCreateInfoKHR SwapchainInfo = {};
 		SwapchainInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
 		SwapchainInfo.surface = *surface;
@@ -22,14 +31,15 @@ namespace sx
 		SwapchainInfo.clipped = VK_TRUE;
 		SwapchainInfo.oldSwapchain = VK_NULL_HANDLE;
 
-		if (vkCreateSwapchainKHR(*device, &SwapchainInfo, nullptr, &handle) != VK_SUCCESS)
+
+		if (vkCreateSwapchainKHR(device, &SwapchainInfo, nullptr, &handle) != VK_SUCCESS)
 			throw std::runtime_error("failed to create swap chain!");
 
 		uint32_t imageCount;
 		std::vector<VkImage> swapChainImages;
-		vkGetSwapchainImagesKHR(*device, handle, &imageCount, nullptr);
+		vkGetSwapchainImagesKHR(device, handle, &imageCount, nullptr);
 		swapChainImages.resize(imageCount);
-		vkGetSwapchainImagesKHR(*device, handle, &imageCount, swapChainImages.data());
+		vkGetSwapchainImagesKHR(device, handle, &imageCount, swapChainImages.data());
 
 		swapChainImageViews.resize(imageCount);
 
@@ -47,21 +57,12 @@ namespace sx
 			createInfo.subresourceRange.baseArrayLayer = 0;
 			createInfo.subresourceRange.layerCount = 1;
 
-			if (vkCreateImageView(*device, &createInfo, nullptr, &*it) != VK_SUCCESS) 
+			if (vkCreateImageView(device, &createInfo, nullptr, &*it) != VK_SUCCESS)
 				throw std::runtime_error("failed to create image views!");
 		}
-		
+
 		format = surface.Format();
 		extent = surface.Extent();
-	}
-
-	SwapchainVulkan::~SwapchainVulkan()
-	{
-		for (size_t i = 0; i < swapChainImageViews.size(); i++) {
-			vkDestroyImageView(*device, swapChainImageViews[i], nullptr);
-		}
-
-		vkDestroySwapchainKHR(*device, handle, nullptr);
 	}
 
 

@@ -13,11 +13,13 @@ namespace sx
 		: public HandleExposer<VkPipeline>
 	{
 	public:
-		PipelineVulkan(DeviceVulkan& device, RenderPassVulkan& renderpass, SurfaceVulkan& surface, const std::vector<char>& vertex, const std::vector<char>& fragment);
+		PipelineVulkan() = default;
 		virtual ~PipelineVulkan();
 
+		void Init(vk::Device& device, RenderPassVulkan& renderpass, SurfaceVulkan& surface, ShaderVertexVulkan& vertex, ShaderFragmentVulkan& fragment);
+
 	private:
-		DeviceVulkan& device;
+		VkDevice device;
 		VkPipelineLayout pipelineLayout;
 	};
 }

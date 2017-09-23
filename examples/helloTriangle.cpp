@@ -1,5 +1,3 @@
-#include <stdlib.h>
-#include <stdio.h>
 #include <iostream>
 #include "InstanceVulkan.hpp"
 #include "WindowGlfw.hpp"
@@ -16,23 +14,15 @@ int main(void)
 	static sx::FileSystemStd fileSystem;
 
 	static sx::WindowGlfw window("Hello Triangle", 800, 600);
-	static sx::InstanceVulkan instance("stixx", "Hello Triangle", window.InstanceExtensions());
-	static sx::SurfaceVulkan surface(instance, *window.GetHandle());
-	static sx::DeviceVulkan device(instance, surface);
+	static sx::RendererVulkan renderer(window, fileSystem.LoadFile(""), fileSystem.LoadFile(""));
 
-	static sx::SwapchainVulkan swapchain(device, surface);
-	static sx::RenderPassVulkan renderpass(device, swapchain);
-	static sx::PipelineVulkan pipeline(device, renderpass, surface, fileSystem.LoadFile(R"(C:\Users\Sven\Documents\build_vs\stixxShaders\vert.spv)"), fileSystem.LoadFile(R"(C:\Users\Sven\Documents\build_vs\stixxShaders\frag.spv)"));
 
-	static sx::RendererVulkan renderer(device, pipeline, renderpass, swapchain, instance.PhysicalDevice());
 
 	while (!window.ShouldClose())
 	{
 		window.Poll();
-//		renderer.Draw();
+		renderer.Draw();
 	}
-
-	vkDeviceWaitIdle(*device);
 
 	return 0;
 }

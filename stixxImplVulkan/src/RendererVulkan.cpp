@@ -1,22 +1,17 @@
 #include <algorithm>
-#include "RendererVulkan.hpp"
-#include "PipelineVulkan.hpp"
+#include <Window.hpp>
 #include <vulkan/vulkan.hpp>
-#include <GLFW/glfw3.h>
+#include <RendererVulkan.hpp>
+#include <iostream>
+#include "ShaderVulkan.hpp"
 
 namespace
 {
-	vk::CommandPool commandPool;
-	vk::Queue graphicsQueue;
-	vk::Device device;
-
 	VkSemaphore imageAvailableSemaphore;
 	VkSemaphore renderFinishedSemaphore;
-	std::vector<vk::CommandBuffer> commandBuffers;
 
 	uint32_t QueueFamily(vk::PhysicalDevice device, vk::QueueFlags type)
 	{
-		uint32_t queueFamilyCount = 0;
 		auto devices = device.getQueueFamilyProperties();
 
 		auto Queue = std::find_if(devices.begin(), devices.end(), [type](const vk::QueueFamilyProperties& properties) {
@@ -32,12 +27,35 @@ namespace
 
 namespace sx
 {
-	RendererVulkan::RendererVulkan(DeviceVulkan& adevice, PipelineVulkan& pipeline, RenderPassVulkan& renderPass, SwapchainVulkan& swapchain, const VkPhysicalDevice& physicalDevice)
-		: pipeline(pipeline)
-		, swapchain(swapchain)
-		, graphicsFamilyIndex(QueueFamily(physicalDevice, vk::QueueFlagBits::eGraphics))
+	RendererVulkan::RendererVulkan(sx::WindowGlfw& window, const std::vector<uint32_t>& vertex, const std::vector<uint32_t>& fragment)
 	{
-		device = *adevice;
+        VkApplicationInfo appInfo = {};
+        appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
+        appInfo.pApplicationName = window.Name();
+        appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
+        appInfo.pEngineName = "stixx";
+        appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
+        appInfo.apiVersion = VK_API_VERSION_1_0;
+
+        VkInstanceCreateInfo InstanceInfo = {};
+        InstanceInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
+        InstanceInfo.pApplicationInfo = &appInfo;
+        InstanceInfo.enabledExtensionCount = static_cast<uint32_t>(window.InstanceExtensions().size());
+        InstanceInfo.ppEnabledExtensionNames = window.InstanceExtensions().data();
+        InstanceInfo.enabledLayerCount = 0;
+
+        instance = vk::createInstance(InstanceInfo);
+        pdevice = instance.enumeratePhysicalDevices()[0];
+
+        surface.Init(instance, pdevice, *window.GetHandle());
+        swapchain.Init(device, surface);
+        renderPass.Init(device, swapchain);
+		ShaderVertexVulkan vertexShader(device, vertex);
+		ShaderFragmentVulkan fragmentShader(device, fragment);
+
+		pipeline.Init(device, renderPass, surface, vertexShader, fragmentShader);
+
+		uint32_t graphicsFamilyIndex = QueueFamily(pdevice, vk::QueueFlagBits::eGraphics);
 		commandPool = device.createCommandPool(vk::CommandPoolCreateInfo(
 			vk::CommandPoolCreateFlags(vk::CommandPoolCreateFlagBits::eResetCommandBuffer),	
 			graphicsFamilyIndex), nullptr);
@@ -92,9 +110,7 @@ namespace sx
 		vkDestroySemaphore(device, renderFinishedSemaphore, nullptr);
 		vkDestroySemaphore(device, imageAvailableSemaphore, nullptr);
 		vkDestroyCommandPool(device, commandPool, nullptr);
-	}
-	
-
+    }
 
 	void RendererVulkan::Draw()
 	{

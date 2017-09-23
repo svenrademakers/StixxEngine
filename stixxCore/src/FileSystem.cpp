@@ -3,7 +3,7 @@
 
 namespace sx
 {
-	std::vector<char> FileSystemStd::LoadFile(const std::string& fileName)
+	std::vector<uint32_t> FileSystemStd::LoadFile(const char * fileName)
 	{
 		std::ifstream file(fileName, std::ios::ate | std::ios::binary);
 
@@ -12,10 +12,10 @@ namespace sx
 		}
 
 		size_t fileSize = (size_t)file.tellg();
-		std::vector<char> buffer(fileSize);
+		std::vector<uint32_t> buffer(fileSize);
 
 		file.seekg(0);
-		file.read(buffer.data(), fileSize);
+		file.read(reinterpret_cast<char *>(buffer.data()), fileSize);
 
 		file.close();
 
