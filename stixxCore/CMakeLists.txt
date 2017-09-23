@@ -1,9 +1,4 @@
 find_package(assimp REQUIRED)
-#find_package(glm REQUIRED)
-
-add_subdirectory(external/glfw)
-#add_subdirectory(external/glm)
-#find_package(glfw3 REQUIRED)
 
 file(GLOB_RECURSE sources src/*.cpp)
 file(GLOB_RECURSE headers include/*.hpp)
