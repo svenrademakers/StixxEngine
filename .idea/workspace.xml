@@ -2,7 +2,6 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true" buildAllGenerated="true">
     <generated>
-      <config projectName="stixx" targetName="inputlag" />
       <config projectName="stixx" targetName="clipboard" />
       <config projectName="stixx" targetName="simple" />
       <config projectName="stixx" targetName="iconify" />
@@ -15,25 +14,30 @@
       <config projectName="stixx" targetName="threads" />
       <config projectName="stixx" targetName="vulkan" />
       <config projectName="stixx" targetName="icon" />
+      <config projectName="stixx" targetName="gtest_main" />
       <config projectName="stixx" targetName="gamma" />
       <config projectName="stixx" targetName="title" />
       <config projectName="stixx" targetName="wave" />
       <config projectName="stixx" targetName="msaa" />
       <config projectName="stixx" targetName="windows" />
+      <config projectName="stixx" targetName="vulkan_microtests" />
+      <config projectName="stixx" targetName="glm_dummy" />
       <config projectName="stixx" targetName="hello_triangle" />
       <config projectName="stixx" targetName="joysticks" />
+      <config projectName="stixx" targetName="gtest" />
       <config projectName="stixx" targetName="StixxImplVulkan" />
       <config projectName="stixx" targetName="glfwinfo" />
-      <config projectName="stixx" targetName="offscreen" />
       <config projectName="stixx" targetName="StixxCore" />
       <config projectName="stixx" targetName="boing" />
       <config projectName="stixx" targetName="events" />
       <config projectName="stixx" targetName="splitview" />
+      <config projectName="stixx" targetName="gmock_main" />
       <config projectName="stixx" targetName="StixxShaders" />
       <config projectName="stixx" targetName="gears" />
       <config projectName="stixx" targetName="empty" />
       <config projectName="stixx" targetName="sharing" />
       <config projectName="stixx" targetName="timeout" />
+      <config projectName="stixx" targetName="gmock" />
       <config projectName="stixx" targetName="heightmap" />
       <config projectName="stixx" targetName="uninstall" />
     </generated>
@@ -45,14 +49,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="83e17905-baf7-475d-87d1-c3525784665e" name="Default" comment="``">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/external/glfw" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/external/glm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/external/googletest" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gitmodules" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMakeLists.txt" afterPath="$PROJECT_DIR$/CMakeLists.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/helloTriangle.cpp" afterPath="$PROJECT_DIR$/examples/helloTriangle.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stixxCore/CMakeLists.txt" afterPath="$PROJECT_DIR$/stixxCore/CMakeLists.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stixxImplVulkan/CMakeLists.txt" afterPath="$PROJECT_DIR$/stixxImplVulkan/CMakeLists.txt" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -65,23 +62,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="helloTriangle.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/examples/helloTriangle.cpp">
+      <file leaf-file-name="RendererVulkan.hpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/stixxImplVulkan/include/RendererVulkan.hpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="12" column="61" lean-forward="false" selection-start-line="12" selection-start-column="61" selection-end-line="12" selection-end-column="61" />
-              <folding>
-                <element signature="e#0#19#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="238">
+              <caret line="20" column="42" lean-forward="true" selection-start-line="20" selection-start-column="42" selection-end-line="20" selection-end-column="42" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/README.md">
+      <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/stixxImplVulkan/CMakeLists.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="204">
+              <caret line="12" column="42" lean-forward="false" selection-start-line="12" selection-start-column="42" selection-end-line="12" selection-end-column="42" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="vulkan.hpp" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/VulkanSDK/1.0.61.0/x86_64/include/vulkan/vulkan.hpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="294">
+              <caret line="31913" column="3" lean-forward="false" selection-start-line="31913" selection-start-column="3" selection-end-line="31913" selection-end-column="3" />
               <folding />
             </state>
           </provider>
@@ -90,7 +95,7 @@
       <file leaf-file-name="RendererVulkan.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/stixxImplVulkan/src/RendererVulkan.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="260">
+            <state relative-caret-position="2618">
               <caret line="154" column="0" lean-forward="false" selection-start-line="154" selection-start-column="0" selection-end-line="154" selection-end-column="0" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
@@ -99,52 +104,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="limits" pinned="false" current-in-tab="false">
-        <entry file="file:///usr/include/c++/5/limits">
+      <file leaf-file-name="SurfaceVulkan.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/stixxImplVulkan/src/SurfaceVulkan.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="260">
-              <caret line="1206" column="0" lean-forward="false" selection-start-line="1206" selection-start-column="0" selection-end-line="1206" selection-end-column="0" />
+            <state relative-caret-position="1241">
+              <caret line="76" column="0" lean-forward="false" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/stixxCore/CMakeLists.txt">
+      <file leaf-file-name="TestRenderer.cpp" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/stixxImplVulkan/test/TestRenderer.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="InstanceVulkan.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/stixxImplVulkan/src/InstanceVulkan.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="22" column="71" lean-forward="false" selection-start-line="7" selection-start-column="12" selection-end-line="22" selection-end-column="71" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" column="8" lean-forward="false" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/stixxImplVulkan/CMakeLists.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" column="80" lean-forward="false" selection-start-line="9" selection-start-column="80" selection-end-line="9" selection-end-column="80" />
-              <folding />
+            <state relative-caret-position="204">
+              <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#24#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -154,16 +131,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="85">
               <caret line="5" column="27" lean-forward="false" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SwapchainVulkan.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/stixxImplVulkan/src/SwapchainVulkan.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -218,6 +185,7 @@
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/stixxImplVulkan/test/test.cpp" />
         <option value="$PROJECT_DIR$/stixxImplVulkan/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/stixxImplVulkan/test/TestRenderer.cpp" />
       </list>
     </option>
   </component>
@@ -270,6 +238,12 @@
               <item name="stixx" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
               <item name="stixx" type="462c0819:PsiDirectoryNode" />
               <item name="stixxImplVulkan" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="stixx" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="stixx" type="462c0819:PsiDirectoryNode" />
+              <item name="stixxImplVulkan" type="462c0819:PsiDirectoryNode" />
               <item name="test" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -293,7 +267,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.hello_triangle">
+  <component name="RunManager" selected="Google Test.vulkan_microtests">
     <configuration name="Build All" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" EXPLICIT_BUILD_TARGET_NAME="all">
       <envs />
     </configuration>
@@ -333,6 +307,21 @@
     <configuration name="glfwinfo" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="stixx" TARGET_NAME="glfwinfo" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="stixx" RUN_TARGET_NAME="glfwinfo">
       <envs />
     </configuration>
+    <configuration name="glm_dummy" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="stixx" TARGET_NAME="glm_dummy" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="stixx" RUN_TARGET_NAME="glm_dummy">
+      <envs />
+    </configuration>
+    <configuration name="gmock" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="stixx" TARGET_NAME="gmock" CONFIG_NAME="Debug">
+      <envs />
+    </configuration>
+    <configuration name="gmock_main" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="stixx" TARGET_NAME="gmock_main" CONFIG_NAME="Debug">
+      <envs />
+    </configuration>
+    <configuration name="gtest" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="stixx" TARGET_NAME="gtest" CONFIG_NAME="Debug">
+      <envs />
+    </configuration>
+    <configuration name="gtest_main" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="stixx" TARGET_NAME="gtest_main" CONFIG_NAME="Debug">
+      <envs />
+    </configuration>
     <configuration name="heightmap" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="stixx" TARGET_NAME="heightmap" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="stixx" RUN_TARGET_NAME="heightmap">
       <envs />
     </configuration>
@@ -345,9 +334,6 @@
     <configuration name="iconify" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="stixx" TARGET_NAME="iconify" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="stixx" RUN_TARGET_NAME="iconify">
       <envs />
     </configuration>
-    <configuration name="inputlag" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="stixx" TARGET_NAME="inputlag" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="stixx" RUN_TARGET_NAME="inputlag">
-      <envs />
-    </configuration>
     <configuration name="joysticks" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="stixx" TARGET_NAME="joysticks" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="stixx" RUN_TARGET_NAME="joysticks">
       <envs />
     </configuration>
@@ -355,9 +341,6 @@
       <envs />
     </configuration>
     <configuration name="msaa" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="stixx" TARGET_NAME="msaa" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="stixx" RUN_TARGET_NAME="msaa">
-      <envs />
-    </configuration>
-    <configuration name="offscreen" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="stixx" TARGET_NAME="offscreen" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="stixx" RUN_TARGET_NAME="offscreen">
       <envs />
     </configuration>
     <configuration name="particles" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="stixx" TARGET_NAME="particles" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="stixx" RUN_TARGET_NAME="particles">
@@ -393,13 +376,16 @@
     <configuration name="vulkan" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="stixx" TARGET_NAME="vulkan" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="stixx" RUN_TARGET_NAME="vulkan">
       <envs />
     </configuration>
+    <configuration name="vulkan_microtests" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" PASS_PARENT_ENVS_2="true" PROJECT_NAME="stixx" TARGET_NAME="vulkan_microtests" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="stixx" RUN_TARGET_NAME="vulkan_microtests" TEST_MODE="SUITE_TEST">
+      <envs />
+    </configuration>
     <configuration name="wave" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="stixx" TARGET_NAME="wave" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="stixx" RUN_TARGET_NAME="wave">
       <envs />
     </configuration>
     <configuration name="windows" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="stixx" TARGET_NAME="windows" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="stixx" RUN_TARGET_NAME="windows">
       <envs />
     </configuration>
-    <list size="35">
+    <list size="39">
       <item index="0" class="java.lang.String" itemvalue="Application.Build All" />
       <item index="1" class="java.lang.String" itemvalue="Application.hello_triangle" />
       <item index="2" class="java.lang.String" itemvalue="Application.StixxCore" />
@@ -407,34 +393,38 @@
       <item index="4" class="java.lang.String" itemvalue="Application.boing" />
       <item index="5" class="java.lang.String" itemvalue="Application.gears" />
       <item index="6" class="java.lang.String" itemvalue="Application.heightmap" />
-      <item index="7" class="java.lang.String" itemvalue="Application.offscreen" />
-      <item index="8" class="java.lang.String" itemvalue="Application.particles" />
-      <item index="9" class="java.lang.String" itemvalue="Application.simple" />
-      <item index="10" class="java.lang.String" itemvalue="Application.splitview" />
-      <item index="11" class="java.lang.String" itemvalue="Application.wave" />
-      <item index="12" class="java.lang.String" itemvalue="Application.glfw" />
-      <item index="13" class="java.lang.String" itemvalue="Application.clipboard" />
-      <item index="14" class="java.lang.String" itemvalue="Application.cursor" />
-      <item index="15" class="java.lang.String" itemvalue="Application.empty" />
-      <item index="16" class="java.lang.String" itemvalue="Application.events" />
-      <item index="17" class="java.lang.String" itemvalue="Application.gamma" />
-      <item index="18" class="java.lang.String" itemvalue="Application.glfwinfo" />
-      <item index="19" class="java.lang.String" itemvalue="Application.icon" />
-      <item index="20" class="java.lang.String" itemvalue="Application.iconify" />
-      <item index="21" class="java.lang.String" itemvalue="Application.inputlag" />
-      <item index="22" class="java.lang.String" itemvalue="Application.joysticks" />
-      <item index="23" class="java.lang.String" itemvalue="Application.monitors" />
-      <item index="24" class="java.lang.String" itemvalue="Application.msaa" />
-      <item index="25" class="java.lang.String" itemvalue="Application.reopen" />
-      <item index="26" class="java.lang.String" itemvalue="Application.sharing" />
-      <item index="27" class="java.lang.String" itemvalue="Application.tearing" />
-      <item index="28" class="java.lang.String" itemvalue="Application.threads" />
-      <item index="29" class="java.lang.String" itemvalue="Application.timeout" />
-      <item index="30" class="java.lang.String" itemvalue="Application.title" />
-      <item index="31" class="java.lang.String" itemvalue="Application.vulkan" />
-      <item index="32" class="java.lang.String" itemvalue="Application.windows" />
-      <item index="33" class="java.lang.String" itemvalue="Application.StixxImplVulkan" />
-      <item index="34" class="java.lang.String" itemvalue="Application.StixxShaders" />
+      <item index="7" class="java.lang.String" itemvalue="Application.particles" />
+      <item index="8" class="java.lang.String" itemvalue="Application.simple" />
+      <item index="9" class="java.lang.String" itemvalue="Application.splitview" />
+      <item index="10" class="java.lang.String" itemvalue="Application.wave" />
+      <item index="11" class="java.lang.String" itemvalue="Application.glfw" />
+      <item index="12" class="java.lang.String" itemvalue="Application.clipboard" />
+      <item index="13" class="java.lang.String" itemvalue="Application.cursor" />
+      <item index="14" class="java.lang.String" itemvalue="Application.empty" />
+      <item index="15" class="java.lang.String" itemvalue="Application.events" />
+      <item index="16" class="java.lang.String" itemvalue="Application.gamma" />
+      <item index="17" class="java.lang.String" itemvalue="Application.glfwinfo" />
+      <item index="18" class="java.lang.String" itemvalue="Application.icon" />
+      <item index="19" class="java.lang.String" itemvalue="Application.iconify" />
+      <item index="20" class="java.lang.String" itemvalue="Application.joysticks" />
+      <item index="21" class="java.lang.String" itemvalue="Application.monitors" />
+      <item index="22" class="java.lang.String" itemvalue="Application.msaa" />
+      <item index="23" class="java.lang.String" itemvalue="Application.reopen" />
+      <item index="24" class="java.lang.String" itemvalue="Application.sharing" />
+      <item index="25" class="java.lang.String" itemvalue="Application.tearing" />
+      <item index="26" class="java.lang.String" itemvalue="Application.threads" />
+      <item index="27" class="java.lang.String" itemvalue="Application.timeout" />
+      <item index="28" class="java.lang.String" itemvalue="Application.title" />
+      <item index="29" class="java.lang.String" itemvalue="Application.vulkan" />
+      <item index="30" class="java.lang.String" itemvalue="Application.windows" />
+      <item index="31" class="java.lang.String" itemvalue="Application.glm_dummy" />
+      <item index="32" class="java.lang.String" itemvalue="Application.gmock" />
+      <item index="33" class="java.lang.String" itemvalue="Application.gmock_main" />
+      <item index="34" class="java.lang.String" itemvalue="Application.gtest" />
+      <item index="35" class="java.lang.String" itemvalue="Application.gtest_main" />
+      <item index="36" class="java.lang.String" itemvalue="Application.StixxImplVulkan" />
+      <item index="37" class="java.lang.String" itemvalue="Google Test.vulkan_microtests" />
+      <item index="38" class="java.lang.String" itemvalue="Application.StixxShaders" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
@@ -453,8 +443,19 @@
     </task>
     <servers />
   </component>
+  <component name="TestHistory">
+    <history-entry file="vulkan_microtests - 2017.09.23 at 21h 53m 40s.xml">
+      <configuration name="vulkan_microtests" configurationId="CMakeGoogleTestRunConfigurationType" />
+    </history-entry>
+    <history-entry file="vulkan_microtests - 2017.09.23 at 21h 53m 53s.xml">
+      <configuration name="vulkan_microtests" configurationId="CMakeGoogleTestRunConfigurationType" />
+    </history-entry>
+    <history-entry file="vulkan_microtests - 2017.09.23 at 21h 54m 14s.xml">
+      <configuration name="vulkan_microtests" configurationId="CMakeGoogleTestRunConfigurationType" />
+    </history-entry>
+  </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19751000" />
+    <option name="totallyTimeSpent" value="20924000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="377" y="178" width="2505" height="1455" extended-state="6" />
@@ -462,10 +463,10 @@
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.332342" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32936803" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936803" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936803" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32936803" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24970035" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936803" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -474,11 +475,24 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.332342" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32936803" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936803" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24970035" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936803" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -509,16 +523,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/stixxImplVulkan/include/SurfaceVulkan.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding>
-            <element signature="e#55#72#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/stixxCore/src/FileSystem.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -549,7 +553,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="1" column="59" lean-forward="false" selection-start-line="1" selection-start-column="12" selection-end-line="1" selection-end-column="59" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -585,9 +588,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#28#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -624,18 +625,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="292">
           <caret line="1460" column="32" lean-forward="false" selection-start-line="1460" selection-start-column="32" selection-end-line="1460" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/stixxCore/external/glfw/include/GLFW/glfw3.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="291">
-          <caret line="5167" column="17" lean-forward="false" selection-start-line="5167" selection-start-column="17" selection-end-line="5167" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/stixxCore/external/glfw/include/GLFW/glfw3.h" />
     <entry file="file://$PROJECT_DIR$/stixxImplVulkan/src/RenderPassVulkan.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -657,7 +650,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="17" column="13" lean-forward="false" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -680,7 +672,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -695,7 +686,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -711,7 +701,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="1" column="59" lean-forward="false" selection-start-line="1" selection-start-column="12" selection-end-line="1" selection-end-column="59" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -733,22 +722,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/stixxCore/external/glfw/src/vulkan.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="549">
-          <caret line="241" column="0" lean-forward="false" selection-start-line="241" selection-start-column="0" selection-end-line="241" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/VulkanSDK/1.0.61.0/x86_64/include/vulkan/vulkan.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="30592" column="58" lean-forward="false" selection-start-line="30592" selection-start-column="36" selection-end-line="30592" selection-end-column="58" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/stixxCore/external/glfw/src/vulkan.c" />
     <entry file="file:///usr/include/c++/5/bits/stl_iterator.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="260">
@@ -769,7 +743,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="18" column="174" lean-forward="false" selection-start-line="18" selection-start-column="174" selection-end-line="18" selection-end-column="174" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -777,7 +750,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -795,42 +767,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="18" column="44" lean-forward="true" selection-start-line="18" selection-start-column="44" selection-end-line="18" selection-end-column="44" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/stixxCore/external/glfw/src/window.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="291">
-          <caret line="495" column="13" lean-forward="false" selection-start-line="495" selection-start-column="13" selection-end-line="495" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/stixxCore/external/glfw/src/window.c" />
     <entry file="file://$PROJECT_DIR$/stixxCore/src/WindowGlfw.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="754">
           <caret line="94" column="31" lean-forward="false" selection-start-line="94" selection-start-column="31" selection-end-line="94" selection-end-column="31" />
           <folding>
             <element signature="e#0#18#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/stixxImplVulkan/src/SurfaceVulkan.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="719">
-          <caret line="76" column="0" lean-forward="false" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/stixxImplVulkan/include/RendererVulkan.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="42" lean-forward="true" selection-start-line="20" selection-start-column="42" selection-end-line="20" selection-end-column="42" />
-          <folding>
-            <element signature="e#57#80#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -851,21 +797,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/stixxImplVulkan/src/RendererVulkan.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="154" column="0" lean-forward="false" selection-start-line="154" selection-start-column="0" selection-end-line="154" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/stixxImplVulkan/src/PipelineVulkan.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="9" column="40" lean-forward="false" selection-start-line="9" selection-start-column="34" selection-end-line="9" selection-end-column="40" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -927,11 +862,55 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/stixxImplVulkan/src/RendererVulkan.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2618">
+          <caret line="154" column="0" lean-forward="false" selection-start-line="154" selection-start-column="0" selection-end-line="154" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stixxImplVulkan/src/SurfaceVulkan.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1241">
+          <caret line="76" column="0" lean-forward="false" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/stixxImplVulkan/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="80" lean-forward="false" selection-start-line="9" selection-start-column="80" selection-end-line="9" selection-end-column="80" />
+        <state relative-caret-position="204">
+          <caret line="12" column="42" lean-forward="false" selection-start-line="12" selection-start-column="42" selection-end-line="12" selection-end-column="42" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/VulkanSDK/1.0.61.0/x86_64/include/vulkan/vulkan.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="31913" column="3" lean-forward="false" selection-start-line="31913" selection-start-column="3" selection-end-line="31913" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stixxImplVulkan/include/RendererVulkan.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="20" column="42" lean-forward="true" selection-start-line="20" selection-start-column="42" selection-end-line="20" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stixxImplVulkan/test/TestRenderer.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

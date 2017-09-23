@@ -7,7 +7,8 @@ add_library(StixxImplVulkan STATIC
 	${shaders}
 )
 
-find_package (Vulkan REQUIRED HINTS /home/sven/stixx/external/glfw/CMake/modules)
+set(Vulkan_INCLUDE_DIR $ENV{VULKAN_SDK}/include)
+file(GLOB_RECURSE Vulkan_LIBRARIES $ENV{VULKAN_SDK}/lib/*)
 
 target_include_directories(StixxImplVulkan
 	PUBLIC
@@ -17,7 +18,7 @@ target_include_directories(StixxImplVulkan
 	PRIVATE
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>)
 
-target_link_libraries(StixxImplVulkan StixxCore ${Vulkan_LIBRARIES} vulkan)
+target_link_libraries(StixxImplVulkan StixxCore ${Vulkan_LIBRARIES})
 target_compile_features(StixxImplVulkan PUBLIC cxx_override cxx_inheriting_constructors)
 install(DIRECTORY include DESTINATION include/stixx)
 
@@ -29,18 +30,7 @@ install(TARGETS StixxImplVulkan
 
 install(EXPORT StixxImplVulkan-targets FILE StixxImplVulkan-config.cmake DESTINATION lib/cmake/StixxImplVulkan)
 
-#find_package(gtest REQUIRED)
-#find_package(GTest REQUIRED)
-
-
-add_executable(micro_tests_vulkan
-	test/test.cpp)
-#	test/TestAntHost.cpp
-#	test/TestHbAlgo.cpp
-#	test/TestMapController.cpp
-#	test/TestSensorSniffer.cpp)
-
-#target_compile_features(micro_tests PUBLIC cxx_default_function_template_args)
-
-target_link_libraries(micro_tests_vulkan gtest gmock)
-install(TARGETS micro_tests_vulkan DESTINATION bin)
+file(GLOB_RECURSE tests test/*.cpp)
+add_executable(vulkan_microtests ${tests})
+target_link_libraries(vulkan_microtests StixxImplVulkan gtest gmock)
+install(TARGETS vulkan_microtests DESTINATION bin)
