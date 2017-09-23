@@ -29,33 +29,70 @@ namespace sx
 {
 	RendererVulkan::RendererVulkan(sx::WindowGlfw& window, const std::vector<uint32_t>& vertex, const std::vector<uint32_t>& fragment)
 	{
-        VkApplicationInfo appInfo = {};
-        appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
-        appInfo.pApplicationName = window.Name();
-        appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
-        appInfo.pEngineName = "stixx";
-        appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
-        appInfo.apiVersion = VK_API_VERSION_1_0;
+        auto appInfo = vk::ApplicationInfo(
+                window.Name(),
+                VK_MAKE_VERSION(1, 0, 0),
+                "Stixx",
+                VK_MAKE_VERSION(1, 0, 0),
+                VK_API_VERSION_1_0
+        );
 
-        VkInstanceCreateInfo InstanceInfo = {};
-        InstanceInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
-        InstanceInfo.pApplicationInfo = &appInfo;
-        InstanceInfo.enabledExtensionCount = static_cast<uint32_t>(window.InstanceExtensions().size());
-        InstanceInfo.ppEnabledExtensionNames = window.InstanceExtensions().data();
-        InstanceInfo.enabledLayerCount = 0;
+        auto instance = vk::createInstance(
+                vk::InstanceCreateInfo(
+                        vk::InstanceCreateFlags(),
+                        &appInfo,
+                        0,
+                        nullptr,
+                        window.InstanceExtensions().size(),
+                        window.InstanceExtensions().data()
+                )
+        );
 
-        instance = vk::createInstance(InstanceInfo);
         pdevice = instance.enumeratePhysicalDevices()[0];
+        auto gpuFeatures = pdevice.getFeatures();
+        auto gpuQueueProps = pdevice.getQueueFamilyProperties();
+        uint32_t graphicsFamilyIndex = QueueFamily(pdevice, vk::QueueFlagBits::eGraphics);
+
+        float priority = 1.0;
+        auto queueCreateInfos = std::vector<vk::DeviceQueueCreateInfo>();
+
+        queueCreateInfos.push_back(
+                vk::DeviceQueueCreateInfo(
+                        vk::DeviceQueueCreateFlags(),
+                        graphicsFamilyIndex,
+                        1,
+                        &priority
+                )
+        );
+
+        const char * deviceExtension = VK_KHR_SWAPCHAIN_EXTENSION_NAME;
+
+        device = pdevice.createDevice(
+                vk::DeviceCreateInfo(
+                        vk::DeviceCreateFlags(),
+                        queueCreateInfos.size(),
+                        queueCreateInfos.data(),
+                        0,
+                        nullptr,
+                        1,
+                        &deviceExtension,
+                        &gpuFeatures
+                )
+        );
 
         surface.Init(instance, pdevice, *window.GetHandle());
         swapchain.Init(device, surface);
         renderPass.Init(device, swapchain);
-		ShaderVertexVulkan vertexShader(device, vertex);
-		ShaderFragmentVulkan fragmentShader(device, fragment);
 
-		pipeline.Init(device, renderPass, surface, vertexShader, fragmentShader);
+        vk::Viewport viewport(0.0f, 0.0f,
+                              static_cast<float>(window.Size().first),
+                              static_cast<float>(window.Size().second),
+                              0.0f, 1.0f);
 
-		uint32_t graphicsFamilyIndex = QueueFamily(pdevice, vk::QueueFlagBits::eGraphics);
+        ShaderVertexVulkan vertexShader(device, vertex);
+        ShaderFragmentVulkan fragmentShader(device, fragment);
+		pipeline.Init(device, renderPass, surface, vertexShader, fragmentShader, viewport);
+
 		commandPool = device.createCommandPool(vk::CommandPoolCreateInfo(
 			vk::CommandPoolCreateFlags(vk::CommandPoolCreateFlagBits::eResetCommandBuffer),	
 			graphicsFamilyIndex), nullptr);
@@ -130,8 +167,7 @@ namespace sx
 			submitInfo.signalSemaphoreCount = 1;
 			submitInfo.pSignalSemaphores = &renderFinishedSemaphore;
 
-			if (vkQueueSubmit(graphicsQueue, 1, &submitInfo, VK_NULL_HANDLE) != VK_SUCCESS)
-				throw std::runtime_error("failed to submit draw command buffer!");
+			vkQueueSubmit(graphicsQueue, 1, &submitInfo, VK_NULL_HANDLE);
 
 			VkPresentInfoKHR presentInfo = {};
 			presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;

@@ -16,7 +16,7 @@ namespace sx
 		SwapchainVulkan() = default;
 		virtual ~SwapchainVulkan();
 
-		void Init(vk::Device& device, SurfaceVulkan&  surface);
+		void Init(vk::Device& device, SurfaceVulkan& surface);
 
 	public:
 		std::vector<VkImageView>& ImageViews();

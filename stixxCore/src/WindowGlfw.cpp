@@ -1,6 +1,5 @@
 #include <sstream>
 #include "WindowGlfw.hpp"
-#include <GLFW/glfw3.h>
 
 namespace
 {
@@ -86,6 +85,15 @@ namespace sx
 	{
 		return window;
 	}
+
+    std::pair<uint32_t, uint32_t> WindowGlfw::Size()
+    {
+
+        int width, height;
+        glfwGetWindowSize(window, &width, &height);
+
+        return {width, height};
+    }
 
 
 }

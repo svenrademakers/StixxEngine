@@ -16,7 +16,7 @@ namespace sx
 		PipelineVulkan() = default;
 		virtual ~PipelineVulkan();
 
-		void Init(vk::Device& device, RenderPassVulkan& renderpass, SurfaceVulkan& surface, ShaderVertexVulkan& vertex, ShaderFragmentVulkan& fragment);
+		void Init(vk::Device& device, RenderPassVulkan& renderpass, SurfaceVulkan& surface, ShaderVertexVulkan& vertex, ShaderFragmentVulkan& fragment, vk::Viewport& viewport);
 
 	private:
 		VkDevice device;

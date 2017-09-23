@@ -1,28 +1,25 @@
 #include <iostream>
-#include "InstanceVulkan.hpp"
+#include <vulkan/vulkan.hpp>
 #include "WindowGlfw.hpp"
-#include "SurfaceVulkan.hpp"
-#include "DeviceVulkan.hpp"
-#include "SwapchainVulkan.hpp"
-#include "RenderPassVulkan.hpp"
-#include "PipelineVulkan.hpp"
 #include "FileSystem.hpp"
 #include "RendererVulkan.hpp"
 
 int main(void)
 {
-	static sx::FileSystemStd fileSystem;
+    try {
+        static sx::FileSystemStd fileSystem;
+        static sx::WindowGlfw window("Hello Triangle", 800, 600);
+        static sx::RendererVulkan renderer(window, fileSystem.LoadFile("/home/sven/stixx/stixxShaders/vert.spv"), fileSystem.LoadFile("/home/sven/stixx/stixxShaders/frag.spv"));
 
-	static sx::WindowGlfw window("Hello Triangle", 800, 600);
-	static sx::RendererVulkan renderer(window, fileSystem.LoadFile(""), fileSystem.LoadFile(""));
-
-
-
-	while (!window.ShouldClose())
-	{
-		window.Poll();
-		renderer.Draw();
-	}
+        while (!window.ShouldClose()) {
+            window.Poll();
+            renderer.Draw();
+        }
+    }
+    catch(std::runtime_error err)
+    {
+        std::cerr << err.what();
+    }
 
 	return 0;
 }

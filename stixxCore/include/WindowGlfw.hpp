@@ -1,8 +1,8 @@
 #ifndef WINDOW_GLFW_HPP
 #define WINDOW_GLFW_HPP
 
-#include "Window.hpp"
 #include <GLFW/glfw3.h>
+#include "Window.hpp"
 
 namespace sx
 {
@@ -17,6 +17,7 @@ namespace sx
 		bool ShouldClose() override;
 		void Poll();
 		std::vector<const char*> InstanceExtensions() override;
+		std::pair<uint32_t, uint32_t> Size() override;
 
 		GLFWwindow* GetHandle();
 	private:

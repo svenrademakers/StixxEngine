@@ -12,7 +12,7 @@ namespace sx
 
 		virtual const char* Name() = 0;
 		virtual bool ShouldClose() = 0;
-
+		virtual std::pair<uint32_t, uint32_t> Size() = 0;
 		virtual std::vector<const char*> InstanceExtensions() = 0;
 	};
 }

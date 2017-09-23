@@ -11,7 +11,7 @@ namespace sx
 		vkDestroyPipelineLayout(device, pipelineLayout, nullptr);
 	}
 
-	void PipelineVulkan::Init(vk::Device& device, RenderPassVulkan& renderpass, SurfaceVulkan& surface, ShaderVertexVulkan& vertex, ShaderFragmentVulkan& fragment)
+	void PipelineVulkan::Init(vk::Device& device, RenderPassVulkan& renderpass, SurfaceVulkan& surface, ShaderVertexVulkan& vertex, ShaderFragmentVulkan& fragment, vk::Viewport& viewport)
 	{
 		VkPipelineShaderStageCreateInfo shaderStages[] = { vertex.GetConfiguration(), fragment.GetConfiguration() };
 
@@ -25,22 +25,14 @@ namespace sx
 		inputAssembly.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
 		inputAssembly.primitiveRestartEnable = VK_FALSE;
 
-		VkViewport viewport = {};
-		viewport.x = 0.0f;
-		viewport.y = 0.0f;
-		viewport.width = static_cast<float>(surface.Extent().width);
-		viewport.height = static_cast<float>(surface.Extent().height);
-		viewport.minDepth = 0.0f;
-		viewport.maxDepth = 1.0f;
-
 		VkRect2D scissor = {};
 		scissor.offset = { 0, 0 };
-		scissor.extent = surface.Extent();
-
+		scissor.extent = surface.extent;
+		VkViewport vkViewport = viewport;
 		VkPipelineViewportStateCreateInfo viewportState = {};
 		viewportState.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
 		viewportState.viewportCount = 1;
-		viewportState.pViewports = &viewport;
+		viewportState.pViewports = &vkViewport;
 		viewportState.scissorCount = 1;
 		viewportState.pScissors = &scissor;
 
