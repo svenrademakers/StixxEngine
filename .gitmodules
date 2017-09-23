@@ -1,6 +1,0 @@
-[submodule "stixxCore/external/glm"]
-	path = stixxCore/external/glm
-	url = https://github.com/g-truc/glm.git
-[submodule "stixxCore/external/glfw"]	
-	path = stixxCore/external/glfw	
-	url = https://github.com/glfw/glfw.git
