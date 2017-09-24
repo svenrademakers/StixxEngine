@@ -14,11 +14,13 @@ int main(void)
     //meshLoader.Next(vertices, indices, texture);
 
     sx::Vertex vertex;
-    vertex.Position = {-0.5,-0.5,0.0};
+    vertex.Position = {-0.5f,-0.5f,0.0};
     vertices.push_back(vertex);
     vertex.Position = {0.5,-0.5,0.0};
     vertices.push_back(vertex);
-    vertex.Position = {0.0,0.5,0.0};
+    vertex.Position = {0.5,0.5,0.0};
+    vertices.push_back(vertex);
+    vertex.Position = {-0.5f, 0.5f, 0.0};
     vertices.push_back(vertex);
 
     indices = {0,1,2,2,3,0};

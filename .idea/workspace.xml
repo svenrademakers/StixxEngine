@@ -50,7 +50,6 @@
   <component name="ChangeListManager">
     <list default="true" id="683ac554-8b53-4ffa-abe6-f120eb2bdcf0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/helloTriangle.cpp" afterPath="$PROJECT_DIR$/examples/helloTriangle.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stixxVulkan/include/RendererVulkan.hpp" afterPath="$PROJECT_DIR$/stixxVulkan/include/RendererVulkan.hpp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stixxVulkan/src/RendererVulkan.cpp" afterPath="$PROJECT_DIR$/stixxVulkan/src/RendererVulkan.cpp" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -66,8 +65,18 @@
       <file leaf-file-name="RendererVulkan.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/stixxVulkan/src/RendererVulkan.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="620">
-              <caret line="188" column="50" lean-forward="true" selection-start-line="188" selection-start-column="50" selection-end-line="188" selection-end-column="50" />
+            <state relative-caret-position="561">
+              <caret line="223" column="49" lean-forward="false" selection-start-line="223" selection-start-column="49" selection-end-line="223" selection-end-column="49" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="vulkan.h" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/VulkanSDK/1.0.61.0/x86_64/include/vulkan/vulkan.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="260">
+              <caret line="3263" column="27" lean-forward="false" selection-start-line="3263" selection-start-column="27" selection-end-line="3263" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -128,8 +137,8 @@
       <file leaf-file-name="helloTriangle.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/examples/helloTriangle.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="24" column="0" lean-forward="true" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+            <state relative-caret-position="357">
+              <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -205,8 +214,8 @@
         <option value="$PROJECT_DIR$/stixxVulkan/src/SurfaceVulkan.cpp" />
         <option value="$PROJECT_DIR$/stixxShaders/main.vert" />
         <option value="$PROJECT_DIR$/stixxVulkan/src/PipelineVulkan.cpp" />
-        <option value="$PROJECT_DIR$/examples/helloTriangle.cpp" />
         <option value="$PROJECT_DIR$/stixxVulkan/include/RendererVulkan.hpp" />
+        <option value="$PROJECT_DIR$/examples/helloTriangle.cpp" />
         <option value="$PROJECT_DIR$/stixxVulkan/src/RendererVulkan.cpp" />
       </list>
     </option>
@@ -484,12 +493,12 @@
       <updated>1506239177336</updated>
       <workItem from="1506239179903" duration="3743000" />
       <workItem from="1506249134990" duration="14170000" />
-      <workItem from="1506275320275" duration="5225000" />
+      <workItem from="1506275320275" duration="5956000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="23138000" />
+    <option name="totallyTimeSpent" value="23869000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="456" y="103" width="2505" height="1455" extended-state="6" />
@@ -558,7 +567,7 @@
           <line>3843</line>
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="27" />
+      <option name="time" value="28" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -892,14 +901,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/helloTriangle.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="24" column="0" lean-forward="true" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/stixxVulkan/src/PipelineVulkan.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="442">
@@ -907,14 +908,6 @@
           <folding>
             <marker date="1506275615447" expanded="true" signature="1180:1437" ph="..." />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/VulkanSDK/1.0.61.0/x86_64/include/vulkan/vulkan.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="1798" column="2" lean-forward="false" selection-start-line="1798" selection-start-column="2" selection-end-line="1798" selection-end-column="2" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -950,10 +943,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/VulkanSDK/1.0.61.0/x86_64/include/vulkan/vulkan.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="3263" column="27" lean-forward="false" selection-start-line="3263" selection-start-column="27" selection-end-line="3263" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/helloTriangle.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/stixxVulkan/src/RendererVulkan.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="620">
-          <caret line="188" column="50" lean-forward="true" selection-start-line="188" selection-start-column="50" selection-end-line="188" selection-end-column="50" />
+        <state relative-caret-position="561">
+          <caret line="223" column="49" lean-forward="false" selection-start-line="223" selection-start-column="49" selection-end-line="223" selection-end-column="49" />
           <folding />
         </state>
       </provider>

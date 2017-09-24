@@ -220,10 +220,9 @@ namespace sx
             VkBuffer vertexBuffers[] = {buffers[0]};
             VkDeviceSize offsets[] = {0};
             vkCmdBindVertexBuffers(commandBuffers[i], 0, 1, vertexBuffers, offsets);
+            vkCmdBindIndexBuffer(commandBuffers[i], buffers[1], 0, VK_INDEX_TYPE_UINT32);
+            vkCmdDrawIndexed(commandBuffers[i], 6, 1, 0, 0, 0);
 
-            vkCmdDraw(commandBuffers[i], memorySize, 1, 0, 0);
-
-            vkCmdDraw(commandBuffers[i], 3, 1, 0, 0);
             vkCmdEndRenderPass(commandBuffers[i]);
             if (vkEndCommandBuffer(commandBuffers[i]) != VK_SUCCESS)
                 throw std::runtime_error("failed to record command buffer!");
