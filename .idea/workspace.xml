@@ -61,18 +61,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ShaderVulkan.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/stixxVulkan/src/ShaderVulkan.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#27#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="RendererVulkan.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/stixxVulkan/src/RendererVulkan.cpp">
           <provider selected="true" editor-type-id="text-editor">
@@ -161,7 +149,17 @@
         <entry file="file://$PROJECT_DIR$/.travis.yml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="136">
-              <caret line="8" column="70" lean-forward="false" selection-start-line="8" selection-start-column="70" selection-end-line="8" selection-end-column="70" />
+              <caret line="8" column="84" lean-forward="false" selection-start-line="8" selection-start-column="84" selection-end-line="8" selection-end-column="84" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/stixx/CMakeLists.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -229,6 +227,11 @@
             <path>
               <item name="stixx" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
               <item name="Stixx" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="stixx" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="Stixx" type="462c0819:PsiDirectoryNode" />
+              <item name="stixx" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="stixx" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
@@ -446,12 +449,12 @@
       <option name="presentableId" value="Default" />
       <updated>1506239177336</updated>
       <workItem from="1506239179903" duration="3743000" />
-      <workItem from="1506249134990" duration="1212000" />
+      <workItem from="1506249134990" duration="1443000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4955000" />
+    <option name="totallyTimeSpent" value="5186000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="456" y="103" width="2505" height="1455" extended-state="6" />
@@ -745,10 +748,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/stixx/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/.travis.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
-          <caret line="8" column="70" lean-forward="false" selection-start-line="8" selection-start-column="70" selection-end-line="8" selection-end-column="70" />
+          <caret line="8" column="84" lean-forward="false" selection-start-line="8" selection-start-column="84" selection-end-line="8" selection-end-column="84" />
           <folding />
         </state>
       </provider>

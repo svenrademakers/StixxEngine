@@ -6,7 +6,7 @@ services:
 before_install:
 - docker pull pmathia0/gcc-cmake-vulkan
 - docker run -d -p 127.0.0.1:80:4567 pmathia0/gcc-cmake-vulkan /bin/sh -c "cd /root/gcc-cmake-vulkan; bundle exec foreman start;"
-- sudo apt-get install -y libxrandr-dev libxinerama-dev libxcursor-dev
+- sudo apt-get install -y libxrandr-dev libxinerama-dev libxcursor-dev libassimp-dev
 
 script:
    - git submodule update --init
