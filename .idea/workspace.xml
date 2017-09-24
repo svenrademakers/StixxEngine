@@ -50,7 +50,6 @@
   <component name="ChangeListManager">
     <list default="true" id="683ac554-8b53-4ffa-abe6-f120eb2bdcf0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.travis.yml" afterPath="$PROJECT_DIR$/.travis.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stixxVulkan/src/SurfaceVulkan.cpp" afterPath="$PROJECT_DIR$/stixxVulkan/src/SurfaceVulkan.cpp" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -162,7 +161,7 @@
         <entry file="file://$PROJECT_DIR$/.travis.yml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="136">
-              <caret line="8" column="55" lean-forward="false" selection-start-line="8" selection-start-column="55" selection-end-line="8" selection-end-column="55" />
+              <caret line="8" column="70" lean-forward="false" selection-start-line="8" selection-start-column="70" selection-end-line="8" selection-end-column="70" />
               <folding />
             </state>
           </provider>
@@ -447,12 +446,12 @@
       <option name="presentableId" value="Default" />
       <updated>1506239177336</updated>
       <workItem from="1506239179903" duration="3743000" />
-      <workItem from="1506249134990" duration="1034000" />
+      <workItem from="1506249134990" duration="1212000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4777000" />
+    <option name="totallyTimeSpent" value="4955000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="456" y="103" width="2505" height="1455" extended-state="6" />
@@ -749,7 +748,7 @@
     <entry file="file://$PROJECT_DIR$/.travis.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
-          <caret line="8" column="55" lean-forward="false" selection-start-line="8" selection-start-column="55" selection-end-line="8" selection-end-column="55" />
+          <caret line="8" column="70" lean-forward="false" selection-start-line="8" selection-start-column="70" selection-end-line="8" selection-end-column="70" />
           <folding />
         </state>
       </provider>
