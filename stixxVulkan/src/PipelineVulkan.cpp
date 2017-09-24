@@ -26,7 +26,7 @@ namespace sx
 		vertexInputAttributeDescriptions[0].binding = 0;
 		vertexInputAttributeDescriptions[0].location = 0;
 		vertexInputAttributeDescriptions[0].format = VK_FORMAT_R32G32_SFLOAT;
-		vertexInputAttributeDescriptions[0].offset = offsetof(sx::Vertex, Position);
+		vertexInputAttributeDescriptions[0].offset = offsetof(sx::Vertex, Normal);
 
 //		vertexInputAttributeDescriptions[1].binding = 0;
 //		vertexInputAttributeDescriptions[1].location = 1;

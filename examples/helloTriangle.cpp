@@ -10,17 +10,17 @@ int main(void)
     std::vector<sx::Vertex> vertices;
     std::vector<uint32_t> indices;
     std::vector<sx::Texture> texture;
-    //static MeshLoaderAssimp meshLoader("/home/sven/Documents/Stixx/examples/aap.obj");
+    //static MeshLoaderAssimp meshLoader("/home/sven/Documents/Stixx/examples/cube.obj");
     //meshLoader.Next(vertices, indices, texture);
 
     sx::Vertex vertex;
-    vertex.Position = {-0.5f,-0.5f,0.0};
+    vertex.Normal = {-0.5f,-0.5f,-0.7};
     vertices.push_back(vertex);
-    vertex.Position = {0.5,-0.5,0.0};
+    vertex.Normal = {0.5,-0.5,0.3};
     vertices.push_back(vertex);
-    vertex.Position = {0.5,0.5,0.0};
+    vertex.Normal = {0.5,0.5,0.0};
     vertices.push_back(vertex);
-    vertex.Position = {-0.5f, 0.5f, 0.0};
+    vertex.Normal = {-0.5f, 0.5f, 0.0};
     vertices.push_back(vertex);
 
     indices = {0,1,2,2,3,0};

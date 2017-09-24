@@ -9,8 +9,8 @@ namespace
 {
 	VkSemaphore imageAvailableSemaphore;
 	VkSemaphore renderFinishedSemaphore;
-    uint32_t memorySize;
-    uint32_t indicesSize;
+    uint32_t vertexCount;
+    uint32_t indicesCount;
 
 	uint32_t QueueFamily(vk::PhysicalDevice device, vk::QueueFlags type)
 	{
@@ -139,15 +139,15 @@ namespace sx
     void RendererVulkan::LoadScene(const std::vector<sx::Vertex>& vertices, const std::vector<uint32_t>& indices)
 	{
         VkDevice dev = device;
-        indicesSize = (indices.size() * sizeof(uint32_t));
-        memorySize = (vertices.size() * sizeof(sx::Vertex));
+        indicesCount = indices.size();
+        vertexCount = vertices.size();
 
         VkBuffer buffer;
         VkBufferCreateInfo createVertexBuffer = {};
         createVertexBuffer.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
         createVertexBuffer.usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;
         createVertexBuffer.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
-        createVertexBuffer.size = memorySize;
+        createVertexBuffer.size = (vertices.size() * sizeof(sx::Vertex));
         vkCreateBuffer(device, &createVertexBuffer, nullptr, &buffer);
         buffers.push_back(buffer);
 
@@ -156,7 +156,7 @@ namespace sx
         createIndicesBuffer.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
         createIndicesBuffer.usage = VK_BUFFER_USAGE_INDEX_BUFFER_BIT;
         createIndicesBuffer.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
-        createIndicesBuffer.size = indicesSize;
+        createIndicesBuffer.size = (indices.size() * sizeof(uint32_t));
         vkCreateBuffer(device, &createIndicesBuffer, nullptr, &IndicesBuffer);
         buffers.push_back(IndicesBuffer);
 
@@ -181,12 +181,12 @@ namespace sx
 
         void* data;
 		vkMapMemory(device, memory, 0, allocInfo.allocationSize, 0, &data);
-		memcpy(data, vertices.data(), memorySize);
+		memcpy(data, vertices.data(), (vertices.size() * sizeof(sx::Vertex)));
         vkUnmapMemory(device, memory);
 
         data= nullptr;
         vkMapMemory(device, memory2, 0, allocInfo.allocationSize, 0, &data);
-        memcpy(data, indices.data(), indicesSize);
+        memcpy(data, indices.data(), (indices.size() * sizeof(uint32_t)));
         vkUnmapMemory(device, memory2);
 
 
@@ -221,7 +221,7 @@ namespace sx
             VkDeviceSize offsets[] = {0};
             vkCmdBindVertexBuffers(commandBuffers[i], 0, 1, vertexBuffers, offsets);
             vkCmdBindIndexBuffer(commandBuffers[i], buffers[1], 0, VK_INDEX_TYPE_UINT32);
-            vkCmdDrawIndexed(commandBuffers[i], 6, 1, 0, 0, 0);
+            vkCmdDrawIndexed(commandBuffers[i], indicesCount, 1, 0, 0, 0);
 
             vkCmdEndRenderPass(commandBuffers[i]);
             if (vkEndCommandBuffer(commandBuffers[i]) != VK_SUCCESS)
