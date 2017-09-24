@@ -4,13 +4,12 @@
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
 image: pmathia0/gcc-cmake-vulkan:latest
- 
+
 pipelines:
-  branches:
-    develop feature/*:
+ branches:
+  develop:
     - step:
         script:
-        - cd ..
-        - mkdir build && cd build
-        - cmake ../stixx -DCMAKE_BUILD_TYPE=Debug
+        - git submodule update --init
+        - cmake -DCMAKE_BUILD_TYPE=Release
         - make
