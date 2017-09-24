@@ -10,6 +10,7 @@ namespace
 	VkSemaphore imageAvailableSemaphore;
 	VkSemaphore renderFinishedSemaphore;
     uint32_t memorySize;
+    uint32_t indicesSize;
 
 	uint32_t QueueFamily(vk::PhysicalDevice device, vk::QueueFlags type)
 	{
@@ -137,28 +138,57 @@ namespace sx
 
     void RendererVulkan::LoadScene(const std::vector<sx::Vertex>& vertices, const std::vector<uint32_t>& indices)
 	{
-		VkBufferCreateInfo createBuffer = {};
-		createBuffer.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
-		createBuffer.usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;
-		createBuffer.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+        VkDevice dev = device;
+        indicesSize = (indices.size() * sizeof(uint32_t));
         memorySize = (vertices.size() * sizeof(sx::Vertex));
-		createBuffer.size = memorySize;
-        buffer = device.createBuffer(createBuffer, nullptr);
+
+        VkBuffer buffer;
+        VkBufferCreateInfo createVertexBuffer = {};
+        createVertexBuffer.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
+        createVertexBuffer.usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;
+        createVertexBuffer.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+        createVertexBuffer.size = memorySize;
+        vkCreateBuffer(device, &createVertexBuffer, nullptr, &buffer);
+        buffers.push_back(buffer);
+
+        VkBuffer IndicesBuffer;
+        VkBufferCreateInfo createIndicesBuffer = {};
+        createIndicesBuffer.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
+        createIndicesBuffer.usage = VK_BUFFER_USAGE_INDEX_BUFFER_BIT;
+        createIndicesBuffer.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+        createIndicesBuffer.size = indicesSize;
+        vkCreateBuffer(device, &createIndicesBuffer, nullptr, &IndicesBuffer);
+        buffers.push_back(IndicesBuffer);
 
         auto memRequirements = device.getBufferMemoryRequirements(buffer);
+        auto memRequirements2 = device.getBufferMemoryRequirements(IndicesBuffer);
 
-		VkMemoryAllocateInfo allocInfo = {};
+
+        VkMemoryAllocateInfo allocInfo = {};
 		allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
 		allocInfo.allocationSize = memRequirements.size;
 		allocInfo.memoryTypeIndex = MemoryType(pdevice, memRequirements.memoryTypeBits, vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::eHostCoherent);
         auto memory = device.allocateMemory(allocInfo, nullptr);
 
-        device.bindBufferMemory(buffer, memory, 0);
 
-		void* data;
-		vkMapMemory(device, memory, 0, createBuffer.size, 0, &data);
-		memcpy(data, vertices.data(), (size_t) createBuffer.size);
-		vkUnmapMemory(device, memory);
+        allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+        allocInfo.allocationSize = memRequirements2.size;
+        allocInfo.memoryTypeIndex = MemoryType(pdevice, memRequirements2.memoryTypeBits, vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::eHostCoherent);
+        auto memory2 = device.allocateMemory(allocInfo, nullptr);
+
+        device.bindBufferMemory(buffers[0], memory, 0);
+        device.bindBufferMemory(buffers[1], memory2, 0);
+
+        void* data;
+		vkMapMemory(device, memory, 0, allocInfo.allocationSize, 0, &data);
+		memcpy(data, vertices.data(), memorySize);
+        vkUnmapMemory(device, memory);
+
+        data= nullptr;
+        vkMapMemory(device, memory2, 0, allocInfo.allocationSize, 0, &data);
+        memcpy(data, indices.data(), indicesSize);
+        vkUnmapMemory(device, memory2);
+
 
         LoadDrawingCommands();
 	}
@@ -187,7 +217,7 @@ namespace sx
             vkCmdBeginRenderPass(commandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
             vkCmdBindPipeline(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, *pipeline);
 
-            VkBuffer vertexBuffers[] = {buffer};
+            VkBuffer vertexBuffers[] = {buffers[0]};
             VkDeviceSize offsets[] = {0};
             vkCmdBindVertexBuffers(commandBuffers[i], 0, 1, vertexBuffers, offsets);
 

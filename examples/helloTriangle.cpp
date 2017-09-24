@@ -21,6 +21,8 @@ int main(void)
     vertex.Position = {0.0,0.5,0.0};
     vertices.push_back(vertex);
 
+    indices = {0,1,2,2,3,0};
+
     static sx::FileSystemStd fileSystem;
     static sx::WindowGlfw window("Hello Triangle", 800, 600);
 

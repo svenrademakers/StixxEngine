@@ -34,7 +34,7 @@ namespace sx
 		vk::CommandPool commandPool;
 		std::vector<vk::CommandBuffer> commandBuffers;
 		VkQueue graphicsQueue;
-		vk::Buffer buffer;
+		std::vector<VkBuffer> buffers;
         SurfaceVulkan surface;
         SwapchainVulkan swapchain;
         RenderPassVulkan renderPass;
