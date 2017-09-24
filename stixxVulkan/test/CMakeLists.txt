@@ -5,5 +5,5 @@ target_include_directories(vulkan_microtests
 	PRIVATE
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
 
-target_link_libraries(vulkan_microtests StixxImplVulkan gtest gmock)
+target_link_libraries(vulkan_microtests StixxVulkan gtest gmock)
 install(TARGETS vulkan_microtests DESTINATION bin)

@@ -3,12 +3,12 @@ find_package(assimp REQUIRED)
 file(GLOB_RECURSE sources src/*.cpp)
 file(GLOB_RECURSE headers include/*.hpp)
 
-add_library(StixxCore
+add_library(Stixx
 	${sources}
 	${headers}
 )
 
-target_include_directories(StixxCore
+target_include_directories(Stixx
 	PUBLIC
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interfaces>
@@ -17,18 +17,18 @@ target_include_directories(StixxCore
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
 		$<BUILD_INTERFACE:${ASSIMP_INCLUDE_DIRS}>)
 
-target_compile_features(StixxCore PUBLIC cxx_override cxx_inheriting_constructors)
-target_link_libraries(StixxCore glfw ${ASSIMP_LIBRARIES})
+target_compile_features(Stixx PUBLIC cxx_override cxx_inheriting_constructors)
+target_link_libraries(Stixx glfw ${ASSIMP_LIBRARIES})
 
 install(DIRECTORY include interfaces DESTINATION include)
 
-install(TARGETS StixxCore
-		EXPORT 	StixxCore-targets
+install(TARGETS Stixx
+		EXPORT 	Stixx-targets
     	ARCHIVE  DESTINATION lib
     	LIBRARY  DESTINATION lib
     	RUNTIME  DESTINATION bin)
 
-install(EXPORT StixxCore-targets FILE StixxCore-config.cmake DESTINATION lib/cmake/StixxCore)
+install(EXPORT Stixx-targets FILE Stixx-config.cmake DESTINATION lib/cmake/Stixx)
 
 #find_package(GTest REQUIRED)
 

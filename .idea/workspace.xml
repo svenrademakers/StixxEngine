@@ -10,16 +10,54 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="20a72439-077e-46e4-baf2-c915d99bd98d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxCore/CMakeLists.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxCore/include/FileSystem.hpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxCore/include/MeshLoaderAssimp.hpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxCore/include/Observer.hpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxCore/include/Renderer.hpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxCore/include/Window.hpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxCore/include/WindowGlfw.hpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxCore/interfaces/Mesh.hpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxCore/interfaces/MeshLoader.hpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxCore/interfaces/Scene.hpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxCore/interfaces/Shader.h" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxCore/interfaces/ShaderLoader.hpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxCore/src/FileSystem.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxCore/src/MeshLoaderAssimp.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxCore/src/Observer.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxCore/src/ShaderLoader.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxCore/src/WindowGlfw.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplGL/MeshGL.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplGL/MeshGL.hpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplGL/ShaderGL.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplGL/ShaderGL.hpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplGL/shaders/fragment.shdr" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplGL/shaders/main.shdr" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/CMakeLists.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/include/DeviceVulkan.hpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/include/HandleExposer.hpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/include/InstanceVulkan.hpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/include/PipelineVulkan.hpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/include/RenderPassVulkan.hpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/include/RendererVulkan.hpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/include/ShaderVulkan.hpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/include/SurfaceVulkan.hpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/include/SwapchainVulkan.hpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/src/DeviceVulkan.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/src/InstanceVulkan.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/src/PipelineVulkan.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/src/RenderPassVulkan.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/src/RendererVulkan.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/src/ShaderVulkan.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/src/SurfaceVulkan.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/src/SwapchainVulkan.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/test/CMakeLists.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/test/TestRenderer.cpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/test/mocks/VulkanMock.hpp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/test/test.cpp" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMakeLists.txt" afterPath="$PROJECT_DIR$/CMakeLists.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/helloTriangle.cpp" afterPath="$PROJECT_DIR$/examples/helloTriangle.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stixxCore/include/Renderer.hpp" afterPath="$PROJECT_DIR$/stixxCore/include/Renderer.hpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stixxCore/src/WindowGlfw.cpp" afterPath="$PROJECT_DIR$/stixxCore/src/WindowGlfw.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stixxImplVulkan/CMakeLists.txt" afterPath="$PROJECT_DIR$/stixxImplVulkan/CMakeLists.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stixxImplVulkan/include/RendererVulkan.hpp" afterPath="$PROJECT_DIR$/stixxImplVulkan/include/RendererVulkan.hpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stixxImplVulkan/src/RendererVulkan.cpp" afterPath="$PROJECT_DIR$/stixxImplVulkan/src/RendererVulkan.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stixxImplVulkan/test/TestRenderer.cpp" afterPath="$PROJECT_DIR$/stixxImplVulkan/test/TestRenderer.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/CMakeLists.txt" afterPath="$PROJECT_DIR$/examples/CMakeLists.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stixxShaders/CMakeLists.txt" afterPath="$PROJECT_DIR$/stixxShaders/CMakeLists.txt" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -31,41 +69,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="VulkanMock.hpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/stixxImplVulkan/test/mocks/VulkanMock.hpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="3" column="16" lean-forward="false" selection-start-line="3" selection-start-column="16" selection-end-line="3" selection-end-column="16" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TestRenderer.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/stixxImplVulkan/test/TestRenderer.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="29" column="0" lean-forward="true" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PipelineVulkan.hpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/stixxImplVulkan/include/PipelineVulkan.hpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="14" lean-forward="false" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="helloTriangle.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/examples/helloTriangle.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" column="20" lean-forward="false" selection-start-line="1" selection-start-column="20" selection-end-line="1" selection-end-column="20" />
+            <state relative-caret-position="68">
+              <caret line="4" column="14" lean-forward="false" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -80,6 +88,7 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/stixxImplVulkan/test/TestRenderer.cpp" />
+        <option value="$PROJECT_DIR$/examples/CMakeLists.txt" />
       </list>
     </option>
   </component>
@@ -123,36 +132,6 @@
               <item name="stixx" type="462c0819:PsiDirectoryNode" />
               <item name="examples" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="stixx" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
-              <item name="stixx" type="462c0819:PsiDirectoryNode" />
-              <item name="stixxImplVulkan" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="stixx" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
-              <item name="stixx" type="462c0819:PsiDirectoryNode" />
-              <item name="stixxImplVulkan" type="462c0819:PsiDirectoryNode" />
-              <item name="include" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="stixx" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
-              <item name="stixx" type="462c0819:PsiDirectoryNode" />
-              <item name="stixxImplVulkan" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="stixx" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
-              <item name="stixx" type="462c0819:PsiDirectoryNode" />
-              <item name="stixxImplVulkan" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="stixx" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
-              <item name="stixx" type="462c0819:PsiDirectoryNode" />
-              <item name="stixxImplVulkan" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="mocks" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -186,14 +165,15 @@
       <updated>1506233379089</updated>
       <workItem from="1506233381914" duration="875000" />
       <workItem from="1506235108236" duration="186000" />
+      <workItem from="1506236290213" duration="24000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1061000" />
+    <option name="totallyTimeSpent" value="1085000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="57" y="-4" width="2503" height="1444" extended-state="6" />
+    <frame x="456" y="103" width="2505" height="1455" extended-state="6" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24970035" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -234,6 +214,38 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/stixxImplVulkan/test/mocks/VulkanMock.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="16" lean-forward="false" selection-start-line="3" selection-start-column="16" selection-end-line="3" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stixxImplVulkan/test/TestRenderer.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="29" column="0" lean-forward="true" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stixxImplVulkan/include/PipelineVulkan.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="14" lean-forward="false" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/helloTriangle.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="20" lean-forward="false" selection-start-line="1" selection-start-column="20" selection-end-line="1" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/stixxImplVulkan/test/mocks/VulkanMock.hpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -288,17 +300,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/helloTriangle.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="20" lean-forward="false" selection-start-line="1" selection-start-column="20" selection-end-line="1" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/stixxImplVulkan/test/mocks/VulkanMock.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
+        <state relative-caret-position="51">
           <caret line="3" column="16" lean-forward="false" selection-start-line="3" selection-start-column="16" selection-end-line="3" selection-end-column="16" />
           <folding />
         </state>
@@ -306,8 +310,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/stixxImplVulkan/test/TestRenderer.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
+        <state relative-caret-position="493">
           <caret line="29" column="0" lean-forward="true" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="42" lean-forward="true" selection-start-line="1" selection-start-column="42" selection-end-line="1" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/helloTriangle.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="14" lean-forward="false" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
           <folding />
         </state>
       </provider>
