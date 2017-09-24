@@ -17,10 +17,10 @@ namespace sx
 		this->device = device;
 		VkPipelineShaderStageCreateInfo shaderStages[] = { vertex.GetConfiguration(), fragment.GetConfiguration() };
 
-		VkVertexInputBindingDescription vertexInputBindingDescription = {};
-		vertexInputBindingDescription.binding = 0;
-		vertexInputBindingDescription.stride = sizeof(sx::Vertex);
-		vertexInputBindingDescription.inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
+		std::array<VkVertexInputBindingDescription, 1> vertexInputBindingDescription = {};
+		vertexInputBindingDescription[0].binding = 0;
+		vertexInputBindingDescription[0].stride = sizeof(sx::Vertex);
+		vertexInputBindingDescription[0].inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
 
 		std::array<VkVertexInputAttributeDescription, 1> vertexInputAttributeDescriptions;
 		vertexInputAttributeDescriptions[0].binding = 0;
@@ -35,10 +35,10 @@ namespace sx
 
 		VkPipelineVertexInputStateCreateInfo vertexInputInfo = {};
 		vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-		vertexInputInfo.vertexBindingDescriptionCount = 0;
-		vertexInputInfo.vertexAttributeDescriptionCount = 0;
-		//vertexInputInfo.pVertexAttributeDescriptions = vertexInputAttributeDescriptions.data();
-		//vertexInputInfo.pVertexBindingDescriptions = &vertexInputBindingDescription;
+		vertexInputInfo.vertexAttributeDescriptionCount = vertexInputAttributeDescriptions.size();
+		vertexInputInfo.pVertexAttributeDescriptions = vertexInputAttributeDescriptions.data();
+		vertexInputInfo.pVertexBindingDescriptions = vertexInputBindingDescription.data();
+        vertexInputInfo.vertexBindingDescriptionCount = vertexInputBindingDescription.size();
 
 		VkPipelineInputAssemblyStateCreateInfo inputAssembly = {};
 		inputAssembly.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;

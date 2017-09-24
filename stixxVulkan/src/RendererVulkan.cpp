@@ -137,28 +137,28 @@ namespace sx
 
     void RendererVulkan::LoadScene(const std::vector<sx::Vertex>& vertices, const std::vector<uint32_t>& indices)
 	{
-//		VkBufferCreateInfo createBuffer = {};
-//		createBuffer.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
-//		createBuffer.usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;
-//		createBuffer.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
-//        memorySize = (vertices.size() * sizeof(sx::Vertex));
-//		createBuffer.size = memorySize;
-//        buffer = device.createBuffer(createBuffer, nullptr);
-//
-//        auto memRequirements = device.getBufferMemoryRequirements(buffer);
-//
-//		VkMemoryAllocateInfo allocInfo = {};
-//		allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
-//		allocInfo.allocationSize = memRequirements.size;
-//		allocInfo.memoryTypeIndex = MemoryType(pdevice, memRequirements.memoryTypeBits, vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::eHostCoherent);
-//        auto memory = device.allocateMemory(allocInfo, nullptr);
-//
-//        device.bindBufferMemory(buffer, memory, 0);
-//
-//		void* data;
-//		vkMapMemory(device, memory, 0, createBuffer.size, 0, &data);
-//		memcpy(data, vertices.data(), (size_t) createBuffer.size);
-//		vkUnmapMemory(device, memory);
+		VkBufferCreateInfo createBuffer = {};
+		createBuffer.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
+		createBuffer.usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;
+		createBuffer.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+        memorySize = (vertices.size() * sizeof(sx::Vertex));
+		createBuffer.size = memorySize;
+        buffer = device.createBuffer(createBuffer, nullptr);
+
+        auto memRequirements = device.getBufferMemoryRequirements(buffer);
+
+		VkMemoryAllocateInfo allocInfo = {};
+		allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+		allocInfo.allocationSize = memRequirements.size;
+		allocInfo.memoryTypeIndex = MemoryType(pdevice, memRequirements.memoryTypeBits, vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::eHostCoherent);
+        auto memory = device.allocateMemory(allocInfo, nullptr);
+
+        device.bindBufferMemory(buffer, memory, 0);
+
+		void* data;
+		vkMapMemory(device, memory, 0, createBuffer.size, 0, &data);
+		memcpy(data, vertices.data(), (size_t) createBuffer.size);
+		vkUnmapMemory(device, memory);
 
         LoadDrawingCommands();
 	}
@@ -180,16 +180,16 @@ namespace sx
             renderPassInfo.renderArea.offset = { 0, 0 };
             renderPassInfo.renderArea.extent = surface.Extent();
 
-            VkClearValue clearColor = { 0.0f, 0.4f, 0.0f, 1.0f };
+            VkClearValue clearColor = { 0.0f, 0.0f, 0.0f, 1.0f };
             renderPassInfo.clearValueCount = 1;
             renderPassInfo.pClearValues = &clearColor;
 
             vkCmdBeginRenderPass(commandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
             vkCmdBindPipeline(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, *pipeline);
-//
-//            VkBuffer vertexBuffers[] = {buffer};
-//            VkDeviceSize offsets[] = {0};
-//            vkCmdBindVertexBuffers(commandBuffers[i], 0, 1, vertexBuffers, offsets);
+
+            VkBuffer vertexBuffers[] = {buffer};
+            VkDeviceSize offsets[] = {0};
+            vkCmdBindVertexBuffers(commandBuffers[i], 0, 1, vertexBuffers, offsets);
 
             vkCmdDraw(commandBuffers[i], memorySize, 1, 0, 0);
 
