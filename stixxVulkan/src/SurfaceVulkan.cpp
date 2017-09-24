@@ -3,10 +3,6 @@
 #include <stdexcept>
 #include <iostream>
 #include "WindowGlfw.hpp"
-//
-//auto surfaceSize = vk::Extent2D(width, height);
-//auto renderArea = vk::Rect2D(vk::Offset2D(), surfaceSize);
-//auto viewport = vk::Viewport(0.0f, 0.0f, width, height, 0, 1.0f);
 
 namespace
 {
