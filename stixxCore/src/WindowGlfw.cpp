@@ -72,8 +72,8 @@ namespace sx
 		const char** glfwExtensions;
 		glfwExtensions = glfwGetRequiredInstanceExtensions(&count);
 		
-		if (glfwExtensions == nullptr)
-			std::runtime_error("error retrieving Instance Extensions");
+		if (glfwExtensions == nullptr || count == 0)
+			throw std::runtime_error("error retrieving Instance Extensions");
 
 		std::vector<const char*> extensions;
 		extensions.insert(extensions.end(), glfwExtensions, glfwExtensions + count);

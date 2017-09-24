@@ -18,19 +18,15 @@ target_include_directories(StixxImplVulkan
 	PRIVATE
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>)
 
-target_link_libraries(StixxImplVulkan StixxCore ${Vulkan_LIBRARIES})
+target_link_libraries(StixxImplVulkan ${Vulkan_LIBRARIES} StixxCore)
 target_compile_features(StixxImplVulkan PUBLIC cxx_override cxx_inheriting_constructors)
-install(DIRECTORY include DESTINATION include/stixx)
 
+install(DIRECTORY include DESTINATION include/stixx)
 install(TARGETS StixxImplVulkan
 		EXPORT 	StixxImplVulkan-targets
     	ARCHIVE  DESTINATION lib
     	LIBRARY  DESTINATION lib
     	RUNTIME  DESTINATION bin)
-
 install(EXPORT StixxImplVulkan-targets FILE StixxImplVulkan-config.cmake DESTINATION lib/cmake/StixxImplVulkan)
 
-file(GLOB_RECURSE tests test/*.cpp)
-add_executable(vulkan_microtests ${tests})
-target_link_libraries(vulkan_microtests StixxImplVulkan gtest gmock)
-install(TARGETS vulkan_microtests DESTINATION bin)
+add_subdirectory(test)

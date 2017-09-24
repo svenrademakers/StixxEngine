@@ -23,6 +23,7 @@ namespace sx
 		RendererVulkan& operator = (const RendererVulkan&) = delete;
 		virtual ~RendererVulkan();
 
+        void LoadScene(const std::vector<sx::Vertex>& vertex, const std::vector<uint32_t>& indices) override;
 		void Draw() override;
 
 	private:

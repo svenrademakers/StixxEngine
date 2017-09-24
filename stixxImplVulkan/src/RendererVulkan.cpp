@@ -23,6 +23,25 @@ namespace
 
 		return  static_cast<uint32_t>(std::distance(devices.begin(), Queue));
 	}
+
+
+	uint32_t MemoryType(vk::PhysicalDevice& physicalDevice, uint32_t typeBits, vk::MemoryPropertyFlags properties)
+	{
+        vk::PhysicalDeviceMemoryProperties memoryProperties;
+        physicalDevice.getMemoryProperties(&memoryProperties);
+
+		for (uint32_t i = 0; i < memoryProperties.memoryTypeCount; i++)
+		{
+			if ((typeBits & 1) == 1)
+			{
+				if ((memoryProperties.memoryTypes[i].propertyFlags & properties) == properties)
+				{
+					return i;
+				}
+			}
+			typeBits >>= 1;
+		}
+	};
 }
 
 namespace sx
@@ -148,6 +167,26 @@ namespace sx
 		vkDestroySemaphore(device, imageAvailableSemaphore, nullptr);
 		vkDestroyCommandPool(device, commandPool, nullptr);
     }
+
+    void RendererVulkan::LoadScene(const std::vector<sx::Vertex>& vertices, const std::vector<uint32_t>& indices)
+	{
+		VkBufferCreateInfo createBuffer = {};
+		createBuffer.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
+		createBuffer.usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;
+		createBuffer.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+		createBuffer.size = (vertices.size() * sizeof(sx::Vertex));
+        vk::Buffer buffer = device.createBuffer(createBuffer, nullptr);
+
+        auto memRequirements = device.getBufferMemoryRequirements(buffer);
+
+		VkMemoryAllocateInfo allocInfo = {};
+		allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+		allocInfo.allocationSize = memRequirements.size;
+		allocInfo.memoryTypeIndex = MemoryType(pdevice, memRequirements.memoryTypeBits, vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::eHostCoherent);
+        auto memory = device.allocateMemory(allocInfo, nullptr);
+
+        device.bindBufferMemory(buffer, memory, 0);
+	}
 
 	void RendererVulkan::Draw()
 	{

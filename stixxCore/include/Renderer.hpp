@@ -9,6 +9,7 @@ namespace sx
 	{
 	public:
 		virtual ~Renderer(){};
+		virtual void LoadScene(const std::vector<sx::Vertex>& vertices, const std::vector<uint32_t>& indices) =0;
 		virtual void Draw()  = 0;
 	};
 }
