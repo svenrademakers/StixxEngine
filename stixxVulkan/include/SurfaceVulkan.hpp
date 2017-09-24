@@ -17,20 +17,21 @@ namespace sx
 		virtual ~SurfaceVulkan();
 
         void Init(vk::Instance& instance,vk::PhysicalDevice& pdevice, Window &window);
+
 		uint32_t ImageCount();
 		VkPresentModeKHR PresentMode();
-
+		VkSurfaceFormatKHR Format();
+		VkExtent2D Extent();
+		VkSurfaceTransformFlagBitsKHR CurrentTransform();
 	private:
 		vk::PhysicalDevice pdevice;
 		VkInstance instance;
+		VkSurfaceFormatKHR format;
 
-	public:
 		vk::Format surfaceDepthFormat;
-		vk::Format surfaceColorFormat;
-		vk::ColorSpaceKHR surfaceColorSpace;
 
 		VkExtent2D extent;
-		VkSurfaceTransformFlagBitsKHR surfaceTransformFlagBitsKHR;
+		VkSurfaceTransformFlagBitsKHR currentTransform;
 	};
 }
 

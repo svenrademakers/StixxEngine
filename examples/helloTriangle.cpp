@@ -10,14 +10,16 @@ int main(void)
     std::vector<sx::Vertex> vertex;
     std::vector<uint32_t> indices;
     std::vector<sx::Texture> texture;
-    static MeshLoaderAssimp meshLoader("/home/sven/stixx/examples/aap.obj");
+    static MeshLoaderAssimp meshLoader("/home/sven/Documents/Stixx/examples/aap.obj");
     meshLoader.Next(vertex, indices, texture);
 
     static sx::FileSystemStd fileSystem;
     static sx::WindowGlfw window("Hello Triangle", 800, 600);
 
-    static sx::RendererVulkan renderer(window, fileSystem.LoadFile("/home/sven/stixx/stixxShaders/vert.spv"), fileSystem.LoadFile("/home/sven/stixx/stixxShaders/frag.spv"));
-
+    static sx::RendererVulkan renderer(window,
+                                       fileSystem.LoadFile("/home/sven/Documents/Stixx/stixxShaders/vert.spv"),
+                                       fileSystem.LoadFile("/home/sven/Documents/Stixx/stixxShaders/frag.spv"));
+    renderer.LoadScene(vertex, indices);
     while (!window.ShouldClose()) {
         window.Poll();
         renderer.Draw();

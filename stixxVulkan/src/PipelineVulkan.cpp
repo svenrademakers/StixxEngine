@@ -1,5 +1,6 @@
 #include "PipelineVulkan.hpp"
 #include <stdexcept>
+#include <Mesh.hpp>
 
 
 namespace sx
@@ -13,12 +14,31 @@ namespace sx
 
 	void PipelineVulkan::Init(vk::Device& device, RenderPassVulkan& renderpass, SurfaceVulkan& surface, ShaderVertexVulkan& vertex, ShaderFragmentVulkan& fragment, vk::Viewport& viewport)
 	{
+		this->device = device;
 		VkPipelineShaderStageCreateInfo shaderStages[] = { vertex.GetConfiguration(), fragment.GetConfiguration() };
+
+		VkVertexInputBindingDescription vertexInputBindingDescription = {};
+		vertexInputBindingDescription.binding = 0;
+		vertexInputBindingDescription.stride = sizeof(sx::Vertex);
+		vertexInputBindingDescription.inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
+
+		std::array<VkVertexInputAttributeDescription, 1> vertexInputAttributeDescriptions;
+		vertexInputAttributeDescriptions[0].binding = 0;
+		vertexInputAttributeDescriptions[0].location = 0;
+		vertexInputAttributeDescriptions[0].format = VK_FORMAT_R32G32_SFLOAT;
+		vertexInputAttributeDescriptions[0].offset = offsetof(sx::Vertex, Position);
+
+//		vertexInputAttributeDescriptions[1].binding = 0;
+//		vertexInputAttributeDescriptions[1].location = 1;
+//		vertexInputAttributeDescriptions[1].format = VK_FORMAT_R32G32B32_SFLOAT;
+//		vertexInputAttributeDescriptions[1].offset = offsetof(sx::Vertex, color);
 
 		VkPipelineVertexInputStateCreateInfo vertexInputInfo = {};
 		vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
 		vertexInputInfo.vertexBindingDescriptionCount = 0;
 		vertexInputInfo.vertexAttributeDescriptionCount = 0;
+		//vertexInputInfo.pVertexAttributeDescriptions = vertexInputAttributeDescriptions.data();
+		//vertexInputInfo.pVertexBindingDescriptions = &vertexInputBindingDescription;
 
 		VkPipelineInputAssemblyStateCreateInfo inputAssembly = {};
 		inputAssembly.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
@@ -27,7 +47,7 @@ namespace sx
 
 		VkRect2D scissor = {};
 		scissor.offset = { 0, 0 };
-		scissor.extent = surface.extent;
+		scissor.extent = surface.Extent();
 		VkViewport vkViewport = viewport;
 		VkPipelineViewportStateCreateInfo viewportState = {};
 		viewportState.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;

@@ -13,10 +13,11 @@ namespace sx
 		vkDestroyRenderPass(device, handle, nullptr);
 	}
 
-	void RenderPassVulkan::Init(vk::Device &device, SwapchainVulkan &swapchain)
+	void RenderPassVulkan::Init(vk::Device &device, SwapchainVulkan &swapchain, SurfaceVulkan& surface)
 	{
+		this->device = device;
 		VkAttachmentDescription colorAttachment = {};
-		colorAttachment.format = swapchain.Format();
+		colorAttachment.format = surface.Format().format;
 		colorAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
 		colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
 		colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
@@ -65,8 +66,7 @@ namespace sx
 			framebufferInfo.renderPass = handle;
 			framebufferInfo.attachmentCount = 1;
 			framebufferInfo.pAttachments = attachments;
-			framebufferInfo.width = swapchain.Extent().width;
-			framebufferInfo.height = swapchain.Extent().height;
+			framebufferInfo.height = surface.Extent().height;
 			framebufferInfo.layers = 1;
 
 			if (vkCreateFramebuffer(device, &framebufferInfo, nullptr, &frameBuffers[i]) != VK_SUCCESS)

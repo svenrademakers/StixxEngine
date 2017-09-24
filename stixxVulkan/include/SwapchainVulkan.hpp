@@ -21,14 +21,8 @@ namespace sx
 	public:
 		std::vector<VkImageView>& ImageViews();
 
-		// mmhh
-		VkFormat Format();
-		VkExtent2D Extent();
-
 	private:
 		std::vector<VkImageView> swapChainImageViews;
-		VkFormat format;
-		VkExtent2D extent;
 		VkDevice device;
 	};
 }

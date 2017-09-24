@@ -19,13 +19,13 @@ namespace sx
 		SwapchainInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
 		SwapchainInfo.surface = *surface;
 		SwapchainInfo.minImageCount = surface.ImageCount();
-		SwapchainInfo.imageFormat = static_cast<VkFormat>(surface.surfaceColorFormat);
-		SwapchainInfo.imageColorSpace = static_cast<VkColorSpaceKHR>(surface.surfaceColorSpace);
-		SwapchainInfo.imageExtent = surface.extent;
+		SwapchainInfo.imageFormat = surface.Format().format;
+		SwapchainInfo.imageColorSpace = surface.Format().colorSpace;
+		SwapchainInfo.imageExtent = surface.Extent();
 		SwapchainInfo.imageArrayLayers = 1;
 		SwapchainInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
 		SwapchainInfo.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE; //VK_SHARING_MODE_CONCURRENT
-		SwapchainInfo.preTransform = surface.surfaceTransformFlagBitsKHR;
+		SwapchainInfo.preTransform = surface.CurrentTransform();
 		SwapchainInfo.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
 		SwapchainInfo.presentMode = surface.PresentMode();
 		SwapchainInfo.clipped = VK_TRUE;
@@ -61,19 +61,8 @@ namespace sx
 		}
 	}
 
-
 	std::vector<VkImageView>& SwapchainVulkan::ImageViews()
 	{
 		return swapChainImageViews;
-	}
-
-	VkFormat SwapchainVulkan::Format()
-	{
-		return format;
-	}
-
-	VkExtent2D SwapchainVulkan::Extent()
-	{
-		return extent;
 	}
 }

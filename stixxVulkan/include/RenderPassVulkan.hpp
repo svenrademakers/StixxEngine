@@ -15,7 +15,7 @@ namespace sx
 		RenderPassVulkan() = default;
 		virtual ~RenderPassVulkan();
 
-		void Init(vk::Device& device, SwapchainVulkan& swapchain);
+		void Init(vk::Device& device, SwapchainVulkan& swapchain, SurfaceVulkan& surface);
 		const std::vector<VkFramebuffer>& FrameBuffers();
 
 	private:

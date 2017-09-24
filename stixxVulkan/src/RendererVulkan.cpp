@@ -9,6 +9,7 @@ namespace
 {
 	VkSemaphore imageAvailableSemaphore;
 	VkSemaphore renderFinishedSemaphore;
+    uint32_t memorySize;
 
 	uint32_t QueueFamily(vk::PhysicalDevice device, vk::QueueFlags type)
 	{
@@ -69,39 +70,30 @@ namespace sx
 
         pdevice = instance.enumeratePhysicalDevices()[0];
         auto gpuFeatures = pdevice.getFeatures();
-        auto gpuQueueProps = pdevice.getQueueFamilyProperties();
         uint32_t graphicsFamilyIndex = QueueFamily(pdevice, vk::QueueFlagBits::eGraphics);
 
         float priority = 1.0;
-        auto queueCreateInfos = std::vector<vk::DeviceQueueCreateInfo>();
+		std::array<VkDeviceQueueCreateInfo,1> queueInfos = {};
+		queueInfos[0].sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+		queueInfos[0].queueCount = 1;
+		queueInfos[0].pQueuePriorities = &priority;
+		queueInfos[0].queueFamilyIndex = graphicsFamilyIndex;
 
-        queueCreateInfos.push_back(
-                vk::DeviceQueueCreateInfo(
-                        vk::DeviceQueueCreateFlags(),
-                        graphicsFamilyIndex,
-                        1,
-                        &priority
-                )
-        );
+        std::array<const char *,1> deviceExtensions = {VK_KHR_SWAPCHAIN_EXTENSION_NAME};
+		VkDeviceCreateInfo deviceCreateInfo = {};
+		deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
+		deviceCreateInfo.pQueueCreateInfos = queueInfos.data();
+		deviceCreateInfo.queueCreateInfoCount = queueInfos.size();
+		deviceCreateInfo.ppEnabledExtensionNames = deviceExtensions.data();
+		deviceCreateInfo.enabledExtensionCount = deviceExtensions.size();
+		VkPhysicalDeviceFeatures features = gpuFeatures;
+		deviceCreateInfo.pEnabledFeatures = &features;
 
-        const char * deviceExtension = VK_KHR_SWAPCHAIN_EXTENSION_NAME;
-
-        device = pdevice.createDevice(
-                vk::DeviceCreateInfo(
-                        vk::DeviceCreateFlags(),
-                        queueCreateInfos.size(),
-                        queueCreateInfos.data(),
-                        0,
-                        nullptr,
-                        1,
-                        &deviceExtension,
-                        &gpuFeatures
-                )
-        );
+        device = pdevice.createDevice(deviceCreateInfo);
 
         surface.Init(instance, pdevice, window);
         swapchain.Init(device, surface);
-        renderPass.Init(device, swapchain);
+        renderPass.Init(device, swapchain, surface);
 
         vk::Viewport viewport(0.0f, 0.0f,
                               static_cast<float>(window.Size().first),
@@ -126,33 +118,6 @@ namespace sx
 
 		graphicsQueue = device.getQueue(graphicsFamilyIndex, 0);
 
-		for (size_t i = 0; i < commandBuffers.size(); i++) 
-		{
-			VkCommandBufferBeginInfo beginInfo = {};
-			beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
-			beginInfo.flags = VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT;
-
-			vkBeginCommandBuffer(commandBuffers[i], &beginInfo);
-
-			VkRenderPassBeginInfo renderPassInfo = {};
-			renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-			renderPassInfo.renderPass = *renderPass;
-			renderPassInfo.framebuffer = renderPass.FrameBuffers()[i];
-			renderPassInfo.renderArea.offset = { 0, 0 };
-			renderPassInfo.renderArea.extent = swapchain.Extent();
-
-			VkClearValue clearColor = { 0.0f, 0.0f, 0.0f, 1.0f };
-			renderPassInfo.clearValueCount = 1;
-			renderPassInfo.pClearValues = &clearColor;
-
-			vkCmdBeginRenderPass(commandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
-			vkCmdBindPipeline(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, *pipeline);
-			vkCmdDraw(commandBuffers[i], 3, 1, 0, 0);
-			vkCmdEndRenderPass(commandBuffers[i]);
-			if (vkEndCommandBuffer(commandBuffers[i]) != VK_SUCCESS)
-				throw std::runtime_error("failed to record command buffer!");
-		}
-
 		VkSemaphoreCreateInfo semaphoreInfo = {};
 		semaphoreInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
 
@@ -166,27 +131,74 @@ namespace sx
 		vkDestroySemaphore(device, renderFinishedSemaphore, nullptr);
 		vkDestroySemaphore(device, imageAvailableSemaphore, nullptr);
 		vkDestroyCommandPool(device, commandPool, nullptr);
+		//vkDestroyDevice(device, nullptr);
+		vkDestroyInstance(instance, nullptr);
     }
 
     void RendererVulkan::LoadScene(const std::vector<sx::Vertex>& vertices, const std::vector<uint32_t>& indices)
 	{
-		VkBufferCreateInfo createBuffer = {};
-		createBuffer.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
-		createBuffer.usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;
-		createBuffer.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
-		createBuffer.size = (vertices.size() * sizeof(sx::Vertex));
-        vk::Buffer buffer = device.createBuffer(createBuffer, nullptr);
+//		VkBufferCreateInfo createBuffer = {};
+//		createBuffer.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
+//		createBuffer.usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;
+//		createBuffer.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+//        memorySize = (vertices.size() * sizeof(sx::Vertex));
+//		createBuffer.size = memorySize;
+//        buffer = device.createBuffer(createBuffer, nullptr);
+//
+//        auto memRequirements = device.getBufferMemoryRequirements(buffer);
+//
+//		VkMemoryAllocateInfo allocInfo = {};
+//		allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+//		allocInfo.allocationSize = memRequirements.size;
+//		allocInfo.memoryTypeIndex = MemoryType(pdevice, memRequirements.memoryTypeBits, vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::eHostCoherent);
+//        auto memory = device.allocateMemory(allocInfo, nullptr);
+//
+//        device.bindBufferMemory(buffer, memory, 0);
+//
+//		void* data;
+//		vkMapMemory(device, memory, 0, createBuffer.size, 0, &data);
+//		memcpy(data, vertices.data(), (size_t) createBuffer.size);
+//		vkUnmapMemory(device, memory);
 
-        auto memRequirements = device.getBufferMemoryRequirements(buffer);
-
-		VkMemoryAllocateInfo allocInfo = {};
-		allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
-		allocInfo.allocationSize = memRequirements.size;
-		allocInfo.memoryTypeIndex = MemoryType(pdevice, memRequirements.memoryTypeBits, vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::eHostCoherent);
-        auto memory = device.allocateMemory(allocInfo, nullptr);
-
-        device.bindBufferMemory(buffer, memory, 0);
+        LoadDrawingCommands();
 	}
+
+    void RendererVulkan::LoadDrawingCommands()
+    {
+        for (size_t i = 0; i < commandBuffers.size(); i++)
+        {
+            VkCommandBufferBeginInfo beginInfo = {};
+            beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+            beginInfo.flags = VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT;
+
+            vkBeginCommandBuffer(commandBuffers[i], &beginInfo);
+
+            VkRenderPassBeginInfo renderPassInfo = {};
+            renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
+            renderPassInfo.renderPass = *renderPass;
+            renderPassInfo.framebuffer = renderPass.FrameBuffers()[i];
+            renderPassInfo.renderArea.offset = { 0, 0 };
+            renderPassInfo.renderArea.extent = surface.Extent();
+
+            VkClearValue clearColor = { 0.0f, 0.4f, 0.0f, 1.0f };
+            renderPassInfo.clearValueCount = 1;
+            renderPassInfo.pClearValues = &clearColor;
+
+            vkCmdBeginRenderPass(commandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
+            vkCmdBindPipeline(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, *pipeline);
+//
+//            VkBuffer vertexBuffers[] = {buffer};
+//            VkDeviceSize offsets[] = {0};
+//            vkCmdBindVertexBuffers(commandBuffers[i], 0, 1, vertexBuffers, offsets);
+
+            vkCmdDraw(commandBuffers[i], memorySize, 1, 0, 0);
+
+            vkCmdDraw(commandBuffers[i], 3, 1, 0, 0);
+            vkCmdEndRenderPass(commandBuffers[i]);
+            if (vkEndCommandBuffer(commandBuffers[i]) != VK_SUCCESS)
+                throw std::runtime_error("failed to record command buffer!");
+        }
+    }
 
 	void RendererVulkan::Draw()
 	{

@@ -24,6 +24,7 @@ namespace sx
 		virtual ~RendererVulkan();
 
         void LoadScene(const std::vector<sx::Vertex>& vertex, const std::vector<uint32_t>& indices) override;
+		void LoadDrawingCommands();
 		void Draw() override;
 
 	private:
@@ -32,11 +33,11 @@ namespace sx
 		vk::Device device;
 		vk::CommandPool commandPool;
 		std::vector<vk::CommandBuffer> commandBuffers;
-		vk::Queue graphicsQueue;
-
-		SwapchainVulkan swapchain;
+		VkQueue graphicsQueue;
+		vk::Buffer buffer;
         SurfaceVulkan surface;
-		RenderPassVulkan renderPass;
+        SwapchainVulkan swapchain;
+        RenderPassVulkan renderPass;
         PipelineVulkan pipeline;
 	};
 }

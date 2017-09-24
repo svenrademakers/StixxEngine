@@ -41,12 +41,11 @@ namespace sx
         auto surfaceFormats = pdevice.getSurfaceFormatsKHR(handle);
 
         if (surfaceFormats.size() == 1 && surfaceFormats[0].format == vk::Format::eUndefined)
-            surfaceColorFormat = vk::Format::eB8G8R8A8Unorm;
+            format.format = VK_FORMAT_B8G8R8A8_UNORM;
         else
-            surfaceColorFormat = surfaceFormats[0].format;
+            format.format = static_cast<VkFormat>(surfaceFormats[0].format);
 
-        surfaceColorSpace = surfaceFormats[0].colorSpace;
-        auto formatProperties = pdevice.getFormatProperties(vk::Format::eR8G8B8A8Unorm);
+        format.colorSpace = static_cast<VkColorSpaceKHR>(surfaceFormats[0].colorSpace);
 
         // Since all depth formats may be optional, we need to find a suitable depth format to use
         // Start with the highest precision packed format
@@ -69,7 +68,7 @@ namespace sx
             }
         }
 		extent = surfaceCapabilities.currentExtent;
-		surfaceTransformFlagBitsKHR = static_cast<VkSurfaceTransformFlagBitsKHR>(surfaceCapabilities.currentTransform);
+		currentTransform = static_cast<VkSurfaceTransformFlagBitsKHR>(surfaceCapabilities.currentTransform);
 	}
 
     VkPresentModeKHR SurfaceVulkan::PresentMode()
@@ -86,4 +85,20 @@ namespace sx
     {
         return 3;
     }
+
+    VkSurfaceFormatKHR SurfaceVulkan::Format()
+    {
+        return format;
+    }
+
+    VkExtent2D SurfaceVulkan::Extent()
+    {
+        return extent;
+    }
+
+    VkSurfaceTransformFlagBitsKHR SurfaceVulkan::CurrentTransform()
+    {
+        return currentTransform;
+    }
+
 }
