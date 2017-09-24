@@ -15,11 +15,11 @@ namespace sx
 
 		const char* Name() override;
 		bool ShouldClose() override;
-		void Poll();
+		void Poll() override;
 		std::vector<const char*> InstanceExtensions() override;
 		std::pair<uint32_t, uint32_t> Size() override;
 
-		GLFWwindow* GetHandle();
+		void* GetHandle();
 	private:
 		GLFWwindow* window;
 		const char* name;

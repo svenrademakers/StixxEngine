@@ -81,9 +81,9 @@ namespace sx
 		return extensions;
 	}
 
-	GLFWwindow* WindowGlfw::GetHandle()
+	void* WindowGlfw::GetHandle()
 	{
-		return window;
+		return static_cast<void*>(window);
 	}
 
     std::pair<uint32_t, uint32_t> WindowGlfw::Size()

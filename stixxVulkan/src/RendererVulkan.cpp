@@ -46,7 +46,7 @@ namespace
 
 namespace sx
 {
-	RendererVulkan::RendererVulkan(sx::WindowGlfw& window, const std::vector<uint32_t>& vertex, const std::vector<uint32_t>& fragment)
+	RendererVulkan::RendererVulkan(sx::Window& window, const std::vector<uint32_t>& vertex, const std::vector<uint32_t>& fragment)
 	{
         auto appInfo = vk::ApplicationInfo(
                 window.Name(),
@@ -99,7 +99,7 @@ namespace sx
                 )
         );
 
-        surface.Init(instance, pdevice, *window.GetHandle());
+        surface.Init(instance, pdevice, window);
         swapchain.Init(device, surface);
         renderPass.Init(device, swapchain);
 

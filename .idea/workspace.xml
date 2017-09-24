@@ -9,55 +9,21 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="20a72439-077e-46e4-baf2-c915d99bd98d" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxCore/CMakeLists.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxCore/include/FileSystem.hpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxCore/include/MeshLoaderAssimp.hpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxCore/include/Observer.hpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxCore/include/Renderer.hpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxCore/include/Window.hpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxCore/include/WindowGlfw.hpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxCore/interfaces/Mesh.hpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxCore/interfaces/MeshLoader.hpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxCore/interfaces/Scene.hpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxCore/interfaces/Shader.h" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxCore/interfaces/ShaderLoader.hpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxCore/src/FileSystem.cpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxCore/src/MeshLoaderAssimp.cpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxCore/src/Observer.cpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxCore/src/ShaderLoader.cpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxCore/src/WindowGlfw.cpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplGL/MeshGL.cpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplGL/MeshGL.hpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplGL/ShaderGL.cpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplGL/ShaderGL.hpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplGL/shaders/fragment.shdr" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplGL/shaders/main.shdr" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/CMakeLists.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/include/DeviceVulkan.hpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/include/HandleExposer.hpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/include/InstanceVulkan.hpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/include/PipelineVulkan.hpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/include/RenderPassVulkan.hpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/include/RendererVulkan.hpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/include/ShaderVulkan.hpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/include/SurfaceVulkan.hpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/include/SwapchainVulkan.hpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/src/DeviceVulkan.cpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/src/InstanceVulkan.cpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/src/PipelineVulkan.cpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/src/RenderPassVulkan.cpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/src/RendererVulkan.cpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/src/ShaderVulkan.cpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/src/SurfaceVulkan.cpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/src/SwapchainVulkan.cpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/test/CMakeLists.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/test/TestRenderer.cpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/test/mocks/VulkanMock.hpp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stixxImplVulkan/test/test.cpp" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMakeLists.txt" afterPath="$PROJECT_DIR$/CMakeLists.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/CMakeLists.txt" afterPath="$PROJECT_DIR$/examples/CMakeLists.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stixxShaders/CMakeLists.txt" afterPath="$PROJECT_DIR$/stixxShaders/CMakeLists.txt" />
+    <list default="true" id="683ac554-8b53-4ffa-abe6-f120eb2bdcf0" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/stixx.iml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stixx/include/Window.hpp" afterPath="$PROJECT_DIR$/stixx/include/Window.hpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stixx/include/WindowGlfw.hpp" afterPath="$PROJECT_DIR$/stixx/include/WindowGlfw.hpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stixx/src/WindowGlfw.cpp" afterPath="$PROJECT_DIR$/stixx/src/WindowGlfw.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stixxVulkan/include/RendererVulkan.hpp" afterPath="$PROJECT_DIR$/stixxVulkan/include/RendererVulkan.hpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stixxVulkan/include/SurfaceVulkan.hpp" afterPath="$PROJECT_DIR$/stixxVulkan/include/SurfaceVulkan.hpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stixxVulkan/src/RendererVulkan.cpp" afterPath="$PROJECT_DIR$/stixxVulkan/src/RendererVulkan.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stixxVulkan/src/SurfaceVulkan.cpp" afterPath="$PROJECT_DIR$/stixxVulkan/src/SurfaceVulkan.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stixxVulkan/test/TestRenderer.cpp" afterPath="$PROJECT_DIR$/stixxVulkan/test/TestRenderer.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stixxVulkan/test/mocks/WindowMock.hpp" afterPath="$PROJECT_DIR$/stixxVulkan/test/mocks/WindowMock.hpp" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -68,12 +34,92 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="helloTriangle.cpp" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/examples/helloTriangle.cpp">
+    <leaf>
+      <file leaf-file-name="TestRenderer.cpp" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/stixxVulkan/test/TestRenderer.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="14" lean-forward="false" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
+            <state relative-caret-position="272">
+              <caret line="16" column="32" lean-forward="false" selection-start-line="16" selection-start-column="32" selection-end-line="16" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Window.hpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/stixx/include/Window.hpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="374">
+              <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RenderPassVulkan.hpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/stixxVulkan/include/RenderPassVulkan.hpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RendererVulkan.hpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/stixxVulkan/include/RendererVulkan.hpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="425">
+              <caret line="25" column="109" lean-forward="false" selection-start-line="25" selection-start-column="109" selection-end-line="25" selection-end-column="109" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RendererVulkan.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/stixxVulkan/src/RendererVulkan.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="401">
+              <caret line="48" column="45" lean-forward="false" selection-start-line="48" selection-start-column="45" selection-end-line="48" selection-end-column="45" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WindowGlfw.hpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/stixx/include/WindowGlfw.hpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="391">
+              <caret line="23" column="18" lean-forward="false" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="18" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WindowGlfw.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/stixx/src/WindowGlfw.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="544">
+              <caret line="83" column="8" lean-forward="false" selection-start-line="83" selection-start-column="8" selection-end-line="83" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SurfaceVulkan.hpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/stixxVulkan/include/SurfaceVulkan.hpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="306">
+              <caret line="18" column="76" lean-forward="false" selection-start-line="18" selection-start-column="76" selection-end-line="18" selection-end-column="76" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SurfaceVulkan.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/stixxVulkan/src/SurfaceVulkan.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="561">
+              <caret line="33" column="5" lean-forward="false" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -81,14 +127,27 @@
       </file>
     </leaf>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>glfw</find>
+      <find>getHan</find>
+    </findStrings>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/stixxImplVulkan/test/TestRenderer.cpp" />
-        <option value="$PROJECT_DIR$/examples/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/stixxVulkan/test/mocks/WindowMock.hpp" />
+        <option value="$PROJECT_DIR$/stixx/src/WindowGlfw.cpp" />
+        <option value="$PROJECT_DIR$/stixxVulkan/include/SurfaceVulkan.hpp" />
+        <option value="$PROJECT_DIR$/stixx/include/WindowGlfw.hpp" />
+        <option value="$PROJECT_DIR$/stixx/include/Window.hpp" />
+        <option value="$PROJECT_DIR$/stixxVulkan/src/SurfaceVulkan.cpp" />
+        <option value="$PROJECT_DIR$/stixxVulkan/src/RendererVulkan.cpp" />
+        <option value="$PROJECT_DIR$/stixxVulkan/include/RendererVulkan.hpp" />
+        <option value="$PROJECT_DIR$/stixxVulkan/test/TestRenderer.cpp" />
       </list>
     </option>
   </component>
@@ -104,7 +163,6 @@
     <option name="width" value="1400" />
     <option name="height" value="998" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
       <flattenPackages />
@@ -124,13 +182,55 @@
         <subPane>
           <expand>
             <path>
-              <item name="stixx" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="Stixx" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="Stixx" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Stixx" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="Stixx" type="462c0819:PsiDirectoryNode" />
               <item name="stixx" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="stixx" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="Stixx" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="Stixx" type="462c0819:PsiDirectoryNode" />
               <item name="stixx" type="462c0819:PsiDirectoryNode" />
-              <item name="examples" type="462c0819:PsiDirectoryNode" />
+              <item name="include" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Stixx" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="Stixx" type="462c0819:PsiDirectoryNode" />
+              <item name="stixx" type="462c0819:PsiDirectoryNode" />
+              <item name="interfaces" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Stixx" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="Stixx" type="462c0819:PsiDirectoryNode" />
+              <item name="stixx" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Stixx" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="Stixx" type="462c0819:PsiDirectoryNode" />
+              <item name="stixxVulkan" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Stixx" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="Stixx" type="462c0819:PsiDirectoryNode" />
+              <item name="stixxVulkan" type="462c0819:PsiDirectoryNode" />
+              <item name="include" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Stixx" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="Stixx" type="462c0819:PsiDirectoryNode" />
+              <item name="stixxVulkan" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Stixx" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="Stixx" type="462c0819:PsiDirectoryNode" />
+              <item name="stixxVulkan" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="mocks" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -158,40 +258,39 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="20a72439-077e-46e4-baf2-c915d99bd98d" name="Default" comment="" />
-      <created>1506233379089</created>
+      <changelist id="683ac554-8b53-4ffa-abe6-f120eb2bdcf0" name="Default" comment="" />
+      <created>1506239177336</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1506233379089</updated>
-      <workItem from="1506233381914" duration="875000" />
-      <workItem from="1506235108236" duration="186000" />
-      <workItem from="1506236290213" duration="24000" />
+      <updated>1506239177336</updated>
+      <workItem from="1506239179903" duration="2519000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1085000" />
+    <option name="totallyTimeSpent" value="2519000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="456" y="103" width="2505" height="1455" extended-state="6" />
+    <frame x="57" y="-4" width="2503" height="1444" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24970035" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32862455" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32936803" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -201,133 +300,110 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/external/googletest" />
+      <path value="$PROJECT_DIR$/external/glm" />
+      <path value="$PROJECT_DIR$/external/glfw" />
+    </ignored-roots>
+  </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/stixxImplVulkan/include/PipelineVulkan.hpp</url>
-          <line>3</line>
-        </line-breakpoint>
-      </breakpoints>
-      <option name="time" value="1" />
-    </breakpoint-manager>
+    <breakpoint-manager />
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/stixxImplVulkan/test/mocks/VulkanMock.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="16" lean-forward="false" selection-start-line="3" selection-start-column="16" selection-end-line="3" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/stixxImplVulkan/test/TestRenderer.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="29" column="0" lean-forward="true" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/stixxImplVulkan/include/PipelineVulkan.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="14" lean-forward="false" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/helloTriangle.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="20" lean-forward="false" selection-start-line="1" selection-start-column="20" selection-end-line="1" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/stixxImplVulkan/test/mocks/VulkanMock.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="16" lean-forward="true" selection-start-line="3" selection-start-column="16" selection-end-line="3" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/stixxImplVulkan/test/TestRenderer.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="102" lean-forward="false" selection-start-line="21" selection-start-column="102" selection-end-line="21" selection-end-column="102" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/stixxImplVulkan/include/PipelineVulkan.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="14" lean-forward="false" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/helloTriangle.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="20" lean-forward="false" selection-start-line="1" selection-start-column="20" selection-end-line="1" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/stixxImplVulkan/test/CMakeLists.txt">
+    <entry file="file://$PROJECT_DIR$/stixxVulkan/test/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/stixxImplVulkan/include/RenderPassVulkan.hpp">
+    <entry file="file://$PROJECT_DIR$/stixxVulkan/test/mocks/VulkanMock.hpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/stixxImplVulkan/include/PipelineVulkan.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="14" lean-forward="false" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/stixxImplVulkan/test/mocks/VulkanMock.hpp">
+    <entry file="file://$PROJECT_DIR$/stixxVulkan/include/RenderPassVulkan.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="16" lean-forward="false" selection-start-line="3" selection-start-column="16" selection-end-line="3" selection-end-column="16" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/stixxImplVulkan/test/TestRenderer.cpp">
+    <entry file="file://$PROJECT_DIR$/stixx/src/WindowGlfw.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="29" column="0" lean-forward="true" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+        <state relative-caret-position="544">
+          <caret line="83" column="8" lean-forward="false" selection-start-line="83" selection-start-column="8" selection-end-line="83" selection-end-column="8" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/CMakeLists.txt">
+    <entry file="file://$PROJECT_DIR$/stixxVulkan/include/SurfaceVulkan.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="42" lean-forward="true" selection-start-line="1" selection-start-column="42" selection-end-line="1" selection-end-column="42" />
+        <state relative-caret-position="306">
+          <caret line="18" column="76" lean-forward="false" selection-start-line="18" selection-start-column="76" selection-end-line="18" selection-end-column="76" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/helloTriangle.cpp">
+    <entry file="file://$PROJECT_DIR$/stixx/include/Window.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="14" lean-forward="false" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
+        <state relative-caret-position="374">
+          <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stixx/include/WindowGlfw.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="23" column="18" lean-forward="false" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stixxVulkan/src/SurfaceVulkan.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="33" column="5" lean-forward="false" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stixxVulkan/include/RendererVulkan.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="25" column="109" lean-forward="false" selection-start-line="25" selection-start-column="109" selection-end-line="25" selection-end-column="109" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stixxVulkan/test/mocks/WindowMock.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="23" lean-forward="false" selection-start-line="0" selection-start-column="23" selection-end-line="0" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stixxVulkan/src/RendererVulkan.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="401">
+          <caret line="48" column="45" lean-forward="false" selection-start-line="48" selection-start-column="45" selection-end-line="48" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stixxVulkan/test/TestRenderer.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="32" lean-forward="false" selection-start-line="16" selection-start-column="32" selection-end-line="16" selection-end-column="32" />
           <folding />
         </state>
       </provider>

@@ -4,7 +4,7 @@
 #include <string>
 #include <vulkan/vulkan.hpp>
 #include "InstanceVulkan.hpp"
-#include "WindowGlfw.hpp"
+#include "Window.hpp"
 #include "HandleExposer.hpp"
 
 namespace sx
@@ -16,7 +16,7 @@ namespace sx
 		SurfaceVulkan() = default;
 		virtual ~SurfaceVulkan();
 
-        void Init(vk::Instance& instance,vk::PhysicalDevice& pdevice, GLFWwindow &window);
+        void Init(vk::Instance& instance,vk::PhysicalDevice& pdevice, Window &window);
 		uint32_t ImageCount();
 		VkPresentModeKHR PresentMode();
 

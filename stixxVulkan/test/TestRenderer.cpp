@@ -3,15 +3,25 @@
 #include "mocks/VulkanMock.hpp"
 
 #include "RendererVulkan.hpp"
+#include "mocks/WindowMock.hpp"
 
 class TestRenderer : public ::testing::Test
 {
-protected:
+public:
+    TestRenderer()
+    : renderer(window, vertex, fragment)
+    {}
 
+protected:
+    sx::RendererVulkan renderer;
+    ::testing::StrictMock<WindowMock> window;
+
+    std::vector<uint32_t> vertex;
+    std::vector<uint32_t> fragment;
 };
 
 
-TEST_F(TestRenderer, hoi)
+TEST_F(TestRenderer, scene_gets_loaded_in_host_visible_heap)
 {
     VkResult r;
 

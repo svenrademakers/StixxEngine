@@ -18,7 +18,7 @@ namespace sx
 		: public Renderer
 	{
 	public:
-        RendererVulkan(sx::WindowGlfw& window, const std::vector<uint32_t>& vertex, const std::vector<uint32_t>& fragment);
+        RendererVulkan(sx::Window& window, const std::vector<uint32_t>& vertex, const std::vector<uint32_t>& fragment);
         RendererVulkan(const RendererVulkan&) = delete;
 		RendererVulkan& operator = (const RendererVulkan&) = delete;
 		virtual ~RendererVulkan();

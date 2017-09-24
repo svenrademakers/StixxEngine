@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <stdexcept>
 #include <iostream>
-
+#include "WindowGlfw.hpp"
 //
 //auto surfaceSize = vk::Extent2D(width, height);
 //auto renderArea = vk::Rect2D(vk::Offset2D(), surfaceSize);
@@ -30,12 +30,12 @@ namespace sx
 		vkDestroySurfaceKHR(instance, handle, nullptr);
 	}
 
-	void SurfaceVulkan::Init(vk::Instance& instance,vk::PhysicalDevice& pdevice, GLFWwindow &window)
+	void SurfaceVulkan::Init(vk::Instance& instance,vk::PhysicalDevice& pdevice, Window &window)
 	{
         this->pdevice = pdevice;
         this->instance = instance;
 
-		if (glfwCreateWindowSurface(instance, &window, nullptr, &handle) != VK_SUCCESS)
+		if (glfwCreateWindowSurface(instance, static_cast<GLFWwindow*>(window.GetHandle()), nullptr, &handle) != VK_SUCCESS)
 			throw std::runtime_error("failed to create window surface.");
 
 		auto surfaceCapabilities = pdevice.getSurfaceCapabilitiesKHR(handle);

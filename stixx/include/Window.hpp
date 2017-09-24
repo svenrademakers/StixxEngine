@@ -14,7 +14,9 @@ namespace sx
 		virtual bool ShouldClose() = 0;
 		virtual std::pair<uint32_t, uint32_t> Size() = 0;
 		virtual std::vector<const char*> InstanceExtensions() = 0;
+		virtual void Poll() = 0;
+        virtual void * GetHandle() = 0;
 	};
 }
 
-#endif /* SHADERLOADER_HPP_ */
+#endif /* WINDOW_HPP */
