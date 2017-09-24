@@ -2,6 +2,7 @@
 #define RENDERER_HPP
 
 #include <string>
+#include "Mesh.hpp"
 
 namespace sx
 {
