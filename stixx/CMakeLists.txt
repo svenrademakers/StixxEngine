@@ -18,7 +18,7 @@ target_include_directories(Stixx
 		$<BUILD_INTERFACE:${ASSIMP_INCLUDE_DIRS}>)
 
 target_compile_features(Stixx PUBLIC cxx_override cxx_inheriting_constructors)
-target_link_libraries(Stixx glfw libassimp.so)
+target_link_libraries(Stixx glfw glm libassimp.so)
 
 install(DIRECTORY include interfaces DESTINATION include)
 
