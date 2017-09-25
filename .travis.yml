@@ -1,16 +1,27 @@
+language: cpp
+
 sudo: required
 
-language: c++
+os: linux
+    addons:
+      apt:
+        sources:
+          - ubuntu-toolchain-r-test
+        packages:
+          - g++-5
+    env:
+       - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
 
 before_install:
 - sudo apt-get install -y libxrandr-dev libxinerama-dev libxcursor-dev libassimp-dev
-- dpkg -L libassimp-dev
-- 	wget -O VulkanSDK.run https://vulkan.lunarg.com/sdk/download/1.0.61.0/linux/vulkansdk-linux-x86_64-1.0.61.0.run?human=true && chmod ugo+x VulkanSDK.run
+- cd / && wget -O VulkanSDK.run https://vulkan.lunarg.com/sdk/download/1.0.61.0/linux/vulkansdk-linux-x86_64-1.0.61.0.run?human=true && chmod ugo+x VulkanSDK.run
 - ./VulkanSDK.run
 
 script:
-   - export VULKAN_SDK="${PWD}/VulkanSDK/1.0.61.0/x86_64"
+   - export VULKAN_SDK="/VulkanSDK/1.0.61.0/x86_64"
+   - cd ${TRAVIS_BUILD_DIR}
    - export PATH="${VULKAN_SDK}/bin:${PATH}"
+   - export LD_LIBRARY_PATH="${VULKAN_SDK}/lib:${LD_LIBRARY_PATH}"
    - git submodule update --init
    - cmake -DCMAKE_BUILD_TYPE=Release
    - make
