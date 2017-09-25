@@ -1,4 +1,4 @@
-find_package(assimp REQUIRED)
+#find_package(assimp REQUIRED)
 
 file(GLOB_RECURSE sources src/*.cpp)
 file(GLOB_RECURSE headers include/*.hpp)
@@ -18,7 +18,7 @@ target_include_directories(Stixx
 		$<BUILD_INTERFACE:${ASSIMP_INCLUDE_DIRS}>)
 
 target_compile_features(Stixx PUBLIC cxx_override cxx_inheriting_constructors)
-target_link_libraries(Stixx glfw ${ASSIMP_LIBRARIES})
+target_link_libraries(Stixx glfw libassimp.so)
 
 install(DIRECTORY include interfaces DESTINATION include)
 

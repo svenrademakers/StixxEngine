@@ -9,7 +9,6 @@ add_library(StixxVulkan STATIC
 
 set(Vulkan_INCLUDE_DIR $ENV{VULKAN_SDK}/include)
 set(Vulkan_LIBRARIES $ENV{VULKAN_SDK}/lib/libvulkan.so)
-
 target_include_directories(StixxVulkan
 	PUBLIC
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
