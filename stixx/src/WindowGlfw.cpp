@@ -1,5 +1,6 @@
 #include <sstream>
 #include "WindowGlfw.hpp"
+#include <stdexcept>
 
 namespace
 {

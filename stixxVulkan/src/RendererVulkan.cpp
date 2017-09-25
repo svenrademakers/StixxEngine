@@ -4,6 +4,7 @@
 #include <RendererVulkan.hpp>
 #include <iostream>
 #include "ShaderVulkan.hpp"
+#include <stdexcept>
 
 namespace
 {

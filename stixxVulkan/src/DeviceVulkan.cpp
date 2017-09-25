@@ -1,4 +1,5 @@
 #include "DeviceVulkan.hpp"
+#include <stdexcept>
 
 namespace sx
 {

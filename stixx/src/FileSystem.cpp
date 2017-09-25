@@ -1,5 +1,6 @@
 #include "FileSystem.hpp"
 #include <fstream>
+#include <stdexcept>
 
 namespace sx
 {
