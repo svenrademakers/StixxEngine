@@ -5,7 +5,7 @@ sudo: required
 
 before_install:
 - sudo apt-get install -y libxrandr-dev libxinerama-dev libxcursor-dev libassimp-dev
-- cd / && wget -O VulkanSDK.run https://vulkan.lunarg.com/sdk/download/1.0.61.0/linux/vulkansdk-linux-x86_64-1.0.61.0.run?human=true && chmod ugo+x VulkanSDK.run
+- cd / && sudo wget -O VulkanSDK.run https://vulkan.lunarg.com/sdk/download/1.0.61.0/linux/vulkansdk-linux-x86_64-1.0.61.0.run?human=true && chmod ugo+x VulkanSDK.run
 - sudo ./VulkanSDK.run
 
 script:
