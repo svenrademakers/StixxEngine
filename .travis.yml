@@ -8,7 +8,7 @@ before_install:
 - cd / && sudo wget -O VulkanSDK.run https://vulkan.lunarg.com/sdk/download/1.0.61.0/linux/vulkansdk-linux-x86_64-1.0.61.0.run?human=true && sudo chmod ugo+x VulkanSDK.run
 - sudo ./VulkanSDK.run
 - export VULKAN_SDK="/VulkanSDK/1.0.61.0/x86_64"
-- sudo cp -rf ${TRAVIS_BUILD_DIR}/external/vulkan.h /VulkanSDK/1.0.61.0/x86_64/include
+- sudo cp -rf ${TRAVIS_BUILD_DIR}/external/vulkan.hpp /VulkanSDK/1.0.61.0/x86_64/include
 
 script:
    - export PATH="${VULKAN_SDK}/bin:${PATH}"
