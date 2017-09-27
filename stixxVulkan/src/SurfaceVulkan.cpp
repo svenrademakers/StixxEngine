@@ -11,16 +11,7 @@ namespace sx
 {
 	SurfaceVulkan::SurfaceVulkan(const InstanceVulkan& instance)
         : instance(instance)
-    {
-        VkSurfaceCapabilitiesKHR surfaceCapabilities;
-        vkGetPhysicalDeviceSurfaceCapabilitiesKHR(instance, surface, &surfaceCapabilities);
-
-        extent.width = surfaceCapabilities.currentExtent.width;
-        extent.height = surfaceCapabilities.currentExtent.height;
-
-        currentTransform = static_cast<Surface::Transform>(surfaceCapabilities.currentTransform);
-        imageCountMax = surfaceCapabilities.maxImageCount;
-	}
+    {}
 
     SurfaceVulkan::~SurfaceVulkan()
     {
@@ -34,7 +25,20 @@ namespace sx
 
     bool SurfaceVulkan::CreateSurface(Window& window)
     {
-        return (glfwCreateWindowSurface(instance, static_cast<GLFWwindow*>(window.GetHandle()), nullptr, &surface) == VK_SUCCESS);
+        if (glfwCreateWindowSurface(instance, static_cast<GLFWwindow*>(window.GetHandle()), nullptr, &surface) == VK_SUCCESS)
+        {
+            VkSurfaceCapabilitiesKHR surfaceCapabilities;
+            vkGetPhysicalDeviceSurfaceCapabilitiesKHR(instance, surface, &surfaceCapabilities);
+
+            extent.width = surfaceCapabilities.currentExtent.width;
+            extent.height = surfaceCapabilities.currentExtent.height;
+
+            currentTransform = static_cast<Surface::Transform>(surfaceCapabilities.currentTransform);
+            imageCountMax = surfaceCapabilities.maxImageCount;
+            return true;
+        }
+
+        return false;
     }
 
     uint32_t SurfaceVulkan::MaxImageCount()
