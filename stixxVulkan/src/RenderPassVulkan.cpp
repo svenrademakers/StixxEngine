@@ -60,13 +60,13 @@ namespace sx
 		for (size_t i = 0; i < swapchain.ImageViews().size(); i++)
 		{
 			VkImageView attachments[] = { swapchain.ImageViews()[i]};
-
 			VkFramebufferCreateInfo framebufferInfo = {};
 			framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
 			framebufferInfo.renderPass = handle;
 			framebufferInfo.attachmentCount = 1;
 			framebufferInfo.pAttachments = attachments;
 			framebufferInfo.height = surface.Extent().height;
+			framebufferInfo.width = surface.Extent().width;
 			framebufferInfo.layers = 1;
 
 			if (vkCreateFramebuffer(device, &framebufferInfo, nullptr, &frameBuffers[i]) != VK_SUCCESS)
