@@ -8,25 +8,26 @@ namespace sx
         , pdevice(pdevice)
     {}
 
-    std::vector<Heap> DeviceMemoryVulkan::Heaps()
+    virtual std::vector<Heap> DeviceMemoryVulkan::HeapInfo()
     {
         std::vector<Heap> heaps;
-
         VkPhysicalDeviceMemoryProperties memProperties;
         vkGetPhysicalDeviceMemoryProperties(pdevice, &memProperties);
 
-        for(int i= 0; i < memProperties.memoryHeapCount; ++i)
+        for(int i = 0; i < memProperties.memoryHeapCount; ++i)
         {
-            //memProperties.memoryTypes[i]
-            //heaps.push_back({});
+            auto heapProperties = memProperties.memoryHeaps[i];
+            heaps.push_back({heapProperties.size, heapProperties.flags == VK_MEMORY_HEAP_DEVICE_LOCAL_BIT});
         }
-
-
-       // throw std::runtime_error("failed to find suitable memory type!");
-        return heaps;
+        
+        for (int i = 0; i < memProperties.memoryTypeCount; ++i)
+        {
+            auto memoryTypes = memProperties.memoryTypes[i];
+            heaps[memoryTypes.heapIndex].supportedTypes |= memoryTypes.propertyFlags;             
+        }
     }
 
-    bool DeviceMemoryVulkan::AllocateMemory(std::size_t size)
+    virtual bool DeviceMemoryVulkan::AllocateMemory(uint8_t heapId, std::size_t size)
     {
         return false;
     }

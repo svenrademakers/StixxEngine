@@ -11,11 +11,11 @@ namespace sx
         DeviceMemoryVulkan(const DeviceMemoryVulkan&) = delete;
         DeviceMemoryVulkan& operator= (const DeviceMemoryVulkan&) = delete;
 
-        virtual std::vector<Heap> Heaps() override;
-        virtual bool AllocateMemory(std::size_t size) override;
+        virtual std::vector<Heap> HeapInfo() override;
+        virtual bool AllocateMemory(uint8_t heapId, std::size_t size) override;
 
     private:
-        const VkDevice device;
-        const VkPhysicalDevice pdevice;
+        const VkDevice& device;
+        const VkPhysicalDevice& pdevice;
     };
 }
