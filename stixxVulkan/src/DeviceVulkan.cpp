@@ -1,11 +1,14 @@
 #include "DeviceVulkan.hpp"
+#include "InstanceVulkan.hpp"
+#include "SurfaceVulkan.hpp"
 #include <stdexcept>
+#include <algorithm>
 
 namespace sx
 {
-	DeviceVulkan::DeviceVulkan(InstanceVulkan& instance, SurfaceVulkan& surface)
+	DeviceVulkan::DeviceVulkan(const InstanceVulkan& instance, const SurfaceVulkan& surface)
 	{
-		queueFamilyIndex = GetGraphicsFamilyIndex(instance.PhysicalDevice());
+		queueFamilyIndex = GetGraphicsFamilyIndex(instance);
 
 		float queuePriority = 1.0f;
 		VkDeviceQueueCreateInfo queueCreateInfo = {};
@@ -15,7 +18,7 @@ namespace sx
 		queueCreateInfo.pQueuePriorities = &queuePriority;
 
 		VkPhysicalDeviceFeatures deviceFeatures = {};
-		vkGetPhysicalDeviceFeatures(instance.PhysicalDevice(), &deviceFeatures);
+		vkGetPhysicalDeviceFeatures(instance, &deviceFeatures);
 
 		std::vector<const char*> enableExtensions{ VK_KHR_SWAPCHAIN_EXTENSION_NAME };
 		
@@ -27,11 +30,11 @@ namespace sx
 		DeviceInfo.ppEnabledExtensionNames = enableExtensions.data();
 		DeviceInfo.pEnabledFeatures = nullptr;
 
-		if (vkCreateDevice(instance.PhysicalDevice(), &DeviceInfo, nullptr, &handle) != VK_SUCCESS)
+		if (vkCreateDevice(instance, &DeviceInfo, nullptr, &device) != VK_SUCCESS)
 			throw std::runtime_error("failed to find GPUs with Vulkan support!");
 
 		VkBool32 presentSupport = false;
-		vkGetPhysicalDeviceSurfaceSupportKHR(instance.PhysicalDevice(), queueFamilyIndex, *surface, &presentSupport);
+		vkGetPhysicalDeviceSurfaceSupportKHR(instance, queueFamilyIndex, surface, &presentSupport);
 
 		if (!presentSupport)
 			throw std::runtime_error("deviceQueue family does not support present support");
@@ -39,10 +42,15 @@ namespace sx
 
 	DeviceVulkan::~DeviceVulkan()
 	{
-		vkDestroyDevice(handle, nullptr);
+		vkDestroyDevice(device, nullptr);
 	}
 
-	uint32_t DeviceVulkan::GetGraphicsFamilyIndex(const VkPhysicalDevice& device) const
+	DeviceVulkan::operator const VkDevice&() const
+	{
+		return device;
+	}
+
+	uint32_t DeviceVulkan::GetGraphicsFamilyIndex(const VkPhysicalDevice& device)
 	{
 		uint32_t queueFamilyCount = 0;
 		vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, nullptr);

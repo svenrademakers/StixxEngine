@@ -1,29 +1,35 @@
 #ifndef DEVICE_VULKAN_HPP
 #define DEVICE_VULKAN_HPP
 
-#include "InstanceVulkan.hpp"
-#include "SurfaceVulkan.hpp"
-#include "HandleExposer.hpp"
+#include "vulkan/vulkan.h"
+#include "renderer/Device.hpp"
 
 namespace sx
 {
-	typedef std::pair<uint32_t, const VkQueue&> QueuePair;
+    class InstanceVulkan;
+    class SurfaceVulkan;
 
 	class DeviceVulkan
-		: public HandleExposer<VkDevice>
+        : public Device
 	{
 	public:
-		DeviceVulkan(InstanceVulkan& instance, SurfaceVulkan& surface);
+		DeviceVulkan(const InstanceVulkan& instance, const SurfaceVulkan& surface);
+        DeviceVulkan(const DeviceVulkan&) = delete;
+        const DeviceVulkan& operator = (const DeviceVulkan&) = delete;
 		virtual ~DeviceVulkan();
 
-	private:
-		uint32_t GetGraphicsFamilyIndex(const VkPhysicalDevice& device) const;
+        operator const VkDevice&() const;
 
 	private:
+		uint32_t GetGraphicsFamilyIndex(const VkPhysicalDevice& device);
+
+	private:
+        VkDevice device;
 		VkQueue graphicsQueue;
 		VkQueue presentQueue;
+        VkQueue TransferQueu;
 
-		uint32_t queueFamilyIndex;
+        uint32_t queueFamilyIndex;
 	};
 }
 

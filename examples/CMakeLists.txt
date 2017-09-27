@@ -1,2 +1,0 @@
-add_executable(hello_triangle helloTriangle.cpp)
-target_link_libraries(hello_triangle StixxVulkan Stixx)

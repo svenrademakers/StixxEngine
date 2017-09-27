@@ -3,22 +3,24 @@
 
 #include <vector>
 #include "vulkan/vulkan.h"
-#include "HandleExposer.hpp"
 
 namespace sx
 {
 	class InstanceVulkan
-		: public HandleExposer<VkInstance>
 	{
 	public:
 		InstanceVulkan(const char* engineName, const char* windowName, const std::vector<const char*>& extensions);
+        InstanceVulkan(const InstanceVulkan& instance) = delete;
+        const InstanceVulkan& operator = (const InstanceVulkan&) = delete;
 		virtual ~InstanceVulkan();
 
-	public:
-		const VkPhysicalDevice& PhysicalDevice();
-		
+		operator const VkInstance&() const;
+        operator const VkPhysicalDevice&() const;
+
+
 	private:
 		VkPhysicalDevice physicalDevice;
+        VkInstance instance;
 	};
 }
 

@@ -3,7 +3,6 @@
 
 #include <vector>
 #include <glm/glm.hpp>
-#include "Shader.h"
 
 namespace sx
 {
@@ -26,12 +25,6 @@ namespace sx
 	{
 	public:
 		virtual ~Mesh(){};
-		virtual void Load() = 0;
-		virtual void Draw(Shader& shader) = 0;
-
-	    virtual void Vertices(const std::vector<sx::Vertex>& vertices) = 0;
-	    virtual void Indices(const std::vector<unsigned int>& indices) = 0;
-	    virtual void Textures(const std::vector<sx::Texture>& textures) = 0;
 	};
 }
 #endif

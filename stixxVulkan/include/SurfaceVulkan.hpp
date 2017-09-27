@@ -1,38 +1,40 @@
 #ifndef SURFACE_VULKAN_HPP
 #define SURFACE_VULKAN_HPP
 
+#include "vulkan/vulkan.h"
 #include <string>
-#include <vulkan/vulkan.hpp>
-#include "InstanceVulkan.hpp"
-#include "Window.hpp"
-#include "HandleExposer.hpp"
+#include "renderer/Surface.hpp"
 
 namespace sx
 {
+    class InstanceVulkan;
+
 	class SurfaceVulkan
-		: public HandleExposer<VkSurfaceKHR>
+		: public Surface
 	{
 	public:
-		SurfaceVulkan() = default;
+		SurfaceVulkan(const InstanceVulkan& instance);
+        SurfaceVulkan(const SurfaceVulkan&) = delete;
+        const SurfaceVulkan& operator = (const SurfaceVulkan&) = delete;
 		virtual ~SurfaceVulkan();
 
-        void Init(vk::Instance& instance,vk::PhysicalDevice& pdevice, Window &window);
+        operator const VkSurfaceKHR&() const;
 
-		uint32_t ImageCount();
-		VkPresentModeKHR PresentMode();
-		VkSurfaceFormatKHR Format();
-		VkExtent2D Extent();
-		VkSurfaceTransformFlagBitsKHR CurrentTransform();
+        // Surface
+        bool CreateSurface(Window& window) override;
+        uint32_t MaxImageCount() override;
+        bool isSupported(const PresentMode type) override;
+        SurfaceFormat Format() override;
+        Extent CurrentExtent() override;
+        Transform CurrentTransform() override;
+
 	private:
-		vk::PhysicalDevice pdevice;
-		VkInstance instance;
-		VkSurfaceFormatKHR format;
-
-		vk::Format surfaceDepthFormat;
-
-		VkExtent2D extent;
-		VkSurfaceTransformFlagBitsKHR currentTransform;
+        VkSurfaceKHR surface;
+        const InstanceVulkan& instance;
+        Surface::Transform currentTransform;
+        Surface::Extent extent;
+        uint32_t imageCountMax;
 	};
 }
 
-#endif /* RENDERERVULKAN_HPP */
+#endif /* SURFACE_VULKAN_HPP */

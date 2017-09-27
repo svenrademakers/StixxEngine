@@ -1,5 +1,5 @@
 file(GLOB_RECURSE sources src/*.cpp)
-file(GLOB_RECURSE headers include/*.hpp)
+file(GLOB_RECURSE headers include/*.hpp interfaces/*.hpp)
 
 add_library(StixxVulkan STATIC
 	${sources}
@@ -13,11 +13,12 @@ target_include_directories(StixxVulkan
 	PUBLIC
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 		$<BUILD_INTERFACE:${Vulkan_INCLUDE_DIR}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interfaces>
  		$<INSTALL_INTERFACE:stixx>
 	PRIVATE
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>)
 
-target_link_libraries(StixxVulkan ${Vulkan_LIBRARIES} Stixx)
+target_link_libraries(StixxVulkan ${Vulkan_LIBRARIES} StixxCore)
 target_compile_features(StixxVulkan PUBLIC cxx_override cxx_inheriting_constructors)
 
 install(DIRECTORY include DESTINATION include/stixx)
@@ -28,4 +29,4 @@ install(TARGETS StixxVulkan
     	RUNTIME  DESTINATION bin)
 install(EXPORT StixxVulkan-targets FILE StixxVulkan-config.cmake DESTINATION lib/cmake/StixxVulkan)
 
-add_subdirectory(test)
+
