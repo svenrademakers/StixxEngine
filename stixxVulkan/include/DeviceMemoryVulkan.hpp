@@ -7,7 +7,7 @@ namespace sx
             : public DeviceMemory
     {
     public:
-        DeviceMemoryVulkan(const VkDevice device, const VkPhysicalDevice pdevice);
+        DeviceMemoryVulkan(const VkDevice& device, const VkPhysicalDevice& pdevice);
         DeviceMemoryVulkan(const DeviceMemoryVulkan&) = delete;
         DeviceMemoryVulkan& operator= (const DeviceMemoryVulkan&) = delete;
 

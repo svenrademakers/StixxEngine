@@ -3,14 +3,14 @@
 
 namespace sx
 {
-    DeviceMemoryVulkan::DeviceMemoryVulkan(const VkDevice device, const VkPhysicalDevice pdevice)
+    DeviceMemoryVulkan::DeviceMemoryVulkan(const VkDevice& device, const VkPhysicalDevice& pdevice)
         : device(device)
         , pdevice(pdevice)
     {}
 
-    virtual std::vector<Heap> DeviceMemoryVulkan::HeapInfo()
+    std::vector<DeviceMemory::Heap> DeviceMemoryVulkan::HeapInfo()
     {
-        std::vector<Heap> heaps;
+        std::vector<DeviceMemory::Heap> heaps;
         VkPhysicalDeviceMemoryProperties memProperties;
         vkGetPhysicalDeviceMemoryProperties(pdevice, &memProperties);
 
@@ -27,7 +27,7 @@ namespace sx
         }
     }
 
-    virtual bool DeviceMemoryVulkan::AllocateMemory(uint8_t heapId, std::size_t size)
+    bool DeviceMemoryVulkan::AllocateMemory(uint8_t heapId, std::size_t size)
     {
         return false;
     }
