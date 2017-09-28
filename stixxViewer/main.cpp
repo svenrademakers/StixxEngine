@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdexcept>
 #include "WindowGlfw.hpp"
 #include "DeviceVulkan.hpp"
 #include "InstanceVulkan.hpp"
@@ -16,10 +17,7 @@ int main(void)
     static sx::DeviceVulkan device(instance, surface);
     static sx::DeviceMemoryVulkan deviceMemoryVulkan(device, instance);
 
-    while(!window.ShouldClose())
-    {
-        //Do work
-    }
+    auto heaps = deviceMemoryVulkan.HeapInfo();
 
     return 0;
 }
