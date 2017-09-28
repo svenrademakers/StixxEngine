@@ -10,7 +10,6 @@ namespace sx
     class SurfaceVulkan;
 
 	class DeviceVulkan
-        : public Device
 	{
 	public:
 		DeviceVulkan(const InstanceVulkan& instance, const SurfaceVulkan& surface);

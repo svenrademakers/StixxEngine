@@ -1,15 +1,15 @@
-#ifndef DEVICE_MEMORY_HPP
-#define DEVICE_MEMORY_HPP
-
-#include <stdint.h>
-#include <cstddef>
+#ifndef PHYSICAL_DEVICE_HPP
+#define PHYSICAL_DEVICE_HPP
+#include <cstdio>
+#include <cstdint>
 #include <vector>
 
 namespace sx
 {
-    class DeviceMemory
+    class Device;
+
+    struct Heap
     {
-    public:
         enum HeapType
         {
             DeviceLocal = 0x1,
@@ -19,17 +19,18 @@ namespace sx
             LazilyAllocated = 0x10
         };
 
-        struct Heap
-        {
-            size_t size;
-            bool local;
-            uint32_t supportedTypes;
-        };
+        std::size_t size;
+        bool local;
+        uint32_t heapType;
+    };
 
+    class PhysicalDevice
+    {
     public:
+        virtual ~PhysicalDevice() {};
         virtual std::vector<Heap> HeapInfo() = 0;
         virtual bool AllocateMemory(uint8_t heapId, std::size_t size) = 0;
     };
-
 }
+
 #endif

@@ -1,17 +1,24 @@
 #ifndef DEVICE_MEMORY_CONTROLLER_HPP
 #define DEVICE_MEMORY_CONTROLLER_HPP
 
-#include "renderer/DeviceMemory.hpp"
+#include "renderer/PhysicalDevice.hpp"
+#include "renderer/Device.hpp"
 
 namespace sx
 {
     class DeviceMemoryAllocator
     {
     public:
-        DeviceMemoryAllocator(DeviceMemory &deviceMemory);
+        DeviceMemoryAllocator(PhysicalDevice &physicalDevice, Device& device);
+        DeviceMemoryAllocator(const DeviceMemoryAllocator&) = delete;
+        const DeviceMemoryAllocator& operator = (const DeviceMemoryAllocator&) = delete;
+
+        void Configure();
 
     private:
-        DeviceMemory &deviceMemory;
+        Device& device;
+        PhysicalDevice& physicalDevice;
+        uint32_t stagingBufferHandle;
     };
 }
 
