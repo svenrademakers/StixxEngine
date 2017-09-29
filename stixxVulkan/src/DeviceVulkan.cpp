@@ -11,7 +11,7 @@ namespace sx
 		float queuePriority = 1.0f;
 		VkDeviceQueueCreateInfo queueCreateInfo = {};
 		queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-		queueCreateInfo.queueFamilyIndex = pdevice.QueueIndex(VK_QUEUE_GRAPHICS_BIT);
+		queueCreateInfo.queueFamilyIndex = pdevice.QueueIndex(static_cast<VkQueueFlagBits>(VK_QUEUE_GRAPHICS_BIT | VK_QUEUE_TRANSFER_BIT));
 		queueCreateInfo.queueCount = 1;
 		queueCreateInfo.pQueuePriorities = &queuePriority;
 

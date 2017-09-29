@@ -29,9 +29,9 @@ namespace sx
         vkGetPhysicalDeviceQueueFamilyProperties(handle, &queueFamilyCount, queueFamilies.data());
 
         auto graphicsQueue = std::find_if(queueFamilies.begin(), queueFamilies.end(),
-                                          [](const VkQueueFamilyProperties &properties) {
+                                          [bits](const VkQueueFamilyProperties &properties) {
                                               return (properties.queueCount > 0) &&
-                                                     (properties.queueFlags & VK_QUEUE_GRAPHICS_BIT);
+                                                     (properties.queueFlags & bits);
                                           });
 
         if (graphicsQueue == queueFamilies.end())
@@ -39,4 +39,19 @@ namespace sx
 
         return static_cast<uint32_t>(std::distance(queueFamilies.begin(), graphicsQueue));
     }
+
+    uint32_t PhysicalDeviceVulkan::FindMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties)
+    {
+        VkPhysicalDeviceMemoryProperties memProperties;
+        vkGetPhysicalDeviceMemoryProperties(handle, &memProperties);
+
+        for (uint32_t i = 0; i < memProperties.memoryTypeCount; i++) {
+            if ((typeFilter & (1 << i)) && (memProperties.memoryTypes[i].propertyFlags & properties) == properties) {
+                return i;
+            }
+        }
+
+        throw std::runtime_error("failed to find suitable memory type!");
+    }
+
 }
