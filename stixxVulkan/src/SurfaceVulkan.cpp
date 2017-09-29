@@ -9,8 +9,9 @@
 
 namespace sx
 {
-	SurfaceVulkan::SurfaceVulkan(const InstanceVulkan& instance)
+	SurfaceVulkan::SurfaceVulkan(const VkInstance& instance, const VkPhysicalDevice& pdevice)
         : instance(instance)
+        , pdevice(pdevice)
     {}
 
     SurfaceVulkan::~SurfaceVulkan()
@@ -28,7 +29,7 @@ namespace sx
         if (glfwCreateWindowSurface(instance, static_cast<GLFWwindow*>(window.GetHandle()), nullptr, &surface) == VK_SUCCESS)
         {
             VkSurfaceCapabilitiesKHR surfaceCapabilities;
-            vkGetPhysicalDeviceSurfaceCapabilitiesKHR(instance, surface, &surfaceCapabilities);
+            vkGetPhysicalDeviceSurfaceCapabilitiesKHR(pdevice, surface, &surfaceCapabilities);
 
             extent.width = surfaceCapabilities.currentExtent.width;
             extent.height = surfaceCapabilities.currentExtent.height;
@@ -49,9 +50,9 @@ namespace sx
     bool SurfaceVulkan::isSupported(const PresentMode type)
     {
         uint32_t count;
-        vkGetPhysicalDeviceSurfacePresentModesKHR(instance, surface, &count,nullptr);
+        vkGetPhysicalDeviceSurfacePresentModesKHR(pdevice, surface, &count,nullptr);
         std::vector<VkPresentModeKHR> presentModes(count);
-        vkGetPhysicalDeviceSurfacePresentModesKHR(instance, surface, &count,presentModes.data());
+        vkGetPhysicalDeviceSurfacePresentModesKHR(pdevice, surface, &count,presentModes.data());
 
         return (std::find_if(presentModes.begin(), presentModes.end(),
                              [type](const VkPresentModeKHR& mode) { return mode == static_cast<VkPresentModeKHR>(type); }) != presentModes.end());
@@ -62,9 +63,9 @@ namespace sx
         Surface::SurfaceFormat format;
 
         uint32_t count = 0;
-        vkGetPhysicalDeviceSurfaceFormatsKHR(instance, surface, &count, nullptr );
+        vkGetPhysicalDeviceSurfaceFormatsKHR(pdevice, surface, &count, nullptr );
         std::vector<VkSurfaceFormatKHR> surfaceFormats(count);
-        vkGetPhysicalDeviceSurfaceFormatsKHR(instance, surface, &count, surfaceFormats.data());
+        vkGetPhysicalDeviceSurfaceFormatsKHR(pdevice, surface, &count, surfaceFormats.data());
 
         if (surfaceFormats.size() == 1 && surfaceFormats[0].format == VK_FORMAT_UNDEFINED)
             format.first = static_cast<Surface::ColorFormat>(VK_FORMAT_B8G8R8A8_UNORM);

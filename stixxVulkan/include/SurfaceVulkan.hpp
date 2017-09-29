@@ -13,7 +13,7 @@ namespace sx
 		: public Surface
 	{
 	public:
-		SurfaceVulkan(const InstanceVulkan& instance);
+		SurfaceVulkan(const VkInstance& instance, const VkPhysicalDevice& pdevice);
         SurfaceVulkan(const SurfaceVulkan&) = delete;
         const SurfaceVulkan& operator = (const SurfaceVulkan&) = delete;
 		virtual ~SurfaceVulkan();
@@ -30,7 +30,8 @@ namespace sx
 
 	private:
         VkSurfaceKHR surface;
-        const InstanceVulkan& instance;
+        const VkInstance& instance;
+		const VkPhysicalDevice& pdevice;
         Surface::Transform currentTransform;
         Surface::Extent extent;
         uint32_t imageCountMax;

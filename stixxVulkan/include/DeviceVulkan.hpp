@@ -2,7 +2,8 @@
 #define DEVICE_VULKAN_HPP
 
 #include "vulkan/vulkan.h"
-#include "renderer/Device.hpp"
+#include "CastOperator.hpp"
+#include "PhysicalDeviceVulkan.hpp"
 
 namespace sx
 {
@@ -10,25 +11,19 @@ namespace sx
     class SurfaceVulkan;
 
 	class DeviceVulkan
+		: public CastOperator<VkDevice>
 	{
 	public:
-		DeviceVulkan(const InstanceVulkan& instance, const SurfaceVulkan& surface);
+		DeviceVulkan(PhysicalDeviceVulkan& pdevice);
         DeviceVulkan(const DeviceVulkan&) = delete;
         const DeviceVulkan& operator = (const DeviceVulkan&) = delete;
 		virtual ~DeviceVulkan();
 
-        operator const VkDevice&() const;
+		const VkQueue Queue();
 
 	private:
-		uint32_t GetGraphicsFamilyIndex(const VkPhysicalDevice& device);
-
-	private:
-        VkDevice device;
-		VkQueue graphicsQueue;
-		VkQueue presentQueue;
-        VkQueue TransferQueu;
-
-        uint32_t queueFamilyIndex;
+        const VkPhysicalDevice& pdevice;
+		VkQueue queue;
 	};
 }
 

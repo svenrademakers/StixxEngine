@@ -1,19 +1,55 @@
 #include <iostream>
-#include <stdexcept>
-#include "WindowGlfw.hpp"
-#include "DeviceVulkan.hpp"
 #include "InstanceVulkan.hpp"
-#include "SurfaceVulkan.hpp"
+#include "WindowGlfw.hpp"
+//#include "FileSystem.hpp"
+//#include "RendererVulkan.hpp"
+//#include "MeshLoaderAssimp.hpp"
+//#include "PhysicalDeviceVulkan.hpp"
+//#include "DeviceVulkan.hpp"
+//#include "DeviceMemoryAllocatorVulkan.hpp"
 
 int main(void)
 {
-    static sx::WindowGlfw window("Hello Triangle", 800, 600);
-    static sx::InstanceVulkan instance("stixxEngine", window.Name(), window.InstanceExtensions());
-    static sx::SurfaceVulkan surface(instance);
-    if (!surface.CreateSurface(window))
-        throw std::runtime_error("not able to create window");
+//    std::vector<sx::Vertex> vertices;
+//    std::vector<uint32_t> indices;
+//    std::vector<sx::Texture> texture;
+//    //static MeshLoaderAssimp meshLoader("/home/sven/Documents/Stixx/examples/cube.obj");
+//    //meshLoader.Next(vertices, indices, texture);
+//
+//    sx::Vertex vertex;
+//    vertex.Normal = {-0.5f,-0.5f,-0.7};
+//    vertices.push_back(vertex);
+//    vertex.Normal = {0.5,-0.5,0.3};
+//    vertices.push_back(vertex);
+//    vertex.Normal = {0.5,0.5,0.0};
+//    vertices.push_back(vertex);
+//    vertex.Normal = {-0.5f, 0.5f, 0.0};
+//    vertices.push_back(vertex);
+//
+//    indices = {0,1,2,2,3,0};
 
-    static sx::DeviceVulkan device(instance, surface);
+//    static sx::FileSystemStd fileSystem;
+
+    static sx::WindowGlfw window("Hello Triangle", 800, 600);
+    static sx::InstanceVulkan instance("Stixx", window);
+//    static sx::PhysicalDeviceVulkan pdevice(instance);
+//    static sx::SurfaceVulkan surface(instance, pdevice);
+//    if (!surface.CreateSurface(window) || !pdevice.PresentSupport(surface))
+//        throw std::runtime_error("could not setup surface");
+//
+//    static sx::DeviceVulkan device(pdevice);
+//    static sx::DeviceMemoryAllocatorVulkan alloc(device, pdevice);
+//
+//    static sx::RendererVulkan renderer(device, surface,
+//                                       fileSystem.LoadFile("/home/sven/Documents/Stixx/stixxShaders/vert.spv"),
+//                                       fileSystem.LoadFile("/home/sven/Documents/Stixx/stixxShaders/frag.spv"));
+
+//    renderer.LoadScene(vertices, indices);
+//
+//    while (!window.ShouldClose()) {
+//        window.Poll();
+//        renderer.Draw();
+//    }
 
     return 0;
 }

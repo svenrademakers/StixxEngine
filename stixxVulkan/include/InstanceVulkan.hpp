@@ -3,24 +3,20 @@
 
 #include <vector>
 #include "vulkan/vulkan.h"
+#include "CastOperator.hpp"
 
 namespace sx
 {
+    class Window;
+
 	class InstanceVulkan
+        : public CastOperator<VkInstance>
 	{
 	public:
-		InstanceVulkan(const char* engineName, const char* windowName, const std::vector<const char*>& extensions);
+		InstanceVulkan(const char* engineName, Window& window);
         InstanceVulkan(const InstanceVulkan& instance) = delete;
         const InstanceVulkan& operator = (const InstanceVulkan&) = delete;
 		virtual ~InstanceVulkan();
-
-		operator const VkInstance&() const;
-        operator const VkPhysicalDevice&() const;
-
-
-	private:
-		VkPhysicalDevice physicalDevice;
-        VkInstance instance;
 	};
 }
 
