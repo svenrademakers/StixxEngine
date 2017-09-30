@@ -29,7 +29,6 @@ namespace sx
         void Draw();
 
     private:
-        VkCommandPool commandPool;
         std::vector<VkCommandBuffer> commandBuffers;
 
         SurfaceVulkan& surface;

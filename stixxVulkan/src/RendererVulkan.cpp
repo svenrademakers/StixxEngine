@@ -1,5 +1,4 @@
 #include <algorithm>
-#include <Window.hpp>
 #include <RendererVulkan.hpp>
 #include <iostream>
 #include "ShaderVulkan.hpp"
@@ -10,26 +9,6 @@ namespace
 {
     VkSemaphore imageAvailableSemaphore;
     VkSemaphore renderFinishedSemaphore;
-    uint32_t vertexCount;
-    uint32_t indicesCount;
-
-//    uint32_t MemoryType(vk::PhysicalDevice& physicalDevice, uint32_t typeBits, vk::MemoryPropertyFlags properties)
-//    {
-//        vk::PhysicalDeviceMemoryProperties memoryProperties;
-//        physicalDevice.getMemoryProperties(&memoryProperties);
-//
-//        for (uint32_t i = 0; i < memoryProperties.memoryTypeCount; i++)
-//        {
-//            if ((typeBits & 1) == 1)
-//            {
-//                if ((memoryProperties.memoryTypes[i].propertyFlags & properties) == properties)
-//                {
-//                    return i;
-//                }
-//            }
-//            typeBits >>= 1;
-//        }
-//    };
 }
 
 namespace sx
@@ -60,9 +39,6 @@ namespace sx
 //                        swapchain.ImageViews().size()
 //                )
 //        );
-
-      //  graphicsQueue = 0;//device.getQueue(graphicsFamilyIndex, 0);
-
         VkSemaphoreCreateInfo semaphoreInfo = {};
         semaphoreInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
 
@@ -75,64 +51,6 @@ namespace sx
     {
         vkDestroySemaphore(device, renderFinishedSemaphore, nullptr);
         vkDestroySemaphore(device, imageAvailableSemaphore, nullptr);
-        vkDestroyCommandPool(device, commandPool, nullptr);
-    }
-
-    void RendererVulkan::LoadScene(const std::vector<sx::Vertex>& vertices, const std::vector<uint32_t>& indices)
-    {
-//        VkDevice dev = device;
-//        indicesCount = indices.size();
-//        vertexCount = vertices.size();
-//
-//        VkBuffer buffer;
-//        VkBufferCreateInfo createVertexBuffer = {};
-//        createVertexBuffer.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
-//        createVertexBuffer.usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;
-//        createVertexBuffer.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
-//        createVertexBuffer.size = (vertices.size() * sizeof(sx::Vertex));
-//        vkCreateBuffer(device, &createVertexBuffer, nullptr, &buffer);
-//        buffers.push_back(buffer);
-//
-//        VkBuffer IndicesBuffer;
-//        VkBufferCreateInfo createIndicesBuffer = {};
-//        createIndicesBuffer.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
-//        createIndicesBuffer.usage = VK_BUFFER_USAGE_INDEX_BUFFER_BIT;
-//        createIndicesBuffer.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
-//        createIndicesBuffer.size = (indices.size() * sizeof(uint32_t));
-//        vkCreateBuffer(device, &createIndicesBuffer, nullptr, &IndicesBuffer);
-//        buffers.push_back(IndicesBuffer);
-//
-//        auto memRequirements = device.getBufferMemoryRequirements(buffer);
-//        auto memRequirements2 = device.getBufferMemoryRequirements(IndicesBuffer);
-//
-//
-//        VkMemoryAllocateInfo allocInfo = {};
-//        allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
-//        allocInfo.allocationSize = memRequirements.size;
-//        allocInfo.memoryTypeIndex = MemoryType(pdevice, memRequirements.memoryTypeBits, vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::eHostCoherent);
-//        auto memory = device.allocateMemory(allocInfo, nullptr);
-//
-//
-//        allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
-//        allocInfo.allocationSize = memRequirements2.size;
-//        allocInfo.memoryTypeIndex = MemoryType(pdevice, memRequirements2.memoryTypeBits, vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::eHostCoherent);
-//        auto memory2 = device.allocateMemory(allocInfo, nullptr);
-//
-//        device.bindBufferMemory(buffers[0], memory, 0);
-//        device.bindBufferMemory(buffers[1], memory2, 0);
-//
-//        void* data;
-//        vkMapMemory(device, memory, 0, allocInfo.allocationSize, 0, &data);
-//        memcpy(data, vertices.data(), (vertices.size() * sizeof(sx::Vertex)));
-//        vkUnmapMemory(device, memory);
-//
-//        data= nullptr;
-//        vkMapMemory(device, memory2, 0, allocInfo.allocationSize, 0, &data);
-//        memcpy(data, indices.data(), (indices.size() * sizeof(uint32_t)));
-//        vkUnmapMemory(device, memory2);
-
-
-        LoadDrawingCommands();
     }
 
     void RendererVulkan::LoadDrawingCommands()
