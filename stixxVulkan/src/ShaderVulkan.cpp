@@ -15,9 +15,12 @@ namespace sx
 		: device(device)
 		, shaderStageFlagBits(shaderStageFlagBits)
 	{
+		VkShaderModuleCreateInfo shaderModuleCreateInfo = {};
 		shaderModuleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
+		shaderModuleCreateInfo.pNext = nullptr;
+		shaderModuleCreateInfo.flags = 0;
 		shaderModuleCreateInfo.codeSize = data.size();
-		shaderModuleCreateInfo.pCode = reinterpret_cast<const uint32_t*>(data.data());
+		shaderModuleCreateInfo.pCode = data.data();
 
 		if (vkCreateShaderModule(device, &shaderModuleCreateInfo, nullptr, &handle) != VK_SUCCESS)
 			throw std::runtime_error("failed to create shader module!");

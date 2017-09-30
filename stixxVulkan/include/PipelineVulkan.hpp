@@ -13,13 +13,13 @@ namespace sx
 		: public CastOperator<VkPipeline>
 	{
 	public:
-		PipelineVulkan() = default;
+		PipelineVulkan(const VkDevice& device);
 		virtual ~PipelineVulkan();
 
-		void Init(const VkDevice& device, RenderPassVulkan& renderpass, SurfaceVulkan& surface, ShaderVertexVulkan& vertex, ShaderFragmentVulkan& fragment, VkViewport& viewport);
+		void Init(RenderPassVulkan& renderpass, SurfaceVulkan& surface, ShaderVertexVulkan& vertex, ShaderFragmentVulkan& fragment, VkViewport& viewport);
 
 	private:
-		VkDevice device;
+		const VkDevice& device;
 		VkPipelineLayout pipelineLayout;
 	};
 }

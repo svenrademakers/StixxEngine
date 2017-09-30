@@ -24,6 +24,10 @@ namespace
 }
 namespace sx
 {
+	SwapchainVulkan::SwapchainVulkan(const VkDevice &device)
+		: device(device)
+	{}
+
 	SwapchainVulkan::~SwapchainVulkan()
 	{
 		for (size_t i = 0; i < swapChainImageViews.size(); i++) {
@@ -33,9 +37,8 @@ namespace sx
 		vkDestroySwapchainKHR(device, handle, nullptr);
 	}
 
-	void SwapchainVulkan::Init(const VkDevice& device, SurfaceVulkan& surface)
+	void SwapchainVulkan::Init(SurfaceVulkan& surface)
 	{
-        this->device = device;
 		VkSwapchainCreateInfoKHR SwapchainInfo = {};
 		SwapchainInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
 		SwapchainInfo.pNext = nullptr;

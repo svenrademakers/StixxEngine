@@ -65,7 +65,7 @@ namespace sx
         if (data.size() > STAGING_BUFFER_SIZE)
             std::runtime_error("cannot allocate this big piece of memory");
 
-        VkBuffer buffer;
+        VkBuffer  buffer;
         VkBufferCreateInfo bufferInfo = {};
         bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
         bufferInfo.size = data.size();
@@ -74,7 +74,7 @@ namespace sx
         bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
         bufferInfo.queueFamilyIndexCount = 0;
         bufferInfo.pQueueFamilyIndices = 0;
-        vkCreateBuffer(device,&bufferInfo, nullptr,  &buffer);
+        vkCreateBuffer(device, &bufferInfo, nullptr,  &buffer);
 
         AttachMemory(buffer, data.size());
 

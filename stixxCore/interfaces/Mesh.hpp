@@ -21,10 +21,10 @@ namespace sx
 	    std::string path;
 	};
 
-	class Mesh
+	struct Mesh
 	{
-	public:
-		virtual ~Mesh(){};
+		std::vector<Vertex> vertices;
+		std::vector<uint32_t> indices;
 	};
 }
 #endif

@@ -12,14 +12,14 @@ namespace sx
 		: public CastOperator<VkRenderPass>
 	{
 	public:
-		RenderPassVulkan() = default;
+		RenderPassVulkan(const VkDevice& device);
 		virtual ~RenderPassVulkan();
 
-		void Init(const VkDevice& device, SwapchainVulkan& swapchain, SurfaceVulkan& surface);
+		void Init(SwapchainVulkan& swapchain, SurfaceVulkan& surface);
 		const std::vector<VkFramebuffer>& FrameBuffers();
 
 	private:
-		VkDevice device;
+		const VkDevice& device;
 		std::vector<VkFramebuffer> frameBuffers;
 	};
 

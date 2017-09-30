@@ -4,6 +4,10 @@
 
 namespace sx
 {
+	RenderPassVulkan::RenderPassVulkan(const VkDevice &device)
+		: device(device)
+	{}
+
 	RenderPassVulkan::~RenderPassVulkan()
 	{
 		for (size_t i = 0; i < frameBuffers.size(); i++) {
@@ -13,9 +17,8 @@ namespace sx
 		vkDestroyRenderPass(device, handle, nullptr);
 	}
 
-	void RenderPassVulkan::Init(const VkDevice& device, SwapchainVulkan &swapchain, SurfaceVulkan& surface)
+	void RenderPassVulkan::Init(SwapchainVulkan &swapchain, SurfaceVulkan& surface)
 	{
-		this->device = device;
 		VkAttachmentDescription colorAttachment = {};
 		colorAttachment.format = static_cast<VkFormat>(surface.Format().first);
 		colorAttachment.samples = VK_SAMPLE_COUNT_1_BIT;

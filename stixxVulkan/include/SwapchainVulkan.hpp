@@ -14,10 +14,10 @@ namespace sx
 		: public CastOperator<VkSwapchainKHR>
 	{
 	public:
-		SwapchainVulkan() = default;
+		SwapchainVulkan(const VkDevice& device);
 		virtual ~SwapchainVulkan();
 
-		void Init(const VkDevice& device, SurfaceVulkan& surface);
+		void Init(SurfaceVulkan& surface);
 		uint32_t NumberOfImages();
 
 	public:
@@ -25,7 +25,7 @@ namespace sx
 
 	private:
 		std::vector<VkImageView> swapChainImageViews;
-		VkDevice device;
+		const VkDevice& device;
 	};
 }
 

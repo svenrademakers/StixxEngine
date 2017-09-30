@@ -10,25 +10,25 @@
 
 int main(void)
 {
-      std::vector<sx::Vertex> vertices;
 //    std::vector<uint32_t> indices;
 //    std::vector<sx::Texture> texture;
 //    //static MeshLoaderAssimp meshLoader("/home/sven/Documents/Stixx/examples/cube.obj");
 //    //meshLoader.Next(vertices, indices, texture);
 //
+    sx::Mesh mesh;
     sx::Vertex vertex = {};
     vertex.Normal = {-0.5f,-0.5f,-0.7};
-    vertices.push_back(vertex);
+    mesh.vertices.push_back(vertex);
     vertex.Normal = {0.5,-0.5,0.3};
-    vertices.push_back(vertex);
+    mesh.vertices.push_back(vertex);
     vertex.Normal = {0.5,0.5,0.0};
-    vertices.push_back(vertex);
+    mesh.vertices.push_back(vertex);
     vertex.Normal = {-0.5f, 0.5f, 0.0};
-    vertices.push_back(vertex);
+    mesh.vertices.push_back(vertex);
+    mesh.indices = {0,1,2,2,3,0};
 
-    std::vector<uint32_t> data(reinterpret_cast<uint32_t*>(&*vertices.begin()), reinterpret_cast<uint32_t*>(&*vertices.end()));
-//
-//    indices = {0,1,2,2,3,0};
+    std::vector<uint32_t> data(reinterpret_cast<uint32_t*>(&mesh), reinterpret_cast<uint32_t*>(&mesh +1));
+
 
     static sx::FileSystemStd fileSystem;
 
@@ -40,14 +40,15 @@ int main(void)
         throw std::runtime_error("could not setup surface");
 
     static sx::DeviceVulkan device(pdevice);
-    static sx::RendererVulkan renderer(pdevice, surface,
+    static sx::RendererVulkan renderer(pdevice, device, surface,
                                        fileSystem.LoadFile("/home/sven/Documents/Stixx/stixxShaders/vert.spv"),
                                        fileSystem.LoadFile("/home/sven/Documents/Stixx/stixxShaders/frag.spv"));
 
 
     static sx::DeviceMemoryAllocatorVulkan memoryAllocatorVulkan(device, pdevice);
-    auto obj = memoryAllocatorVulkan.Load(data);
-    renderer.RecordDrawingCommands(obj, data.size());
+
+    auto buffer = memoryAllocatorVulkan.Load(data);
+    renderer.RecordDrawingCommands(buffer, mesh.vertices.size(), mesh.indices.size());
 
     while (!window.ShouldClose()) {
         window.Poll();

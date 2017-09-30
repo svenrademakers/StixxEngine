@@ -19,19 +19,19 @@ namespace sx
     class RendererVulkan
     {
     public:
-        RendererVulkan(PhysicalDeviceVulkan& pdevice, SurfaceVulkan& surface, const std::vector<uint32_t>& vertex, const std::vector<uint32_t>& fragment);
+        RendererVulkan(PhysicalDeviceVulkan& pdevice, DeviceVulkan& device, SurfaceVulkan& surface, const std::vector<uint32_t>& vertex, const std::vector<uint32_t>& fragment);
         RendererVulkan(const RendererVulkan&) = delete;
         RendererVulkan& operator = (const RendererVulkan&) = delete;
         virtual ~RendererVulkan();
 
-        void RecordDrawingCommands(const VkBuffer& buffer, std::size_t verticesCount);
+        void RecordDrawingCommands(const VkBuffer& buffer, std::size_t verticesCount, std::size_t indicesCount);
         void Draw();
 
     private:
         std::vector<VkCommandBuffer> commandBuffers;
 
         SurfaceVulkan& surface;
-        DeviceVulkan device;
+        DeviceVulkan& device;
         SwapchainVulkan swapchain;
         RenderPassVulkan renderPass;
         PipelineVulkan pipeline;

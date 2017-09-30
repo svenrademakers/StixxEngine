@@ -18,9 +18,8 @@ namespace sx
 		VkPipelineShaderStageCreateInfo GetConfiguration();
 
 	private:
-		VkDevice device;
+		const VkDevice& device;
 		VkShaderStageFlagBits shaderStageFlagBits;
-		VkShaderModuleCreateInfo shaderModuleCreateInfo;
 	};
 
 	class ShaderVertexVulkan

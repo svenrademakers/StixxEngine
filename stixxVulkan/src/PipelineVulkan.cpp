@@ -16,15 +16,18 @@ namespace
 }
 namespace sx
 {
+	PipelineVulkan::PipelineVulkan(const VkDevice &device)
+		: device(device)
+	{}
+
 	PipelineVulkan::~PipelineVulkan()
 	{
 		vkDestroyPipeline(device, handle, nullptr);
 		vkDestroyPipelineLayout(device, pipelineLayout, nullptr);
 	}
 
-	void PipelineVulkan::Init(const VkDevice& device, RenderPassVulkan& renderpass, SurfaceVulkan& surface, ShaderVertexVulkan& vertex, ShaderFragmentVulkan& fragment, VkViewport& viewport)
+	void PipelineVulkan::Init(RenderPassVulkan& renderpass, SurfaceVulkan& surface, ShaderVertexVulkan& vertex, ShaderFragmentVulkan& fragment, VkViewport& viewport)
 	{
-		this->device = device;
 		VkPipelineShaderStageCreateInfo shaderStages[] = { vertex.GetConfiguration(), fragment.GetConfiguration() };
 
 		std::array<VkVertexInputBindingDescription, 1> vertexInputBindingDescription = {};

@@ -22,12 +22,15 @@ namespace
 
 namespace sx
 {
-    RendererVulkan::RendererVulkan(PhysicalDeviceVulkan& pdevice, SurfaceVulkan& surface, const std::vector<uint32_t>& vertex, const std::vector<uint32_t>& fragment)
+    RendererVulkan::RendererVulkan(PhysicalDeviceVulkan& pdevice, DeviceVulkan& device, SurfaceVulkan& surface, const std::vector<uint32_t>& vertex, const std::vector<uint32_t>& fragment)
          : surface(surface)
-        , device(pdevice)
+        , device(device)
+        , swapchain(device)
+        , renderPass(device)
+        , pipeline(device)
     {
-        swapchain.Init(device, surface);
-        renderPass.Init(device, swapchain, surface);
+        swapchain.Init(surface);
+        renderPass.Init(swapchain, surface);
 
         VkViewport viewport = {};
         viewport.width = static_cast<float>(surface.CurrentExtent().width);
@@ -37,7 +40,7 @@ namespace sx
 
         ShaderVertexVulkan vertexShader(device, vertex);
         ShaderFragmentVulkan fragmentShader(device, fragment);
-        pipeline.Init(device, renderPass, surface, vertexShader, fragmentShader, viewport);
+        pipeline.Init(renderPass, surface, vertexShader, fragmentShader, viewport);
 
         commandBuffers.resize(swapchain.NumberOfImages());
         VkCommandBufferAllocateInfo commandBufferAllocateInfo = {};
@@ -63,7 +66,7 @@ namespace sx
         vkDestroySemaphore(device, imageAvailableSemaphore, nullptr);
     }
 
-    void RendererVulkan::RecordDrawingCommands(const VkBuffer& buffer, std::size_t verticesCount)
+    void RendererVulkan::RecordDrawingCommands(const VkBuffer& buffer, std::size_t verticesCount, std::size_t indicesCount)
     {
         for (size_t i = 0; i < commandBuffers.size(); i++)
         {
@@ -87,12 +90,12 @@ namespace sx
             vkCmdBeginRenderPass(commandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
             vkCmdBindPipeline(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline);
 
+            VkBuffer vertexBuffers[] = {buffer};
             VkDeviceSize offset = 0;
-            vkCmdBindVertexBuffers(commandBuffers[i], 0, 1, &buffer, &offset);
-            vkCmdDraw(commandBuffers[i], verticesCount, 1, 0, 0);
+            vkCmdBindVertexBuffers(commandBuffers[i], 0, 1, vertexBuffers, &offset);
 
-            //vkCmdBindIndexBuffer(commandBuffers[i], buffers[1], 0, VK_INDEX_TYPE_UINT32);
-            //vkCmdDrawIndexed(commandBuffers[i], indicesCount, 1, 0, 0, 0);
+            vkCmdBindIndexBuffer(commandBuffers[i], buffer, verticesCount * sizeof(Vertex), VK_INDEX_TYPE_UINT32);
+            vkCmdDrawIndexed(commandBuffers[i], indicesCount, 1, 0, 0, 0);
 
             vkCmdEndRenderPass(commandBuffers[i]);
             if (vkEndCommandBuffer(commandBuffers[i]) != VK_SUCCESS)
