@@ -16,7 +16,6 @@ namespace
 }
 namespace sx
 {
-
 	PipelineVulkan::~PipelineVulkan()
 	{
 		vkDestroyPipeline(device, handle, nullptr);

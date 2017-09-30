@@ -35,10 +35,11 @@ namespace sx
 
 	void SwapchainVulkan::Init(const VkDevice& device, SurfaceVulkan& surface)
 	{
-
         this->device = device;
 		VkSwapchainCreateInfoKHR SwapchainInfo = {};
 		SwapchainInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
+		SwapchainInfo.pNext = nullptr;
+		SwapchainInfo.flags = 0;
 		SwapchainInfo.surface = surface;
 		SwapchainInfo.minImageCount = NumberOfImages();
 		SwapchainInfo.imageFormat = static_cast<VkFormat>(surface.Format().first);
@@ -47,6 +48,8 @@ namespace sx
 		SwapchainInfo.imageArrayLayers = 1;
 		SwapchainInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
 		SwapchainInfo.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE; //VK_SHARING_MODE_CONCURRENT
+		SwapchainInfo.queueFamilyIndexCount = 0;
+		SwapchainInfo.pQueueFamilyIndices = nullptr;
 		SwapchainInfo.preTransform = static_cast<VkSurfaceTransformFlagBitsKHR>(surface.CurrentTransform());
 		SwapchainInfo.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
 		SwapchainInfo.presentMode = PresentMode(surface);
@@ -68,8 +71,10 @@ namespace sx
 		{
 			VkImageViewCreateInfo createInfo = {};
 			createInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
-			createInfo.image = swapChainImages[std::distance(swapChainImageViews.begin(), it)];
-			createInfo.viewType = VK_IMAGE_VIEW_TYPE_3D;
+			createInfo.pNext = nullptr;
+			createInfo.flags = 0;
+			createInfo.image = swapChainImages[it - swapChainImageViews.begin()];
+			createInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
 			createInfo.format = SwapchainInfo.imageFormat;
 			createInfo.components = { VK_COMPONENT_SWIZZLE_IDENTITY,VK_COMPONENT_SWIZZLE_IDENTITY,VK_COMPONENT_SWIZZLE_IDENTITY,VK_COMPONENT_SWIZZLE_IDENTITY };
 			createInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;

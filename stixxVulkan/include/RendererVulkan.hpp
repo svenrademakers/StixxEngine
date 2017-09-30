@@ -24,8 +24,7 @@ namespace sx
         RendererVulkan& operator = (const RendererVulkan&) = delete;
         virtual ~RendererVulkan();
 
-        void LoadScene(const std::vector<sx::Vertex>& vertex, const std::vector<uint32_t>& indices);
-        void LoadDrawingCommands();
+        void RecordDrawingCommands(const VkBuffer& buffer, std::size_t verticesCount);
         void Draw();
 
     private:

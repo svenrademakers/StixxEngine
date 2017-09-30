@@ -41,18 +41,17 @@ int main(void)
 
     static sx::DeviceVulkan device(pdevice);
     static sx::DeviceMemoryAllocatorVulkan memoryAllocatorVulkan(device, pdevice);
-    memoryAllocatorVulkan.Load(data);
-
     static sx::RendererVulkan renderer(pdevice, surface,
                                        fileSystem.LoadFile("/home/sven/Documents/Stixx/stixxShaders/vert.spv"),
                                        fileSystem.LoadFile("/home/sven/Documents/Stixx/stixxShaders/frag.spv"));
 
-    //renderer.LoadScene(vertices, indices);
+    auto obj = memoryAllocatorVulkan.Load(data);
+    renderer.RecordDrawingCommands(obj, data.size());
 
-//    while (!window.ShouldClose()) {
-//        window.Poll();
-//        renderer.Draw();
-//    }
+    while (!window.ShouldClose()) {
+        window.Poll();
+        renderer.Draw();
+    }
 
     return 0;
 }
