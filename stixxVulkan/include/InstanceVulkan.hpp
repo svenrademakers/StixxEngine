@@ -17,6 +17,9 @@ namespace sx
         InstanceVulkan(const InstanceVulkan& instance) = delete;
         const InstanceVulkan& operator = (const InstanceVulkan&) = delete;
 		virtual ~InstanceVulkan();
+
+	private:
+		VkDebugReportCallbackEXT callback;
 	};
 }
 
