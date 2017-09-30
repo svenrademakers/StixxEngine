@@ -40,11 +40,12 @@ int main(void)
         throw std::runtime_error("could not setup surface");
 
     static sx::DeviceVulkan device(pdevice);
-    static sx::DeviceMemoryAllocatorVulkan memoryAllocatorVulkan(device, pdevice);
     static sx::RendererVulkan renderer(pdevice, surface,
                                        fileSystem.LoadFile("/home/sven/Documents/Stixx/stixxShaders/vert.spv"),
                                        fileSystem.LoadFile("/home/sven/Documents/Stixx/stixxShaders/frag.spv"));
 
+
+    static sx::DeviceMemoryAllocatorVulkan memoryAllocatorVulkan(device, pdevice);
     auto obj = memoryAllocatorVulkan.Load(data);
     renderer.RecordDrawingCommands(obj, data.size());
 

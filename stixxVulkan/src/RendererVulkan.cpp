@@ -89,7 +89,7 @@ namespace sx
 
             VkDeviceSize offset = 0;
             vkCmdBindVertexBuffers(commandBuffers[i], 0, 1, &buffer, &offset);
-            vkCmdDraw(commandBuffers[i], verticesCount, 0, 0, 0);
+            vkCmdDraw(commandBuffers[i], verticesCount, 1, 0, 0);
 
             //vkCmdBindIndexBuffer(commandBuffers[i], buffers[1], 0, VK_INDEX_TYPE_UINT32);
             //vkCmdDrawIndexed(commandBuffers[i], indicesCount, 1, 0, 0, 0);
