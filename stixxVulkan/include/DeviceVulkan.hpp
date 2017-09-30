@@ -3,12 +3,10 @@
 
 #include "vulkan/vulkan.h"
 #include "CastOperator.hpp"
-#include "PhysicalDeviceVulkan.hpp"
 
 namespace sx
 {
-    class InstanceVulkan;
-    class SurfaceVulkan;
+    class PhysicalDeviceVulkan;
 
 	class DeviceVulkan
 		: public CastOperator<VkDevice>
@@ -19,12 +17,14 @@ namespace sx
         const DeviceVulkan& operator = (const DeviceVulkan&) = delete;
 		virtual ~DeviceVulkan();
 
-		const VkQueue Queue();
+		const VkQueue& Queue();
+		const VkCommandPool& CommandPool();
 
 	private:
-        const VkPhysicalDevice& pdevice;
+        PhysicalDeviceVulkan& pdevice;
 		VkQueue queue;
+		VkCommandPool commandPool;
 	};
 }
 
-#endif /* RENDERERVULKAN_HPP */
+#endif /* DEVICE_VULKAN_HPP */

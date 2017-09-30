@@ -4,7 +4,8 @@
 #include <vector>
 #include "vulkan/vulkan.h"
 
-#define STAGING_BUFFER_SIZE (0x10000000)
+#define STAGING_BUFFER_SIZE 0x100000
+#define MEMORY_CHUNK_SIZE 0x10000000
 
 namespace sx
 {
@@ -14,16 +15,27 @@ namespace sx
     class DeviceMemoryAllocatorVulkan
     {
     public:
-        DeviceMemoryAllocatorVulkan(const DeviceVulkan& device, PhysicalDeviceVulkan& pdevice);
+        DeviceMemoryAllocatorVulkan(DeviceVulkan& device, PhysicalDeviceVulkan& pdevice);
         virtual ~DeviceMemoryAllocatorVulkan();
 
-    private:
-        const DeviceVulkan& device;
-        const PhysicalDeviceVulkan& pdevice;
+        VkBuffer Load(const std::vector<uint32_t>& data);
 
-        std::vector<VkDeviceMemory> memoryVector;
-        VkBuffer stagingBuffer;
-        uint32_t stagingBufferAlignment;
+    private:
+        void CreateStatingBuffer();
+        void AttachMemory(const VkBuffer& buffer, const size_t size);
+        void AllocNextChunk(uint32_t memTypeBits);
+        void CopyData2Device(const VkBuffer& buffer, const std::vector<uint32_t>& data) const;
+
+        DeviceVulkan& device;
+        PhysicalDeviceVulkan& pdevice;
+
+        VkDeviceMemory stagingMemory;
+        std::vector<std::pair<std::size_t, VkDeviceMemory>> memoryVector;
+        VkBuffer stagingSrcBuffer;
+        VkCommandBuffer commandBuffer;
+
+        void* dataPtr;
+
     };
 }
 

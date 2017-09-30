@@ -53,5 +53,4 @@ namespace sx
 
         throw std::runtime_error("failed to find suitable memory type!");
     }
-
 }

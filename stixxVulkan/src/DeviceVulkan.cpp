@@ -1,5 +1,5 @@
 #include "DeviceVulkan.hpp"
-#include "SurfaceVulkan.hpp"
+#include "PhysicalDeviceVulkan.hpp"
 #include <stdexcept>
 #include <algorithm>
 
@@ -31,6 +31,11 @@ namespace sx
 		if (vkCreateDevice(pdevice, &DeviceInfo, nullptr, &handle) != VK_SUCCESS)
 			throw std::runtime_error("failed to find GPUs with Vulkan support!");
 
+		VkCommandPoolCreateInfo commandPoolCreateInfo = {};
+		commandPoolCreateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
+		commandPoolCreateInfo.flags = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
+		commandPoolCreateInfo.queueFamilyIndex = pdevice.QueueIndex(static_cast<VkQueueFlagBits>(VK_QUEUE_GRAPHICS_BIT | VK_QUEUE_TRANSFER_BIT));
+		vkCreateCommandPool(handle, &commandPoolCreateInfo, nullptr, &commandPool);
 	}
 
 	DeviceVulkan::~DeviceVulkan()
@@ -38,8 +43,13 @@ namespace sx
 		vkDestroyDevice(handle, nullptr);
 	}
 
-	const VkQueue DeviceVulkan::Queue()
+	const VkQueue& DeviceVulkan::Queue()
 	{
 		return queue;
+	}
+
+	const VkCommandPool& DeviceVulkan::CommandPool()
+	{
+		return commandPool;
 	}
 }

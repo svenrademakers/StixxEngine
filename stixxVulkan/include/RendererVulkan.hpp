@@ -19,7 +19,7 @@ namespace sx
     class RendererVulkan
     {
     public:
-        RendererVulkan(DeviceVulkan& device, SurfaceVulkan& surface, const std::vector<uint32_t>& vertex, const std::vector<uint32_t>& fragment);
+        RendererVulkan(PhysicalDeviceVulkan& pdevice, SurfaceVulkan& surface, const std::vector<uint32_t>& vertex, const std::vector<uint32_t>& fragment);
         RendererVulkan(const RendererVulkan&) = delete;
         RendererVulkan& operator = (const RendererVulkan&) = delete;
         virtual ~RendererVulkan();
@@ -31,8 +31,9 @@ namespace sx
     private:
         VkCommandPool commandPool;
         std::vector<VkCommandBuffer> commandBuffers;
+
         SurfaceVulkan& surface;
-        DeviceVulkan& device;
+        DeviceVulkan device;
         SwapchainVulkan swapchain;
         RenderPassVulkan renderPass;
         PipelineVulkan pipeline;

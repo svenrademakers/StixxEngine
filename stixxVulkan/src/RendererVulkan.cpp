@@ -4,6 +4,7 @@
 #include <iostream>
 #include "ShaderVulkan.hpp"
 #include <stdexcept>
+#include <renderer/PhysicalDevice.hpp>
 
 namespace
 {
@@ -33,11 +34,10 @@ namespace
 
 namespace sx
 {
-    RendererVulkan::RendererVulkan(DeviceVulkan& device, SurfaceVulkan& surface, const std::vector<uint32_t>& vertex, const std::vector<uint32_t>& fragment)
-        : surface(surface)
-        , device(device)
+    RendererVulkan::RendererVulkan(PhysicalDeviceVulkan& pdevice, SurfaceVulkan& surface, const std::vector<uint32_t>& vertex, const std::vector<uint32_t>& fragment)
+         : surface(surface)
+        , device(pdevice)
     {
-
         swapchain.Init(device, surface);
         renderPass.Init(device, swapchain, surface);
 
@@ -51,10 +51,8 @@ namespace sx
         ShaderFragmentVulkan fragmentShader(device, fragment);
         pipeline.Init(device, renderPass, surface, vertexShader, fragmentShader, viewport);
 
-//        commandPool = device.createCommandPool(vk::CommandPoolCreateInfo(
-//                vk::CommandPoolCreateFlags(vk::CommandPoolCreateFlagBits::eResetCommandBuffer),
-//                graphicsFamilyIndex), nullptr);
-//
+
+
 //        commandBuffers = device.allocateCommandBuffers(
 //                vk::CommandBufferAllocateInfo(
 //                        commandPool,
