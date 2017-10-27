@@ -1,25 +1,29 @@
-#include "FileSystem.hpp"
 #include <fstream>
-#include <stdexcept>
+#include "FileSystem.hpp"
 
 namespace sx
 {
-	std::vector<uint32_t> FileSystemStd::LoadFile(const char * fileName)
+	CannotOpenFileException::CannotOpenFileException(const std::string path)
+		: path(path)
+	{}
+
+	void FileSystemImpl::ReadBinary(const std::string fileName, const std::function<void(std::istream&)> streamAvailable) const
 	{
-		std::ifstream file(fileName, std::ios::ate | std::ios::binary);
+		std::ifstream input(fileName, std::ios::binary);
 
-		if (!file.is_open()) {
-			throw std::runtime_error("failed to open file!");
-		}
+		if (!input)
+			throw CannotOpenFileException(fileName);
 
-		size_t fileSize = (size_t)file.tellg();
-		std::vector<uint32_t> buffer(fileSize);
+		streamAvailable(input);
+	}
 
-		file.seekg(0);
-		file.read(reinterpret_cast<char *>(buffer.data()), fileSize);
+	void FileSystemImpl::WriteBinary(const std::string fileName, const std::function<void(std::ostream&)> streamAvailable) const
+	{
+		std::ofstream output(fileName, std::ios::binary);
 
-		file.close();
+		if (!output)
+			throw CannotOpenFileException(fileName);
 
-		return buffer;
+		streamAvailable(output);
 	}
 }
