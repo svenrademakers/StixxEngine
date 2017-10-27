@@ -11,6 +11,7 @@ namespace
 			return VK_PRESENT_MODE_MAILBOX_KHR;
 		else if (surface.isSupported(sx::Surface::PresentMode::Fifo))
 			return VK_PRESENT_MODE_FIFO_KHR;
+		return VK_PRESENT_MODE_MAX_ENUM_KHR;
 	}
 
 	VkExtent2D Extent(sx::Surface::Extent ex)

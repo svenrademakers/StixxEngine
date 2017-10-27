@@ -2,3 +2,4 @@
 buildgcc/
 .idea/
 cmake-build-debug/
+build_vs/

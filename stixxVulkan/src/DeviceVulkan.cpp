@@ -2,6 +2,7 @@
 #include "PhysicalDeviceVulkan.hpp"
 #include <stdexcept>
 #include <algorithm>
+#include <vector>
 
 namespace sx
 {
