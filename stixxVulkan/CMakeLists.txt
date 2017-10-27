@@ -6,6 +6,10 @@ add_library(StixxVulkan STATIC
 	${headers}
 	${shaders}
 )
+if(DEFINED $ENV{VULKAN_SDK})
+else()
+message(FATAL_ERROR "VULKAN_SDK path not set in environment..")
+endif()
 
 set(Vulkan_INCLUDE_DIR $ENV{VULKAN_SDK}/include)
 set(Vulkan_LIBRARIES $ENV{VULKAN_SDK}/lib/libvulkan.so)
