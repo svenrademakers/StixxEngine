@@ -10,6 +10,7 @@
 #include "PipelineVulkan.hpp"
 #include "InstanceVulkan.hpp"
 #include "DeviceMemoryAllocatorVulkan.hpp"
+#include "ModelVulkan.hpp"
 
 namespace sx
 {
@@ -24,7 +25,7 @@ namespace sx
         RendererVulkan& operator = (const RendererVulkan&) = delete;
         virtual ~RendererVulkan();
 
-        void RecordDrawingCommands(const VkBuffer& buffer, std::size_t verticesCount, std::size_t indicesCount);
+        void RecordDrawingCommands(ModelVulkan& m);
         void Draw();
 
     private:

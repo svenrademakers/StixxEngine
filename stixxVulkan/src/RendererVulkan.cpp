@@ -48,7 +48,7 @@ namespace sx
         commandBufferAllocateInfo.pNext = nullptr;
         commandBufferAllocateInfo.commandPool = device.CommandPool();
         commandBufferAllocateInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-        commandBufferAllocateInfo.commandBufferCount = swapchain.ImageViews().size();
+        commandBufferAllocateInfo.commandBufferCount = static_cast<uint32_t>(swapchain.ImageViews().size());
         vkAllocateCommandBuffers(device, &commandBufferAllocateInfo, commandBuffers.data());
 
         VkSemaphoreCreateInfo semaphoreInfo = {};
@@ -66,7 +66,7 @@ namespace sx
         vkDestroySemaphore(device, imageAvailableSemaphore, nullptr);
     }
 
-    void RendererVulkan::RecordDrawingCommands(const VkBuffer& buffer, std::size_t verticesCount, std::size_t indicesCount)
+    void RendererVulkan::RecordDrawingCommands(ModelVulkan& m)
     {
         for (size_t i = 0; i < commandBuffers.size(); i++)
         {
@@ -90,13 +90,8 @@ namespace sx
             vkCmdBeginRenderPass(commandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
             vkCmdBindPipeline(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline);
 
-            VkBuffer vertexBuffers[] = {buffer};
-            VkDeviceSize offset = 0;
-            vkCmdBindVertexBuffers(commandBuffers[i], 0, 1, vertexBuffers, &offset);
-
-            vkCmdBindIndexBuffer(commandBuffers[i], buffer, verticesCount * sizeof(Vertex), VK_INDEX_TYPE_UINT32);
-            vkCmdDrawIndexed(commandBuffers[i], indicesCount, 1, 0, 0, 0);
-
+			m.Draw(commandBuffers[i]);
+			
             vkCmdEndRenderPass(commandBuffers[i]);
             if (vkEndCommandBuffer(commandBuffers[i]) != VK_SUCCESS)
                 throw std::runtime_error("failed to record command buffer!");

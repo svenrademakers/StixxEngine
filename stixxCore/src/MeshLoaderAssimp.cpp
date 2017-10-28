@@ -1,10 +1,3 @@
-/*
- * AssetLoaderAssimp.cpp
- *
- *  Created on: 10 Sep 2017
- *      Author: svenrademakers
- */
-
 #include <MeshLoaderAssimp.hpp>
 #include <iostream>
 #include <vector>
@@ -21,19 +14,19 @@ MeshLoaderAssimp::MeshLoaderAssimp(const std::string& fileName)
 
 	if (!scene)
 		std::cerr << importer.GetErrorString();
-
 }
 
 MeshLoaderAssimp::~MeshLoaderAssimp()
 {
 }
 
-bool MeshLoaderAssimp::Next(std::vector<sx::Vertex>& vertices, std::vector<unsigned int>& indices, std::vector<sx::Texture>& textures)
+bool MeshLoaderAssimp::Next(sx::Mesh& mesh)
 {
 	if (index == scene->mNumMeshes)
 	return false;
 
-    processMesh(vertices, indices, textures);
+	std::vector<sx::Texture> textures;
+    processMesh(mesh.vertices, mesh.indices, textures);
     return true;
 }
 

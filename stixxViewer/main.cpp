@@ -41,14 +41,11 @@ int main(void)
 
     static sx::DeviceVulkan device(pdevice);
     static sx::RendererVulkan renderer(pdevice, device, surface,
-                                       fileSystem.LoadFile("/home/sven/Documents/Stixx/stixxShaders/vert.spv"),
-                                       fileSystem.LoadFile("/home/sven/Documents/Stixx/stixxShaders/frag.spv"));
+                                       fileSystem.LoadFile("../stixxShaders/vert.spv"),
+                                       fileSystem.LoadFile("../stixxShaders/frag.spv"));
 
-
-    static sx::DeviceMemoryAllocatorVulkan memoryAllocatorVulkan(device, pdevice);
-
-    auto buffer = memoryAllocatorVulkan.Load(data);
-    renderer.RecordDrawingCommands(buffer, mesh.vertices.size(), mesh.indices.size());
+	sx::ModelVulkan model(device, pdevice, mesh);
+	renderer.RecordDrawingCommands(model);
 
     while (!window.ShouldClose()) {
         window.Poll();

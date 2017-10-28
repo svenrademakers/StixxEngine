@@ -17,7 +17,7 @@ public:
 	virtual ~MeshLoaderAssimp();
 
 public:
-	bool Next(std::vector<sx::Vertex>&, std::vector<unsigned int>&, std::vector<sx::Texture>&) override;
+	bool Next(sx::Mesh& mesh) override;
 
 private:
 	void processMesh(std::vector<sx::Vertex>& vertices, std::vector<unsigned int>& indices, std::vector<sx::Texture>& textures);

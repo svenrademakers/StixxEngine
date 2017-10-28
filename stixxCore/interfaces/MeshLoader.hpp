@@ -16,7 +16,7 @@ namespace sx
 	{
 	public:
 		virtual ~MeshLoader() {};
-		virtual bool Next(std::vector<sx::Vertex>&, std::vector<unsigned int>&, std::vector<sx::Texture>&) = 0;
+		virtual bool Next(Mesh& mesh) = 0;
 	};
 }
 

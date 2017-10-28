@@ -7,18 +7,12 @@ namespace sx
     class CastOperator
     {
     public:
-        CastOperator();
+		constexpr CastOperator() = default;
         operator const T &() const;
 
     protected:
         T handle;
     };
-
-    template<typename T>
-    CastOperator<T>::CastOperator()
-    {
-
-    }
 
     template<typename T>
     CastOperator<T>::operator const T &() const
