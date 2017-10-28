@@ -16,7 +16,7 @@ add_library(StixxCore STATIC
 	${sources}
 	${headers}
 )
-set_property(TARGET StixxCore PROPERTY CXX_STANDARD 17)
+set_property(TARGET StixxCore PROPERTY CXX_STANDARD 14)
 
 target_include_directories(StixxCore
 	PUBLIC

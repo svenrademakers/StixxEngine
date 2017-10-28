@@ -32,7 +32,7 @@ endif()
 
 target_link_libraries(StixxVulkan StixxCore ${Vulkan_Lib})
 
-set_property(TARGET StixxVulkan PROPERTY CXX_STANDARD 17)
+set_property(TARGET StixxVulkan PROPERTY CXX_STANDARD 14)
 
 install(DIRECTORY include DESTINATION include/stixx)
 install(TARGETS StixxVulkan
