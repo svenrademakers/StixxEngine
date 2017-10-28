@@ -8,24 +8,6 @@
 #include "DeviceVulkan.hpp"
 #include "DeviceMemoryAllocatorVulkan.hpp"
 
-void readShaders(std::vector<uint32_t>& vertex, std::vector<uint32_t>& fragment)
-{
-	static sx::FileSystemImpl fileSystem;
-	fileSystem.ReadBinary("../stixxShaders/vert.spv", [&vertex](std::istream& stream) {
-		stream.seekg(0, stream.end);
-		vertex.resize(stream.tellg()/4);
-		stream.seekg(0, stream.beg);
-		stream.read(reinterpret_cast<char*>(vertex.data()), vertex.size()*4);
-	});
-
-	fileSystem.ReadBinary("../stixxShaders/frag.spv", [&fragment](std::istream& stream) {
-		stream.seekg(0, stream.end);
-		fragment.resize(stream.tellg()/4);
-		stream.seekg(0, stream.beg);
-		stream.read(reinterpret_cast<char*>(fragment.data()), fragment.size()*4);
-	});
-}
-
 int main(void)
 {
 //    std::vector<uint32_t> indices;
@@ -47,10 +29,8 @@ int main(void)
 
     std::vector<uint32_t> data(reinterpret_cast<uint32_t*>(&mesh), reinterpret_cast<uint32_t*>(&mesh +1));
 
-	std::vector<uint32_t> vertexShader;
-	std::vector<uint32_t> fragmentShader;
-	readShaders(vertexShader, fragmentShader);
 
+    static sx::FileSystemStd fileSystem;
 
     static sx::WindowGlfw window("Hello Triangle", 800, 600);
     static sx::InstanceVulkan instance("Stixx", window);
@@ -60,7 +40,11 @@ int main(void)
         throw std::runtime_error("could not setup surface");
 
     static sx::DeviceVulkan device(pdevice);
-	static sx::RendererVulkan renderer(pdevice, device, surface, vertexShader, fragmentShader);
+    static sx::RendererVulkan renderer(pdevice, device, surface,
+                                       fileSystem.LoadFile("/home/sven/Documents/Stixx/stixxShaders/vert.spv"),
+                                       fileSystem.LoadFile("/home/sven/Documents/Stixx/stixxShaders/frag.spv"));
+
+
     static sx::DeviceMemoryAllocatorVulkan memoryAllocatorVulkan(device, pdevice);
 
     auto buffer = memoryAllocatorVulkan.Load(data);
