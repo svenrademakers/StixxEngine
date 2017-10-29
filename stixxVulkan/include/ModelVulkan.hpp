@@ -7,6 +7,12 @@
 
 namespace sx
 {
+	struct UniformBufferObject {
+		glm::mat4 model;
+		glm::mat4 view;
+		glm::mat4 proj;
+	};
+
 	class ModelVulkan
 	{
 	public:
@@ -17,11 +23,11 @@ namespace sx
 
 	private:
 		template<VkBufferUsageFlags flags>
-		void LoadBuffer(const Mesh& mesh, VkBuffer& buffer, VkDeviceMemory& deviceMemory)
+		void LoadBuffer(VkBuffer& buffer, const std::size_t size)
 		{
 			VkBufferCreateInfo bufferInfo = {};
 			bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
-			bufferInfo.size = vertexSize + indexSize;
+			bufferInfo.size = size;
 			bufferInfo.flags = 0;
 			bufferInfo.usage = flags;
 			bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
@@ -32,30 +38,10 @@ namespace sx
 			if (vkCreateBuffer(device, &bufferInfo, nullptr, &buffer) != VK_SUCCESS) {
 				throw std::runtime_error("failed to create buffer!");
 			}
-
-			VkMemoryRequirements memRequirements;
-			vkGetBufferMemoryRequirements(device, buffer, &memRequirements);
-
-			VkMemoryAllocateInfo allocInfo = {};
-			allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
-			allocInfo.allocationSize = memRequirements.size;
-			allocInfo.memoryTypeIndex = pdevice.FindMemoryType(memRequirements.memoryTypeBits, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
-
-			if (vkAllocateMemory(device, &allocInfo, nullptr, &deviceMemory) != VK_SUCCESS) {
-				throw std::runtime_error("failed to allocate buffer memory!");
-			}
-
-			void* data = nullptr;
-			vkBindBufferMemory(device, buffer, deviceMemory, 0);
-
-			vkMapMemory(device, deviceMemory, 0, vertexSize, 0, &data);
-			memcpy(data, mesh.vertices.data(), vertexSize);
-			vkUnmapMemory(device, deviceMemory);
-
-			vkMapMemory(device, deviceMemory, vertexSize, indexSize, 0, &data);
-			memcpy(data, mesh.indices.data(), indexSize);
-			vkUnmapMemory(device, deviceMemory);
 		}
+
+		VkDeviceMemory AttachMemory(VkBuffer& buffer);
+		void LoadVertexData(const Mesh& mesh);
 
 	private:
 		sx::DeviceVulkan& device;
@@ -66,7 +52,11 @@ namespace sx
 		const std::size_t indexSize;
 
 		VkBuffer buffer;
+		VkBuffer uboBuffer;
 		VkDeviceMemory deviceMemory;
+		VkDeviceMemory uboMemory;
+
+		UniformBufferObject ubo;
 	};
 }
 #endif

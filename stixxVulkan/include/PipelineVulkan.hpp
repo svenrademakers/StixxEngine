@@ -19,8 +19,12 @@ namespace sx
 		void Init(RenderPassVulkan& renderpass, SurfaceVulkan& surface, ShaderVertexVulkan& vertex, ShaderFragmentVulkan& fragment, VkViewport& viewport);
 
 	private:
+		void createDescriptorPool();
+
+	private:
 		const VkDevice& device;
 		VkPipelineLayout pipelineLayout;
+		VkDescriptorPool descriptorPool;
 	};
 }
 #endif
