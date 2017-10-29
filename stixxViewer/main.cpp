@@ -10,25 +10,20 @@
 
 int main(void)
 {
-//    std::vector<uint32_t> indices;
-//    std::vector<sx::Texture> texture;
-//    //static MeshLoaderAssimp meshLoader("/home/sven/Documents/Stixx/examples/cube.obj");
-//    //meshLoader.Next(vertices, indices, texture);
-//
-    sx::Mesh mesh;
-    sx::Vertex vertex = {};
-    vertex.Normal = {-0.5f,-0.5f,-0.7};
-    mesh.vertices.push_back(vertex);
-    vertex.Normal = {0.5,-0.5,0.3};
-    mesh.vertices.push_back(vertex);
-    vertex.Normal = {0.5,0.5,0.0};
-    mesh.vertices.push_back(vertex);
-    vertex.Normal = {-0.5f, 0.5f, 0.0};
-    mesh.vertices.push_back(vertex);
-    mesh.indices = {0,1,2,2,3,0};
+	sx::Mesh mesh;
+    static MeshLoaderAssimp meshLoader(R"(D:\cube.obj)");
+    meshLoader.Next(mesh);
 
-    std::vector<uint32_t> data(reinterpret_cast<uint32_t*>(&mesh), reinterpret_cast<uint32_t*>(&mesh +1));
-
+    //sx::Vertex vertex = {};
+    //vertex.Normal = {-0.5f,-0.5f,-0.7};
+    //mesh.vertices.push_back(vertex);
+    //vertex.Normal = {0.5,-0.5,0.3};
+    //mesh.vertices.push_back(vertex);
+    //vertex.Normal = {0.5,0.5,0.0};
+    //mesh.vertices.push_back(vertex);
+    //vertex.Normal = {-0.5f, 0.5f, 0.0};
+    //mesh.vertices.push_back(vertex);
+    //mesh.indices = {0,1,2,2,3,0};
 
     static sx::FileSystemStd fileSystem;
 
