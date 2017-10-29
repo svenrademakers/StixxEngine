@@ -16,14 +16,12 @@ namespace sx
 		void Draw(const VkCommandBuffer& drawCmdBuffer);
 
 	private:
-		template<VkBufferUsageFlags flags, class T>
-		void LoadBuffer(const std::vector<T>& bufferData, VkBuffer& buffer, VkDeviceMemory& deviceMemory)
+		template<VkBufferUsageFlags flags>
+		void LoadBuffer(const Mesh& mesh, VkBuffer& buffer, VkDeviceMemory& deviceMemory)
 		{
-			const std::size_t bufferSize = sizeof(T) * bufferData.size();
-
 			VkBufferCreateInfo bufferInfo = {};
 			bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
-			bufferInfo.size = bufferSize;
+			bufferInfo.size = vertexSize + indexSize;
 			bufferInfo.flags = 0;
 			bufferInfo.usage = flags;
 			bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
@@ -47,10 +45,15 @@ namespace sx
 				throw std::runtime_error("failed to allocate buffer memory!");
 			}
 
+			void* data = nullptr;
 			vkBindBufferMemory(device, buffer, deviceMemory, 0);
-			void* data;
-			vkMapMemory(device, deviceMemory, 0, bufferSize, 0, &data);
-			memcpy(data, bufferData.data(), (size_t)bufferSize);
+
+			vkMapMemory(device, deviceMemory, 0, vertexSize, 0, &data);
+			memcpy(data, mesh.vertices.data(), vertexSize);
+			vkUnmapMemory(device, deviceMemory);
+
+			vkMapMemory(device, deviceMemory, vertexSize, indexSize, 0, &data);
+			memcpy(data, mesh.indices.data(), indexSize);
 			vkUnmapMemory(device, deviceMemory);
 		}
 
@@ -58,11 +61,12 @@ namespace sx
 		sx::DeviceVulkan& device;
 		sx::PhysicalDeviceVulkan& pdevice;
 
-		VkBuffer indexBuffer;
-		VkBuffer vertexBuffer;
-		const uint32_t indicesCount;
-		VkDeviceMemory vertexMem;
-		VkDeviceMemory indexMem;
+		const std::size_t vertexSize;
+		const std::uint32_t indicesCount;
+		const std::size_t indexSize;
+
+		VkBuffer buffer;
+		VkDeviceMemory deviceMemory;
 	};
 }
 #endif
