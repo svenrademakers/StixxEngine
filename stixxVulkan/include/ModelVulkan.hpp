@@ -17,14 +17,14 @@ namespace sx
 	class ModelVulkan
 	{
 	public:
-		 ModelVulkan(sx::DeviceVulkan& device, sx::PhysicalDeviceVulkan& pdevice, const sx::Mesh& mesh);
+		ModelVulkan(const VkDevice& device, const VkPhysicalDevice& pdevice, const sx::Mesh& mesh);
 		virtual ~ModelVulkan();
 
 		void Draw(const VkCommandBuffer& drawCmdBuffer);
 
 	private:
 		template<VkBufferUsageFlags flags>
-		void LoadBuffer(VkBuffer& buffer, const std::size_t size)
+		void LoadBuffer(VkBuffer& buffer, const std::size_t size) const
 		{
 			VkBufferCreateInfo bufferInfo = {};
 			bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
@@ -41,12 +41,12 @@ namespace sx
 			}
 		}
 
-		VkDeviceMemory AttachMemory(VkBuffer& buffer);
+		VkDeviceMemory AttachMemory(VkBuffer& buffer) const;
 		void LoadVertexData(const Mesh& mesh);
 
 	private:
-		sx::DeviceVulkan& device;
-		sx::PhysicalDeviceVulkan& pdevice;
+		const VkDevice& device;
+		const VkPhysicalDevice& pdevice;
 
 		const std::size_t vertexSize;
 		const std::uint32_t indicesCount;

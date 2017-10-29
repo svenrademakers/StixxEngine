@@ -1,9 +1,24 @@
 #include "ModelVulkan.hpp"
 
+namespace
+{
+	uint32_t FindMemoryType(const VkPhysicalDevice device, uint32_t typeFilter, VkMemoryPropertyFlags properties)
+	{
+		VkPhysicalDeviceMemoryProperties memProperties;
+		vkGetPhysicalDeviceMemoryProperties(device, &memProperties);
 
+		for (uint32_t i = 0; i < memProperties.memoryTypeCount; i++) {
+			if ((typeFilter & (1 << i)) && (memProperties.memoryTypes[i].propertyFlags & properties) == properties) {
+				return i;
+			}
+		}
+
+		throw std::runtime_error("failed to find suitable memory type!");
+	}
+}
 namespace sx
 {
-	ModelVulkan::ModelVulkan(sx::DeviceVulkan& device, sx::PhysicalDeviceVulkan& pdevice, const sx::Mesh& mesh)
+	ModelVulkan::ModelVulkan(const VkDevice& device, const VkPhysicalDevice& pdevice, const sx::Mesh& mesh)
 		: device(device)
 		, pdevice(pdevice)
 		, vertexSize(sizeof(mesh.vertices[0]) * mesh.vertices.size())
@@ -30,19 +45,22 @@ namespace sx
 		vkCmdDrawIndexed(drawCmdBuffer, indicesCount, 1, 0, 0, 0);
 	}
 	
-	VkDeviceMemory ModelVulkan::AttachMemory(VkBuffer& buffer)
+	VkDeviceMemory ModelVulkan::AttachMemory(VkBuffer& buffer) const 
 	{
+		VkDeviceMemory deviceMemory;
 		VkMemoryRequirements memRequirements;
 		vkGetBufferMemoryRequirements(device, buffer, &memRequirements);
 
 		VkMemoryAllocateInfo allocInfo = {};
 		allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
 		allocInfo.allocationSize = memRequirements.size;
-		allocInfo.memoryTypeIndex = pdevice.FindMemoryType(memRequirements.memoryTypeBits, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+		allocInfo.memoryTypeIndex = FindMemoryType(pdevice, memRequirements.memoryTypeBits, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
 		if (vkAllocateMemory(device, &allocInfo, nullptr, &deviceMemory) != VK_SUCCESS) {
 			throw std::runtime_error("failed to allocate buffer memory!");
 		}
+
+		return deviceMemory;
 	}
 
 	void ModelVulkan::LoadVertexData(const Mesh& mesh)
