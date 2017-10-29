@@ -1,6 +1,7 @@
 #ifndef MODEL_VULKAN_HPP
 #define MODEL_VULKAN_HPP
 
+#include <stdexcept>
 #include "DeviceVulkan.hpp"
 #include "PhysicalDeviceVulkan.hpp"
 #include "Mesh.hpp"

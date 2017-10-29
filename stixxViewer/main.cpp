@@ -11,19 +11,19 @@
 int main(void)
 {
 	sx::Mesh mesh;
-    static MeshLoaderAssimp meshLoader(R"(D:\cube.obj)");
-    meshLoader.Next(mesh);
+    //static MeshLoaderAssimp meshLoader(R"(D:\cube.obj)");
+    //meshLoader.Next(mesh);
 
-    //sx::Vertex vertex = {};
-    //vertex.Normal = {-0.5f,-0.5f,-0.7};
-    //mesh.vertices.push_back(vertex);
-    //vertex.Normal = {0.5,-0.5,0.3};
-    //mesh.vertices.push_back(vertex);
-    //vertex.Normal = {0.5,0.5,0.0};
-    //mesh.vertices.push_back(vertex);
-    //vertex.Normal = {-0.5f, 0.5f, 0.0};
-    //mesh.vertices.push_back(vertex);
-    //mesh.indices = {0,1,2,2,3,0};
+    sx::Vertex vertex = {};
+    vertex.Normal = {-0.5f,-0.5f,-0.7};
+    mesh.vertices.push_back(vertex);
+    vertex.Normal = {0.5,-0.5,0.3};
+    mesh.vertices.push_back(vertex);
+    vertex.Normal = {0.5,0.5,0.0};
+    mesh.vertices.push_back(vertex);
+    vertex.Normal = {-0.5f, 0.5f, 0.0};
+    mesh.vertices.push_back(vertex);
+    mesh.indices = {0,1,2,2,3,0};
 
     static sx::FileSystemStd fileSystem;
 

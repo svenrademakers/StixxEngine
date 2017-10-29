@@ -18,7 +18,7 @@ namespace sx
 		: public CastOperator<VkShaderModule>
 	{
 	public:
-		constexpr ShaderVulkan(const VkDevice& device, FileSystem& filesystem, const char * name);
+		ShaderVulkan(const VkDevice& device, FileSystem& filesystem, const char * name);
 		virtual ~ShaderVulkan();
 
 		constexpr VkPipelineShaderStageCreateInfo GetConfiguration();
@@ -49,7 +49,7 @@ namespace sx
 	};
 
 	template<VkShaderStageFlagBits shaderStageBit>
-	constexpr ShaderVulkan<shaderStageBit>::ShaderVulkan(const VkDevice& device, FileSystem& filesystem, const char* name)
+	ShaderVulkan<shaderStageBit>::ShaderVulkan(const VkDevice& device, FileSystem& filesystem, const char* name)
 		: device(device)
 		, name(name)
 	{
