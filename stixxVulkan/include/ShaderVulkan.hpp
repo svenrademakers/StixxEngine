@@ -2,11 +2,14 @@
 #define SHADER_VULKAN_HPP
 
 #include <vector>
-#include <string>
+#include <sstream>
 #include <array>
 #include "vulkan/vulkan.h"
 #include "DeviceVulkan.hpp"
 #include "CastOperator.hpp"
+#include "FileSystem.hpp"
+
+#define SHADER_PATH "../StixxShaders"
 
 namespace sx
 {
@@ -15,7 +18,7 @@ namespace sx
 		: public CastOperator<VkShaderModule>
 	{
 	public:
-		constexpr ShaderVulkan(const VkDevice& device, const std::vector<uint32_t>& data, const char * name);
+		constexpr ShaderVulkan(const VkDevice& device, FileSystem& filesystem, const char * name);
 		virtual ~ShaderVulkan();
 
 		constexpr VkPipelineShaderStageCreateInfo GetConfiguration();
@@ -29,7 +32,7 @@ namespace sx
 		: public ShaderVulkan<VK_SHADER_STAGE_VERTEX_BIT>
 	{
 	public:
-		ShaderVertexVulkan(const VkDevice& device, const std::vector<uint32_t>& data, const char * name);
+		ShaderVertexVulkan(const VkDevice& device, FileSystem& filesystem);
 		const VkPipelineVertexInputStateCreateInfo* VertexBindings() const;
 
 	private:
@@ -42,17 +45,19 @@ namespace sx
 		: public ShaderVulkan<VK_SHADER_STAGE_FRAGMENT_BIT>
 	{
 	public:
-		using ShaderVulkan::ShaderVulkan;
-
-	private:
-		//static const char * name = "FragmentShader";
+		ShaderFragmentVulkan(const VkDevice& device, FileSystem& filesystem);
 	};
 
 	template<VkShaderStageFlagBits shaderStageBit>
-	constexpr ShaderVulkan<shaderStageBit>::ShaderVulkan(const VkDevice& device, const std::vector<uint32_t>& data, const char* name)
+	constexpr ShaderVulkan<shaderStageBit>::ShaderVulkan(const VkDevice& device, FileSystem& filesystem, const char* name)
 		: device(device)
 		, name(name)
 	{
+		std::stringstream fileName;
+		fileName << SHADER_PATH << "/" << name;
+
+		const std::vector<uint32_t> data = filesystem.LoadFile(fileName.str().c_str());
+
 		VkShaderModuleCreateInfo shaderModuleCreateInfo = {};
 		shaderModuleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
 		shaderModuleCreateInfo.pNext = nullptr;

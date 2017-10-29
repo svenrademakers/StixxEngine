@@ -35,9 +35,7 @@ int main(void)
         throw std::runtime_error("could not setup surface");
 
     static sx::DeviceVulkan device(pdevice);
-    static sx::RendererVulkan renderer(pdevice, device, surface,
-                                       fileSystem.LoadFile("../stixxShaders/vert.spv"),
-                                       fileSystem.LoadFile("../stixxShaders/frag.spv"));
+	static sx::RendererVulkan renderer(pdevice, device, surface, fileSystem);
 
 	sx::ModelVulkan model(device, pdevice, mesh);
 	renderer.RecordDrawingCommands(model);

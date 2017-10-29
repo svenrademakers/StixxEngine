@@ -1,10 +1,11 @@
 #include "FileSystem.hpp"
 #include <fstream>
 #include <stdexcept>
+#include <string>
 
 namespace sx
 {
-	std::vector<uint32_t> FileSystemStd::LoadFile(const char * fileName)
+	std::vector<uint32_t> FileSystemStd::LoadFile(std::string fileName) const
 	{
 		std::ifstream file(fileName, std::ios::ate | std::ios::binary);
 

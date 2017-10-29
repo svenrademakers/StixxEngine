@@ -4,8 +4,8 @@
 
 namespace sx
 {
-	ShaderVertexVulkan::ShaderVertexVulkan(const VkDevice& device, const std::vector<uint32_t>& data, const char * name)
-		: ShaderVulkan(device, data, name)
+	ShaderVertexVulkan::ShaderVertexVulkan(const VkDevice& device, FileSystem& filesystem)
+		: ShaderVulkan(device, filesystem, "vert.spv")
 	{
 		vertexInputBindingDescription[0].binding = 0;
 		vertexInputBindingDescription[0].stride = sizeof(sx::Vertex);
@@ -34,5 +34,7 @@ namespace sx
 		return &vertexInputInfo;
 	}
 
-
+	ShaderFragmentVulkan::ShaderFragmentVulkan(const VkDevice& device, FileSystem& filesystem)
+		: ShaderVulkan(device, filesystem, "frag.spv")
+	{}
 }

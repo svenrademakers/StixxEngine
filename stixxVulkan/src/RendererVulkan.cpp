@@ -22,7 +22,7 @@ namespace
 
 namespace sx
 {
-    RendererVulkan::RendererVulkan(PhysicalDeviceVulkan& pdevice, DeviceVulkan& device, SurfaceVulkan& surface, const std::vector<uint32_t>& vertex, const std::vector<uint32_t>& fragment)
+    RendererVulkan::RendererVulkan(PhysicalDeviceVulkan& pdevice, DeviceVulkan& device, SurfaceVulkan& surface, FileSystem& filesystem)
          : surface(surface)
         , device(device)
         , swapchain(device)
@@ -38,8 +38,8 @@ namespace sx
         viewport.minDepth = 0.0f;
         viewport.maxDepth = 1.0f;
 
-        ShaderVertexVulkan vertexShader(device, vertex, "MainVertexShader");
-        ShaderFragmentVulkan fragmentShader(device, fragment, "MainFragmentShader");
+        ShaderVertexVulkan vertexShader(device, filesystem);
+		ShaderFragmentVulkan fragmentShader(device, filesystem);
         pipeline.Init(renderPass, surface, vertexShader, fragmentShader, viewport);
 
         commandBuffers.resize(swapchain.NumberOfImages());

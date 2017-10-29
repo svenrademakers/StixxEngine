@@ -20,7 +20,7 @@ namespace sx
     class RendererVulkan
     {
     public:
-        RendererVulkan(PhysicalDeviceVulkan& pdevice, DeviceVulkan& device, SurfaceVulkan& surface, const std::vector<uint32_t>& vertex, const std::vector<uint32_t>& fragment);
+        RendererVulkan(PhysicalDeviceVulkan& pdevice, DeviceVulkan& device, SurfaceVulkan& surface, FileSystem& filesystem);
         RendererVulkan(const RendererVulkan&) = delete;
         RendererVulkan& operator = (const RendererVulkan&) = delete;
         virtual ~RendererVulkan();
