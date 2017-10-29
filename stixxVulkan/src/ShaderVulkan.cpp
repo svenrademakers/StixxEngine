@@ -1,44 +1,38 @@
 #include "ShaderVulkan.hpp"
 #include <stdexcept>
+#include "Mesh.hpp"
 
 namespace sx
 {
-	ShaderFragmentVulkan::ShaderFragmentVulkan(const VkDevice& device, const std::vector<uint32_t>& data)
-		: ShaderVulkan(device, VK_SHADER_STAGE_FRAGMENT_BIT, data)
-	{}
-
-	ShaderVertexVulkan::ShaderVertexVulkan(const VkDevice& device, const std::vector<uint32_t>& data)
-		: ShaderVulkan(device, VK_SHADER_STAGE_VERTEX_BIT, data)
-	{}
-
-	ShaderVulkan::ShaderVulkan(const VkDevice& device, VkShaderStageFlagBits shaderStageFlagBits, const std::vector<uint32_t>& data)
-		: device(device)
-		, shaderStageFlagBits(shaderStageFlagBits)
+	ShaderVertexVulkan::ShaderVertexVulkan(const VkDevice& device, const std::vector<uint32_t>& data, const char * name)
+		: ShaderVulkan(device, data, name)
 	{
-		VkShaderModuleCreateInfo shaderModuleCreateInfo = {};
-		shaderModuleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
-		shaderModuleCreateInfo.pNext = nullptr;
-		shaderModuleCreateInfo.flags = 0;
-		shaderModuleCreateInfo.codeSize = data.size();
-		shaderModuleCreateInfo.pCode = data.data();
+		vertexInputBindingDescription[0].binding = 0;
+		vertexInputBindingDescription[0].stride = sizeof(sx::Vertex);
+		vertexInputBindingDescription[0].inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
 
-		if (vkCreateShaderModule(device, &shaderModuleCreateInfo, nullptr, &handle) != VK_SUCCESS)
-			throw std::runtime_error("failed to create shader module!");
+		vertexInputAttributeDescriptions[0].binding = 0;
+		vertexInputAttributeDescriptions[0].location = 0;
+		vertexInputAttributeDescriptions[0].format = VK_FORMAT_R32G32_SFLOAT;
+		vertexInputAttributeDescriptions[0].offset = offsetof(sx::Vertex, Normal);
+
+		//		vertexInputAttributeDescriptions[1].binding = 0;
+		//		vertexInputAttributeDescriptions[1].location = 1;
+		//		vertexInputAttributeDescriptions[1].format = VK_FORMAT_R32G32B32_SFLOAT;
+		//		vertexInputAttributeDescriptions[1].offset = offsetof(sx::Vertex, color);
+
+		vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
+		vertexInputInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(vertexInputAttributeDescriptions.size());
+		vertexInputInfo.pVertexAttributeDescriptions = vertexInputAttributeDescriptions.data();
+		vertexInputInfo.pVertexBindingDescriptions = vertexInputBindingDescription.data();
+		vertexInputInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(vertexInputBindingDescription.size());
 	}
 
-	ShaderVulkan::~ShaderVulkan()
+
+	const VkPipelineVertexInputStateCreateInfo* ShaderVertexVulkan::VertexBindings() const
 	{
-		vkDestroyShaderModule(device, handle, nullptr);
+		return &vertexInputInfo;
 	}
 
-	VkPipelineShaderStageCreateInfo ShaderVulkan::GetConfiguration()
-	{
-		VkPipelineShaderStageCreateInfo pipelineShaderStageCreateInfo = {};
-		pipelineShaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-		pipelineShaderStageCreateInfo.stage = shaderStageFlagBits;
-		pipelineShaderStageCreateInfo.module = handle;
-		pipelineShaderStageCreateInfo.pName = "main";
 
-		return pipelineShaderStageCreateInfo;
-	}
 }

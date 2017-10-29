@@ -38,8 +38,8 @@ namespace sx
         viewport.minDepth = 0.0f;
         viewport.maxDepth = 1.0f;
 
-        ShaderVertexVulkan vertexShader(device, vertex);
-        ShaderFragmentVulkan fragmentShader(device, fragment);
+        ShaderVertexVulkan vertexShader(device, vertex, "MainVertexShader");
+        ShaderFragmentVulkan fragmentShader(device, fragment, "MainFragmentShader");
         pipeline.Init(renderPass, surface, vertexShader, fragmentShader, viewport);
 
         commandBuffers.resize(swapchain.NumberOfImages());

@@ -30,29 +30,6 @@ namespace sx
 	{
 		VkPipelineShaderStageCreateInfo shaderStages[] = { vertex.GetConfiguration(), fragment.GetConfiguration() };
 
-		std::array<VkVertexInputBindingDescription, 1> vertexInputBindingDescription = {};
-		vertexInputBindingDescription[0].binding = 0;
-		vertexInputBindingDescription[0].stride = sizeof(sx::Vertex);
-		vertexInputBindingDescription[0].inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
-
-		std::array<VkVertexInputAttributeDescription, 1> vertexInputAttributeDescriptions;
-		vertexInputAttributeDescriptions[0].binding = 0;
-		vertexInputAttributeDescriptions[0].location = 0;
-		vertexInputAttributeDescriptions[0].format = VK_FORMAT_R32G32_SFLOAT;
-		vertexInputAttributeDescriptions[0].offset = offsetof(sx::Vertex, Normal);
-
-//		vertexInputAttributeDescriptions[1].binding = 0;
-//		vertexInputAttributeDescriptions[1].location = 1;
-//		vertexInputAttributeDescriptions[1].format = VK_FORMAT_R32G32B32_SFLOAT;
-//		vertexInputAttributeDescriptions[1].offset = offsetof(sx::Vertex, color);
-
-		VkPipelineVertexInputStateCreateInfo vertexInputInfo = {};
-		vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-		vertexInputInfo.vertexAttributeDescriptionCount = vertexInputAttributeDescriptions.size();
-		vertexInputInfo.pVertexAttributeDescriptions = vertexInputAttributeDescriptions.data();
-		vertexInputInfo.pVertexBindingDescriptions = vertexInputBindingDescription.data();
-        vertexInputInfo.vertexBindingDescriptionCount = vertexInputBindingDescription.size();
-
 		VkPipelineInputAssemblyStateCreateInfo inputAssembly = {};
 		inputAssembly.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
 		inputAssembly.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
@@ -110,7 +87,7 @@ namespace sx
 		pipelineInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
 		pipelineInfo.stageCount = 2;
 		pipelineInfo.pStages = shaderStages;
-		pipelineInfo.pVertexInputState = &vertexInputInfo;
+		pipelineInfo.pVertexInputState = vertex.VertexBindings();
 		pipelineInfo.pInputAssemblyState = &inputAssembly;
 		pipelineInfo.pViewportState = &viewportState;
 		pipelineInfo.pRasterizationState = &rasterizer;
