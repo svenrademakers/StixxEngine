@@ -82,7 +82,7 @@ namespace sx
 		pipelineShaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
 		pipelineShaderStageCreateInfo.stage = shaderStageBit;
 		pipelineShaderStageCreateInfo.module = handle;
-		pipelineShaderStageCreateInfo.pName = name;
+		pipelineShaderStageCreateInfo.pName = "main";
 
 		return pipelineShaderStageCreateInfo;
 	}
