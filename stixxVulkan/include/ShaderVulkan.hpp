@@ -8,7 +8,6 @@
 #include "DeviceVulkan.hpp"
 #include "CastOperator.hpp"
 #include "FileSystem.hpp"
-#include "Mesh.hpp"
 
 #define SHADER_PATH "../StixxShaders"
 
@@ -19,7 +18,7 @@ namespace sx
 		: public CastOperator<VkShaderModule>
 	{
 	public:
-		constexpr ShaderVulkan(const VkDevice& device, FileSystem& filesystem, const char * name);
+		ShaderVulkan(const VkDevice& device, FileSystem& filesystem, const char * name);
 		virtual ~ShaderVulkan();
 
 		constexpr VkPipelineShaderStageCreateInfo GetConfiguration();
@@ -34,34 +33,12 @@ namespace sx
 	{
 	public:
 		ShaderVertexVulkan(const VkDevice& device, FileSystem& filesystem);
+		const VkPipelineVertexInputStateCreateInfo* VertexBindings() const;
 
-		constexpr VkPipelineVertexInputStateCreateInfo* VertexBindings() const
-		{
-			static VkVertexInputBindingDescription vertexInputBindingDescription = {};
-			vertexInputBindingDescription.binding = 0;
-			vertexInputBindingDescription.stride = sizeof(sx::Vertex);
-			vertexInputBindingDescription.inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
-
-			static VkVertexInputAttributeDescription vertexInputAttributeDescriptions = {};
-			vertexInputAttributeDescriptions.binding = 0;
-			vertexInputAttributeDescriptions.location = 0;
-			vertexInputAttributeDescriptions.format = VK_FORMAT_R32G32_SFLOAT;
-			vertexInputAttributeDescriptions.offset = offsetof(sx::Vertex, Normal);
-
-			//		vertexInputAttributeDescriptions[1].binding = 0;
-			//		vertexInputAttributeDescriptions[1].location = 1;
-			//		vertexInputAttributeDescriptions[1].format = VK_FORMAT_R32G32B32_SFLOAT;
-			//		vertexInputAttributeDescriptions[1].offset = offsetof(sx::Vertex, color);
-
-			static VkPipelineVertexInputStateCreateInfo vertexInputInfo = {};
-			vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-			vertexInputInfo.vertexAttributeDescriptionCount = 1;
-			vertexInputInfo.pVertexAttributeDescriptions = &vertexInputAttributeDescriptions;
-			vertexInputInfo.pVertexBindingDescriptions = &vertexInputBindingDescription;
-			vertexInputInfo.vertexBindingDescriptionCount = 1;
-
-			return &vertexInputInfo;
-		}
+	private:
+		VkPipelineVertexInputStateCreateInfo vertexInputInfo;
+		std::array<VkVertexInputBindingDescription, 1> vertexInputBindingDescription;
+		std::array<VkVertexInputAttributeDescription, 1> vertexInputAttributeDescriptions;
 	};
 
 	class ShaderFragmentVulkan
@@ -72,7 +49,7 @@ namespace sx
 	};
 
 	template<VkShaderStageFlagBits shaderStageBit>
-	constexpr ShaderVulkan<shaderStageBit>::ShaderVulkan(const VkDevice& device, FileSystem& filesystem, const char* name)
+	ShaderVulkan<shaderStageBit>::ShaderVulkan(const VkDevice& device, FileSystem& filesystem, const char* name)
 		: device(device)
 		, name(name)
 	{
