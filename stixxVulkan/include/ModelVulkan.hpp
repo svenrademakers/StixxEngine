@@ -41,7 +41,6 @@ namespace sx
 			bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 			bufferInfo.queueFamilyIndexCount = 0;
 			bufferInfo.pQueueFamilyIndices = 0;
-			vkCreateBuffer(device, &bufferInfo, nullptr, &buffer);
 
 			if (vkCreateBuffer(device, &bufferInfo, nullptr, &buffer) != VK_SUCCESS) {
 				throw std::runtime_error("failed to create buffer!");
@@ -65,7 +64,6 @@ namespace sx
 		VkDeviceMemory deviceMemory;
 		VkMappedMemoryRange memRange;
 
-		UniformBufferObject ubo;
 		VkBuffer uboBuffer;
 		VkDeviceMemory uboMemory;
 		VkMappedMemoryRange uboMemRange;

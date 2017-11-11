@@ -1,5 +1,6 @@
 #include "ModelVulkan.hpp"
 #include "renderer/Mesh.hpp"
+#include <iostream>
 
 namespace
 {
@@ -28,7 +29,6 @@ namespace sx
 		, indicesCount(mesh.indices.size())
 		, indexSize(4 * static_cast<const std::size_t>(indicesCount))
 	{
-
 		LoadVertexData(mesh);
 		SetupUboBuffer();
 	}
@@ -76,17 +76,11 @@ namespace sx
 	{
 		assert(descriptorSet != nullptr);
 
-		// naivly update ubo
-		void* data;
-		vkMapMemory(device, uboMemory, 0, sizeof(ubo), 0, &data);
-		memcpy(data, &ubo, sizeof(ubo));
-		vkUnmapMemory(device, uboMemory);
-		vkFlushMappedMemoryRanges(device, 1, &uboMemRange);
+		vkCmdBindDescriptorSets(drawCmdBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipelineLayout, 0, 1, &descriptorSet, 0, nullptr);
 
 		VkDeviceSize offset = 0;
 		vkCmdBindVertexBuffers(drawCmdBuffer, 0, 1, &buffer, &offset);
 		vkCmdBindIndexBuffer(drawCmdBuffer, buffer, vertexSize, VK_INDEX_TYPE_UINT32);
-		vkCmdBindDescriptorSets(drawCmdBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipelineLayout, 0, 1, &descriptorSet, 0, nullptr);
 
 		vkCmdDrawIndexed(drawCmdBuffer, indicesCount, 1, 0, 0, 0);
 	}
@@ -97,9 +91,13 @@ namespace sx
 		LoadDescriptors(*info.pSetLayouts);
 	}
 
-	void ModelVulkan::UpdateUbo(UniformBufferObject& ubo)
+	void ModelVulkan::UpdateUbo(UniformBufferObject& ubos)
 	{
-		this->ubo = ubo;
+		// naivly update ubo
+		void* data;
+		vkMapMemory(device, uboMemory, 0, sizeof(ubos), 0, &data);
+		memcpy(data, &ubos, sizeof(ubos));
+		vkUnmapMemory(device, uboMemory);
 	}
 	
 	VkDeviceMemory ModelVulkan::AttachMemory(VkBuffer& buffer) const 
@@ -136,23 +134,19 @@ namespace sx
 		memcpy(data, mesh.indices.data(), indexSize);
 		vkUnmapMemory(device, deviceMemory);
 
-		VkMappedMemoryRange memRange = {};
+		/*VkMappedMemoryRange memRange = {};
 		memRange.memory = deviceMemory;
 		memRange.offset = 0;
 		memRange.sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE;
 		memRange.size = vertexSize + indexSize;
-		vkFlushMappedMemoryRanges(device, 1, &memRange);
+		vkFlushMappedMemoryRanges(device, 1, &memRange);*/
 	}
 
 	void ModelVulkan::SetupUboBuffer()
 	{
 		LoadBuffer<VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT>(uboBuffer, sizeof(UniformBufferObject));
 		uboMemory = AttachMemory(uboBuffer);
-
-		uboMemRange.memory = uboMemory;
-		uboMemRange.offset = 0;
-		uboMemRange.sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE;
-		uboMemRange.size = sizeof(UniformBufferObject);
+		vkBindBufferMemory(device, uboBuffer, uboMemory, 0);
 	}
 
 	void ModelVulkan::CreateDescriptorPool() {

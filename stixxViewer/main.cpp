@@ -43,13 +43,13 @@ int main(void)
     //meshLoader.Next(mesh);
 
     sx::Vertex vertex = {};
-    vertex.Normal = {-0.5f,-0.5f,-0.7};
+    vertex.Normal = {-0.5f,-0.5f,0.0};
     mesh.vertices.push_back(vertex);
-    vertex.Normal = {0.5,-0.5,0.3};
+    vertex.Normal = {0.5,-0.5,0.0};
     mesh.vertices.push_back(vertex);
-    vertex.Normal = {0.5,0.5,0.3};
+    vertex.Normal = {0.5,0.5,0.0};
     mesh.vertices.push_back(vertex);
-    vertex.Normal = {-0.5f, 0.5f, 0.3};
+    vertex.Normal = {-0.5f, 0.5f, 0.0};
     mesh.vertices.push_back(vertex);
     mesh.indices = {0,1,2,2,3,0};
 
@@ -63,7 +63,6 @@ int main(void)
 	renderer.renderer.RecordDrawingCommands(model);
 
 	static RotateModelInteractor rotate(model);
-	rotate.UpdateRotation();
 
     while (!window.ShouldClose()) {
         window.Poll();
