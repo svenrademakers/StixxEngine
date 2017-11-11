@@ -8,7 +8,8 @@
 namespace
 {
 	const std::vector<const char*> validationLayers = {
-			"VK_LAYER_LUNARG_standard_validation"
+		"VK_LAYER_LUNARG_standard_validation"
+		//"VK_LAYER_LUNARG_api_dump"
 	};
 
 	static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(VkDebugReportFlagsEXT flags, VkDebugReportObjectTypeEXT objType, uint64_t obj, size_t location, int32_t code, const char* layerPrefix, const char* msg, void* userData)

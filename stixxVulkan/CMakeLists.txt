@@ -31,6 +31,7 @@ elseif (WIN32)
 endif()
 
 target_link_libraries(StixxVulkan StixxCore ${Vulkan_Lib})
+target_compile_features(StixxVulkan PUBLIC cxx_override cxx_inheriting_constructors)
 
 set_property(TARGET StixxVulkan PROPERTY CXX_STANDARD 14)
 

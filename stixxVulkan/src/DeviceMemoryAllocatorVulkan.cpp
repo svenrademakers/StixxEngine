@@ -36,7 +36,7 @@ namespace sx
 
     void DeviceMemoryAllocatorVulkan::CreateStatingBuffer()
     {
-        VkBufferCreateInfo stagingBufferInfo = {};
+  /*      VkBufferCreateInfo stagingBufferInfo = {};
         stagingBufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
         stagingBufferInfo.size = STAGING_BUFFER_SIZE;
         stagingBufferInfo.flags = 0;
@@ -57,7 +57,7 @@ namespace sx
 
         vkBindBufferMemory(device, stagingSrcBuffer, stagingMemory, 0);
 
-        vkMapMemory(device, stagingMemory, 0, VK_WHOLE_SIZE, 0, &dataPtr);
+        vkMapMemory(device, stagingMemory, 0, VK_WHOLE_SIZE, 0, &dataPtr);*/
     }
 
     VkBuffer DeviceMemoryAllocatorVulkan::Load(const std::vector<uint32_t>& data)
@@ -97,13 +97,13 @@ namespace sx
 
     void DeviceMemoryAllocatorVulkan::AllocNextChunk(uint32_t memTypeBits)
     {
-        VkDeviceMemory memChunk;
+        /*VkDeviceMemory memChunk;
         VkMemoryAllocateInfo allocInfo = {};
         allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
         allocInfo.allocationSize = MEMORY_CHUNK_SIZE;
         allocInfo.memoryTypeIndex = pdevice.FindMemoryType(memTypeBits, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
         vkAllocateMemory(device, &allocInfo, nullptr, &memChunk);
-        memoryVector.push_back({0, memChunk});
+        memoryVector.push_back({0, memChunk});*/
     }
 
     void DeviceMemoryAllocatorVulkan::CopyData2Device(const VkBuffer& buffer, const std::vector<uint32_t>& data) const

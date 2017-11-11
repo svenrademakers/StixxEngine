@@ -18,14 +18,13 @@ namespace sx
 		: public CastOperator<VkShaderModule>
 	{
 	public:
-		constexpr ShaderVulkan(const VkDevice& device, FileSystem& filesystem, const char * name);
+		ShaderVulkan(const VkDevice& device, FileSystem& filesystem, const char * name);
 		virtual ~ShaderVulkan();
 
 		constexpr VkPipelineShaderStageCreateInfo GetConfiguration();
 
-	private:
+	protected:
 		const VkDevice& device;
-		const char * name;
 	};
 
 	class ShaderVertexVulkan
@@ -33,10 +32,14 @@ namespace sx
 	{
 	public:
 		ShaderVertexVulkan(const VkDevice& device, FileSystem& filesystem);
-		const VkPipelineVertexInputStateCreateInfo* VertexBindings() const;
+		virtual ~ShaderVertexVulkan() {};
+
+	public:
+		VkDescriptorSetLayoutCreateInfo descriptorLayout;
+		VkPipelineVertexInputStateCreateInfo vertexInputInfo;
 
 	private:
-		VkPipelineVertexInputStateCreateInfo vertexInputInfo;
+		VkDescriptorSetLayoutBinding uboLayoutBinding = {};
 		std::array<VkVertexInputBindingDescription, 1> vertexInputBindingDescription;
 		std::array<VkVertexInputAttributeDescription, 1> vertexInputAttributeDescriptions;
 	};
@@ -49,9 +52,8 @@ namespace sx
 	};
 
 	template<VkShaderStageFlagBits shaderStageBit>
-	constexpr ShaderVulkan<shaderStageBit>::ShaderVulkan(const VkDevice& device, FileSystem& filesystem, const char* name)
+	ShaderVulkan<shaderStageBit>::ShaderVulkan(const VkDevice& device, FileSystem& filesystem, const char* name)
 		: device(device)
-		, name(name)
 	{
 		std::stringstream fileName;
 		fileName << SHADER_PATH << "/" << name;
@@ -82,8 +84,7 @@ namespace sx
 		pipelineShaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
 		pipelineShaderStageCreateInfo.stage = shaderStageBit;
 		pipelineShaderStageCreateInfo.module = handle;
-		pipelineShaderStageCreateInfo.pName = name;
-
+		pipelineShaderStageCreateInfo.pName = "main";
 		return pipelineShaderStageCreateInfo;
 	}
 

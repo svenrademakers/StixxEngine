@@ -1,65 +1,60 @@
 #ifndef MODEL_VULKAN_HPP
 #define MODEL_VULKAN_HPP
 
-#include "DeviceVulkan.hpp"
-#include "PhysicalDeviceVulkan.hpp"
-#include "Mesh.hpp"
+#include <stdexcept>
+#include "vulkan/vulkan.h"
+#include "glm/glm.hpp"
+#include "util/Observer.hpp"
+#include "renderer/Model.hpp"
+#include "PipelineVulkan.hpp"
 
 namespace sx
 {
+	struct Mesh;
+
 	class ModelVulkan
+		: public PipelineObserver
+		, public Model
 	{
 	public:
-		 ModelVulkan(sx::DeviceVulkan& device, sx::PhysicalDeviceVulkan& pdevice, const sx::Mesh& mesh);
+		ModelVulkan(const VkDevice& device, const VkPhysicalDevice& pdevice, PipelineVulkan& pipeline, const sx::Mesh& mesh);
 		virtual ~ModelVulkan();
 
-		void Draw(const VkCommandBuffer& drawCmdBuffer);
+		void LoadDescriptors(const VkDescriptorSetLayout& descriptorSetLayout);
+		void Draw(const VkPipelineLayout& pipelineLayout, const VkCommandBuffer& drawCmdBuffer);
+
+		// PipelineObserver
+		void PipelineLayoutCreated(VkPipelineLayoutCreateInfo& info) override;
+
+		// Model
+		void UpdateUbo(UniformBufferObject& ubo) override;
 
 	private:
 		template<VkBufferUsageFlags flags>
-		void LoadBuffer(const Mesh& mesh, VkBuffer& buffer, VkDeviceMemory& deviceMemory)
+		void LoadBuffer(VkBuffer& buffer, const std::size_t size) const
 		{
 			VkBufferCreateInfo bufferInfo = {};
 			bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
-			bufferInfo.size = vertexSize + indexSize;
+			bufferInfo.size = size;
 			bufferInfo.flags = 0;
 			bufferInfo.usage = flags;
 			bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 			bufferInfo.queueFamilyIndexCount = 0;
 			bufferInfo.pQueueFamilyIndices = 0;
-			vkCreateBuffer(device, &bufferInfo, nullptr, &buffer);
 
 			if (vkCreateBuffer(device, &bufferInfo, nullptr, &buffer) != VK_SUCCESS) {
 				throw std::runtime_error("failed to create buffer!");
 			}
-
-			VkMemoryRequirements memRequirements;
-			vkGetBufferMemoryRequirements(device, buffer, &memRequirements);
-
-			VkMemoryAllocateInfo allocInfo = {};
-			allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
-			allocInfo.allocationSize = memRequirements.size;
-			allocInfo.memoryTypeIndex = pdevice.FindMemoryType(memRequirements.memoryTypeBits, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
-
-			if (vkAllocateMemory(device, &allocInfo, nullptr, &deviceMemory) != VK_SUCCESS) {
-				throw std::runtime_error("failed to allocate buffer memory!");
-			}
-
-			void* data = nullptr;
-			vkBindBufferMemory(device, buffer, deviceMemory, 0);
-
-			vkMapMemory(device, deviceMemory, 0, vertexSize, 0, &data);
-			memcpy(data, mesh.vertices.data(), vertexSize);
-			vkUnmapMemory(device, deviceMemory);
-
-			vkMapMemory(device, deviceMemory, vertexSize, indexSize, 0, &data);
-			memcpy(data, mesh.indices.data(), indexSize);
-			vkUnmapMemory(device, deviceMemory);
 		}
 
+		VkDeviceMemory AttachMemory(VkBuffer& buffer) const;
+		void LoadVertexData(const Mesh& mesh);
+		void SetupUboBuffer();
+		void CreateDescriptorPool();
+
 	private:
-		sx::DeviceVulkan& device;
-		sx::PhysicalDeviceVulkan& pdevice;
+		const VkDevice& device;
+		const VkPhysicalDevice& pdevice;
 
 		const std::size_t vertexSize;
 		const std::uint32_t indicesCount;
@@ -67,6 +62,14 @@ namespace sx
 
 		VkBuffer buffer;
 		VkDeviceMemory deviceMemory;
+		VkMappedMemoryRange memRange;
+
+		VkBuffer uboBuffer;
+		VkDeviceMemory uboMemory;
+		VkMappedMemoryRange uboMemRange;
+
+		VkDescriptorPool descriptorPool;
+		VkDescriptorSet descriptorSet;
 	};
 }
 #endif

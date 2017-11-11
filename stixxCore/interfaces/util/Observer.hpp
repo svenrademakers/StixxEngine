@@ -10,34 +10,46 @@ namespace sx
 	template<typename T>
 	class Subject;
 
+	template<typename T>
 	class Observer
 	{
 	public:
-		Observer(Subject<Observer>& subject);
+		Observer(Subject<T>& subject)
+			: subject(subject)
+		{
+			subject.Attach(this);
+		}
+
+		~Observer()
+		{
+			subject.Detach(this);
+		}		
+		
 		Observer(const Observer&) = delete;
 		Observer& operator=(const Observer&) = delete;
-		virtual ~Observer();
 
 	private:
-		Subject<Observer>& subject;
+		Subject<T>& subject;
 	};
 
 	template<typename T>
 	class Subject
 	{
 	public:
+		typedef Observer<T> ObserverType;
+
 		Subject() = default;
 		Subject(const Subject&) = delete;
 		Subject& operator=(const Subject&) = delete;
 		virtual ~Subject();
 
-		void Attach(Observer* observer);
-		void Detach(Observer* observer);
+		void Attach(ObserverType* observer);
+		void Detach(ObserverType* observer);
 
 		void NotifyObservers(const std::function<void(T&)>& call);
 
 	private:
-		std::unordered_set<Observer*> observers;
+		std::unordered_set<ObserverType*> observers;
 	};
 
 	template<typename T>
@@ -45,13 +57,13 @@ namespace sx
 	{ }
 
 	template<typename T>
-	void Subject<T>::Attach(Observer* observer)
+	void Subject<T>::Attach(ObserverType* observer)
 	{
 		observers.insert(observer);
 	}
 	
 	template<typename T>
-	void Subject<T>::Detach(Observer* observer)
+	void Subject<T>::Detach(ObserverType* observer)
 	{
 		if(observers.find(observer) != observers.end())
 			observers.erase(observer);
@@ -63,7 +75,7 @@ namespace sx
 		for (auto obs : observers)
 		{
 			assert(obs != nullptr);
-			call(*obs);
+			call(*static_cast<T*>(obs));
 		}
 	}
 }

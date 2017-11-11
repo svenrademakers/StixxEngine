@@ -1,9 +1,15 @@
 #include <algorithm>
-#include <RendererVulkan.hpp>
-#include <iostream>
+#include "RendererVulkan.hpp"
+#include "InstanceVulkan.hpp"
+#include "PhysicalDeviceVulkan.hpp"
+#include "DeviceVulkan.hpp"
+
 #include "ShaderVulkan.hpp"
-#include <stdexcept>
-#include <renderer/PhysicalDevice.hpp>
+#include "PipelineVulkan.hpp"
+#include "SurfaceVulkan.hpp"
+#include "ModelVulkan.hpp"
+#include "renderer/Mesh.hpp"
+#include "FileSystem.hpp"
 
 namespace
 {
@@ -22,80 +28,19 @@ namespace
 
 namespace sx
 {
-    RendererVulkan::RendererVulkan(PhysicalDeviceVulkan& pdevice, DeviceVulkan& device, SurfaceVulkan& surface, FileSystem& filesystem)
+    RendererVulkan::RendererVulkan(PhysicalDeviceVulkan& pdevice, DeviceVulkan& device, SurfaceVulkan& surface, PipelineVulkan& pipeline, FileSystem& filesystem)
          : surface(surface)
         , device(device)
         , swapchain(device)
         , renderPass(device)
-        , pipeline(device)
-    {
-        swapchain.Init(surface);
-        renderPass.Init(swapchain, surface);
-
-        VkViewport viewport = {};
-        viewport.width = static_cast<float>(surface.CurrentExtent().width);
-        viewport.height = static_cast<float>(surface.CurrentExtent().height);
-        viewport.minDepth = 0.0f;
-        viewport.maxDepth = 1.0f;
-
-        ShaderVertexVulkan vertexShader(device, filesystem);
-		ShaderFragmentVulkan fragmentShader(device, filesystem);
-        pipeline.Init(renderPass, surface, vertexShader, fragmentShader, viewport);
-
-        commandBuffers.resize(swapchain.NumberOfImages());
-        VkCommandBufferAllocateInfo commandBufferAllocateInfo = {};
-        commandBufferAllocateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-        commandBufferAllocateInfo.pNext = nullptr;
-        commandBufferAllocateInfo.commandPool = device.CommandPool();
-        commandBufferAllocateInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-        commandBufferAllocateInfo.commandBufferCount = static_cast<uint32_t>(swapchain.ImageViews().size());
-        vkAllocateCommandBuffers(device, &commandBufferAllocateInfo, commandBuffers.data());
-
-        VkSemaphoreCreateInfo semaphoreInfo = {};
-        semaphoreInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
-
-        if (vkCreateSemaphore(device, &semaphoreInfo, nullptr, &imageAvailableSemaphore) != VK_SUCCESS ||
-            vkCreateSemaphore(device, &semaphoreInfo, nullptr, &renderFinishedSemaphore) != VK_SUCCESS)
-            throw std::runtime_error("failed to create semaphores!");
-
-    }
+        , pipeline(pipeline)
+		, filesystem(filesystem)
+    {}
 
     RendererVulkan::~RendererVulkan()
     {
         vkDestroySemaphore(device, renderFinishedSemaphore, nullptr);
         vkDestroySemaphore(device, imageAvailableSemaphore, nullptr);
-    }
-
-    void RendererVulkan::RecordDrawingCommands(ModelVulkan& m)
-    {
-        for (size_t i = 0; i < commandBuffers.size(); i++)
-        {
-            VkCommandBufferBeginInfo beginInfo = {};
-            beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
-            beginInfo.flags = VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT;
-
-            vkBeginCommandBuffer(commandBuffers[i], &beginInfo);
-
-            VkRenderPassBeginInfo renderPassInfo = {};
-            renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-            renderPassInfo.renderPass = renderPass;
-            renderPassInfo.framebuffer = renderPass.FrameBuffers()[i];
-            renderPassInfo.renderArea.offset = { 0, 0 };
-            renderPassInfo.renderArea.extent = Extent(surface.CurrentExtent());
-
-            VkClearValue clearColor = { 0.0f, 0.0f, 0.0f, 0.0f };
-            renderPassInfo.clearValueCount = 1;
-            renderPassInfo.pClearValues = &clearColor;
-
-            vkCmdBeginRenderPass(commandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
-            vkCmdBindPipeline(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline);
-
-			m.Draw(commandBuffers[i]);
-			
-            vkCmdEndRenderPass(commandBuffers[i]);
-            if (vkEndCommandBuffer(commandBuffers[i]) != VK_SUCCESS)
-                throw std::runtime_error("failed to record command buffer!");
-        }
     }
 
     void RendererVulkan::Draw()
@@ -130,4 +75,90 @@ namespace sx
         vkQueuePresentKHR(device.Queue(), &presentInfo);
         vkQueueWaitIdle(device.Queue());
     }
+
+	void RendererVulkan::Load()
+	{
+		swapchain.Init(surface);
+		renderPass.Init(swapchain, surface);
+
+		VkViewport viewport = {};
+		viewport.width = static_cast<float>(surface.CurrentExtent().width);
+		viewport.height = static_cast<float>(surface.CurrentExtent().height);
+		viewport.minDepth = 0.0f;
+		viewport.maxDepth = 1.0f;
+
+		ShaderVertexVulkan vertexShader(device, filesystem);
+		ShaderFragmentVulkan fragmentShader(device, filesystem);
+		pipeline.Init(renderPass, surface, vertexShader, fragmentShader, viewport);
+
+		commandBuffers.resize(swapchain.NumberOfImages());
+		VkCommandBufferAllocateInfo commandBufferAllocateInfo = {};
+		commandBufferAllocateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
+		commandBufferAllocateInfo.pNext = nullptr;
+		commandBufferAllocateInfo.commandPool = device.CommandPool();
+		commandBufferAllocateInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
+		commandBufferAllocateInfo.commandBufferCount = static_cast<uint32_t>(swapchain.ImageViews().size());
+		vkAllocateCommandBuffers(device, &commandBufferAllocateInfo, commandBuffers.data());
+
+		VkSemaphoreCreateInfo semaphoreInfo = {};
+		semaphoreInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
+
+		if (vkCreateSemaphore(device, &semaphoreInfo, nullptr, &imageAvailableSemaphore) != VK_SUCCESS ||
+			vkCreateSemaphore(device, &semaphoreInfo, nullptr, &renderFinishedSemaphore) != VK_SUCCESS)
+			throw std::runtime_error("failed to create semaphores!");
+	}
+
+	void RendererVulkan::RecordDrawingCommands(ModelVulkan& m)
+	{
+		for (size_t i = 0; i < commandBuffers.size(); i++)
+		{
+			VkCommandBufferBeginInfo beginInfo = {};
+			beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+			beginInfo.flags = VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT;
+
+			vkBeginCommandBuffer(commandBuffers[i], &beginInfo);
+
+			VkRenderPassBeginInfo renderPassInfo = {};
+			renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
+			renderPassInfo.renderPass = renderPass;
+			renderPassInfo.framebuffer = renderPass.FrameBuffers()[i];
+			renderPassInfo.renderArea.offset = { 0, 0 };
+			renderPassInfo.renderArea.extent = Extent(surface.CurrentExtent());
+
+			VkClearValue clearColor = { 0.0f, 0.0f, 0.0f, 0.0f };
+			renderPassInfo.clearValueCount = 1;
+			renderPassInfo.pClearValues = &clearColor;
+
+			vkCmdBeginRenderPass(commandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
+			vkCmdBindPipeline(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline);
+
+			m.Draw(pipeline.Layout(), commandBuffers[i]);
+
+			vkCmdEndRenderPass(commandBuffers[i]);
+			if (vkEndCommandBuffer(commandBuffers[i]) != VK_SUCCESS)
+				throw std::runtime_error("failed to record command buffer!");
+		}
+	}
+
+	VulkanRendererFacade::VulkanRendererFacade(Window& window, FileSystem& filesystem)
+		: instance("Stixx-Engine", window)
+		, pdevice(instance)
+		, surface(instance, pdevice)
+		, device(pdevice)
+		, pipeline(device)
+		, renderer(pdevice, device, surface, pipeline, filesystem)
+	{
+		if (!surface.CreateSurface(window) || !pdevice.PresentSupport(surface))
+			throw std::runtime_error("could not setup surface");
+	}
+
+	void VulkanRendererFacade::Draw()
+	{
+		renderer.Draw();
+	}
+
+	void VulkanRendererFacade::Load()
+	{
+		renderer.Load();
+	}
 }

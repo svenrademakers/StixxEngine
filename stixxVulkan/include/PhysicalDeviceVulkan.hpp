@@ -14,8 +14,8 @@ namespace sx
         virtual ~PhysicalDeviceVulkan();
 
         bool PresentSupport(const VkSurfaceKHR& surface);
+
         uint32_t QueueIndex(const VkQueueFlagBits bits);
-        uint32_t FindMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties);
     };
 }
 #endif

@@ -1,5 +1,4 @@
 foreach(shader ${shaders})
 	SET(cmd $ENV{VULKAN_SDK}/bin/glslangValidator.exe -V ${shader})
-	message(STATUS ${cmd})
-	execute_process(COMMAND ${cmd} RESULT_VARIABLE wat)
+	execute_process(COMMAND ${cmd})
 endforeach()

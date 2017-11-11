@@ -8,7 +8,7 @@
 #ifndef MESHLOADER_HPP_
 #define MESHLOADER_HPP_
 
-#include "Mesh.hpp"
+#include "renderer/Mesh.hpp"
 
 namespace sx
 {

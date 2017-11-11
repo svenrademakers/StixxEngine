@@ -1,6 +1,6 @@
 #include "PipelineVulkan.hpp"
 #include <stdexcept>
-#include <Mesh.hpp>
+#include "renderer/Mesh.hpp"
 #include <array>
 
 namespace
@@ -22,6 +22,7 @@ namespace sx
 
 	PipelineVulkan::~PipelineVulkan()
 	{
+		vkDestroyDescriptorSetLayout(device, descriptorSetLayout, nullptr);
 		vkDestroyPipeline(device, handle, nullptr);
 		vkDestroyPipelineLayout(device, pipelineLayout, nullptr);
 	}
@@ -52,7 +53,7 @@ namespace sx
 		rasterizer.polygonMode = VK_POLYGON_MODE_FILL;
 		rasterizer.lineWidth = 1.0f;
 		rasterizer.cullMode = VK_CULL_MODE_BACK_BIT;
-		rasterizer.frontFace = VK_FRONT_FACE_CLOCKWISE;
+		rasterizer.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE;
 		rasterizer.depthBiasEnable = VK_FALSE;
 
 		VkPipelineMultisampleStateCreateInfo multisampling = {};
@@ -77,17 +78,25 @@ namespace sx
 
 		VkPipelineLayoutCreateInfo pipelineLayoutInfo = {};
 		pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-		pipelineLayoutInfo.setLayoutCount = 0;
-		pipelineLayoutInfo.pushConstantRangeCount = 0;
+		pipelineLayoutInfo.setLayoutCount = 1;
+		pipelineLayoutInfo.pSetLayouts = &descriptorSetLayout;
+
+		if (vkCreateDescriptorSetLayout(device, &vertex.descriptorLayout, nullptr, &descriptorSetLayout) != VK_SUCCESS) {
+			throw std::runtime_error("failed to create descriptor set layout!");
+		}
 
 		if (vkCreatePipelineLayout(device, &pipelineLayoutInfo, nullptr, &pipelineLayout) != VK_SUCCESS)
 			throw std::runtime_error("failed to create pipeline layout!");
+
+		NotifyObservers([&pipelineLayoutInfo](PipelineObserver& observer) {
+			observer.PipelineLayoutCreated(pipelineLayoutInfo);
+		});
 
 		VkGraphicsPipelineCreateInfo pipelineInfo = {};
 		pipelineInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
 		pipelineInfo.stageCount = 2;
 		pipelineInfo.pStages = shaderStages;
-		pipelineInfo.pVertexInputState = vertex.VertexBindings();
+		pipelineInfo.pVertexInputState = &vertex.vertexInputInfo;
 		pipelineInfo.pInputAssemblyState = &inputAssembly;
 		pipelineInfo.pViewportState = &viewportState;
 		pipelineInfo.pRasterizationState = &rasterizer;
@@ -102,4 +111,12 @@ namespace sx
 		if (result != VK_SUCCESS)
 			throw std::runtime_error("failed to create graphics pipeline!");
 	}
+
+	const VkPipelineLayout& PipelineVulkan::Layout()
+	{
+		assert(pipelineLayout != nullptr);
+		return pipelineLayout;
+	}
+
+
 }
