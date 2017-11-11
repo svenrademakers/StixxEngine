@@ -23,9 +23,8 @@ namespace sx
 
 		constexpr VkPipelineShaderStageCreateInfo GetConfiguration();
 
-	private:
+	protected:
 		const VkDevice& device;
-		const char * name;
 	};
 
 	class ShaderVertexVulkan
@@ -33,10 +32,14 @@ namespace sx
 	{
 	public:
 		ShaderVertexVulkan(const VkDevice& device, FileSystem& filesystem);
-		const VkPipelineVertexInputStateCreateInfo* VertexBindings() const;
+		virtual ~ShaderVertexVulkan() {};
+
+	public:
+		VkDescriptorSetLayoutCreateInfo descriptorLayout;
+		VkPipelineVertexInputStateCreateInfo vertexInputInfo;
 
 	private:
-		VkPipelineVertexInputStateCreateInfo vertexInputInfo;
+		VkDescriptorSetLayoutBinding uboLayoutBinding = {};
 		std::array<VkVertexInputBindingDescription, 1> vertexInputBindingDescription;
 		std::array<VkVertexInputAttributeDescription, 1> vertexInputAttributeDescriptions;
 	};
@@ -51,7 +54,6 @@ namespace sx
 	template<VkShaderStageFlagBits shaderStageBit>
 	ShaderVulkan<shaderStageBit>::ShaderVulkan(const VkDevice& device, FileSystem& filesystem, const char* name)
 		: device(device)
-		, name(name)
 	{
 		std::stringstream fileName;
 		fileName << SHADER_PATH << "/" << name;
@@ -83,7 +85,6 @@ namespace sx
 		pipelineShaderStageCreateInfo.stage = shaderStageBit;
 		pipelineShaderStageCreateInfo.module = handle;
 		pipelineShaderStageCreateInfo.pName = "main";
-
 		return pipelineShaderStageCreateInfo;
 	}
 

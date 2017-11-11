@@ -1,42 +1,62 @@
 #ifndef RENDERER_VULKAN_HPP
 #define RENDERER_VULKAN_HPP
 
-#include "vulkan/vulkan.h"
-#include <WindowGlfw.hpp>
-#include <Mesh.hpp>
-#include "SwapchainVulkan.hpp"
+#include "renderer\Renderer.hpp"
+#include "InstanceVulkan.hpp"
+#include "DeviceVulkan.hpp"
+#include "PhysicalDeviceVulkan.hpp"
 #include "SurfaceVulkan.hpp"
+#include "SwapchainVulkan.hpp"
 #include "RenderPassVulkan.hpp"
 #include "PipelineVulkan.hpp"
-#include "InstanceVulkan.hpp"
-#include "DeviceMemoryAllocatorVulkan.hpp"
-#include "ModelVulkan.hpp"
 
 namespace sx
 {
-    class  ShaderVertexVulkan;
-    class ShaderFragmentVulkan;
+	class FileSystem;
+	class Window;
+	class ModelVulkan;
 
     class RendererVulkan
+		: public Renderer
     {
     public:
-        RendererVulkan(PhysicalDeviceVulkan& pdevice, DeviceVulkan& device, SurfaceVulkan& surface, FileSystem& filesystem);
+        RendererVulkan(PhysicalDeviceVulkan& pdevice, DeviceVulkan& device, SurfaceVulkan& surface, PipelineVulkan& pipeline, FileSystem& filesystem);
         RendererVulkan(const RendererVulkan&) = delete;
         RendererVulkan& operator = (const RendererVulkan&) = delete;
         virtual ~RendererVulkan();
 
-        void RecordDrawingCommands(ModelVulkan& m);
-        void Draw();
+        virtual void Draw() override;
+		virtual void Load() override;
+
+		void RecordDrawingCommands(ModelVulkan& m);
 
     private:
         std::vector<VkCommandBuffer> commandBuffers;
 
+		PipelineVulkan& pipeline;
         SurfaceVulkan& surface;
         DeviceVulkan& device;
         SwapchainVulkan swapchain;
         RenderPassVulkan renderPass;
-        PipelineVulkan pipeline;
+		FileSystem& filesystem;
     };
-}
 
-#endif /* RENDERERVULKAN_HPP */
+	struct VulkanRendererFacade
+		: public Renderer
+	{
+	public:
+		VulkanRendererFacade(Window& window, FileSystem& filesystem);
+
+		virtual void Draw() override;
+		virtual void Load() override;
+
+	public:
+		InstanceVulkan instance;
+		PhysicalDeviceVulkan pdevice;
+		SurfaceVulkan surface;
+		DeviceVulkan device;
+		PipelineVulkan pipeline;
+		RendererVulkan renderer;
+	};
+}
+#endif 

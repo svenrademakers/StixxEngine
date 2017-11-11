@@ -1,6 +1,6 @@
 #include "PipelineVulkan.hpp"
 #include <stdexcept>
-#include <Mesh.hpp>
+#include "renderer/Mesh.hpp"
 #include <array>
 
 namespace
@@ -22,12 +22,17 @@ namespace sx
 
 	PipelineVulkan::~PipelineVulkan()
 	{
+		vkDestroyDescriptorSetLayout(device, descriptorSetLayout, nullptr);
 		vkDestroyPipeline(device, handle, nullptr);
 		vkDestroyPipelineLayout(device, pipelineLayout, nullptr);
 	}
 
 	void PipelineVulkan::Init(RenderPassVulkan& renderpass, SurfaceVulkan& surface, ShaderVertexVulkan& vertex, ShaderFragmentVulkan& fragment, VkViewport& viewport)
 	{
+		if (vkCreateDescriptorSetLayout(device, &vertex.descriptorLayout, nullptr, &descriptorSetLayout) != VK_SUCCESS) {
+			throw std::runtime_error("failed to create descriptor set layout!");
+		}
+
 		VkPipelineShaderStageCreateInfo shaderStages[] = { vertex.GetConfiguration(), fragment.GetConfiguration() };
 
 		VkPipelineInputAssemblyStateCreateInfo inputAssembly = {};
@@ -77,17 +82,21 @@ namespace sx
 
 		VkPipelineLayoutCreateInfo pipelineLayoutInfo = {};
 		pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-		pipelineLayoutInfo.setLayoutCount = 0;
-		pipelineLayoutInfo.pushConstantRangeCount = 0;
+		pipelineLayoutInfo.setLayoutCount = 1;
+		pipelineLayoutInfo.pSetLayouts = &descriptorSetLayout;
 
 		if (vkCreatePipelineLayout(device, &pipelineLayoutInfo, nullptr, &pipelineLayout) != VK_SUCCESS)
 			throw std::runtime_error("failed to create pipeline layout!");
+
+		NotifyObservers([&pipelineLayoutInfo](PipelineObserver& observer) {
+			observer.PipelineLayoutCreated(pipelineLayoutInfo);
+		});
 
 		VkGraphicsPipelineCreateInfo pipelineInfo = {};
 		pipelineInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
 		pipelineInfo.stageCount = 2;
 		pipelineInfo.pStages = shaderStages;
-		pipelineInfo.pVertexInputState = vertex.VertexBindings();
+		pipelineInfo.pVertexInputState = &vertex.vertexInputInfo;
 		pipelineInfo.pInputAssemblyState = &inputAssembly;
 		pipelineInfo.pViewportState = &viewportState;
 		pipelineInfo.pRasterizationState = &rasterizer;
@@ -103,19 +112,11 @@ namespace sx
 			throw std::runtime_error("failed to create graphics pipeline!");
 	}
 
-	void PipelineVulkan::createDescriptorPool() {
-		VkDescriptorPoolSize poolSize = {};
-		poolSize.type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-		poolSize.descriptorCount = 1;
-
-		VkDescriptorPoolCreateInfo poolInfo = {};
-		poolInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
-		poolInfo.poolSizeCount = 1;
-		poolInfo.pPoolSizes = &poolSize;
-		poolInfo.maxSets = 1;
-
-		if (vkCreateDescriptorPool(device, &poolInfo, nullptr, &descriptorPool) != VK_SUCCESS) {
-			throw std::runtime_error("failed to create descriptor pool!");
-		}
+	const VkPipelineLayout& PipelineVulkan::Layout()
+	{
+		assert(pipelineLayout != nullptr);
+		return pipelineLayout;
 	}
+
+
 }

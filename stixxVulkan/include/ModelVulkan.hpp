@@ -2,25 +2,32 @@
 #define MODEL_VULKAN_HPP
 
 #include <stdexcept>
-#include "DeviceVulkan.hpp"
-#include "PhysicalDeviceVulkan.hpp"
-#include "Mesh.hpp"
+#include "vulkan/vulkan.h"
+#include "glm/glm.hpp"
+#include "util/Observer.hpp"
+#include "renderer/Model.hpp"
+#include "PipelineVulkan.hpp"
 
 namespace sx
 {
-	struct UniformBufferObject {
-		glm::mat4 model;
-		glm::mat4 view;
-		glm::mat4 proj;
-	};
+	struct Mesh;
 
 	class ModelVulkan
+		: public PipelineObserver
+		, public Model
 	{
 	public:
-		ModelVulkan(const VkDevice& device, const VkPhysicalDevice& pdevice, const sx::Mesh& mesh);
+		ModelVulkan(const VkDevice& device, const VkPhysicalDevice& pdevice, PipelineVulkan& pipeline, const sx::Mesh& mesh);
 		virtual ~ModelVulkan();
 
-		void Draw(const VkCommandBuffer& drawCmdBuffer);
+		void LoadDescriptors(const VkDescriptorSetLayout& descriptorSetLayout);
+		void Draw(const VkPipelineLayout& pipelineLayout, const VkCommandBuffer& drawCmdBuffer);
+
+		// PipelineObserver
+		void PipelineLayoutCreated(VkPipelineLayoutCreateInfo& info) override;
+
+		// Model
+		void UpdateUbo(UniformBufferObject& ubo) override;
 
 	private:
 		template<VkBufferUsageFlags flags>
@@ -43,6 +50,8 @@ namespace sx
 
 		VkDeviceMemory AttachMemory(VkBuffer& buffer) const;
 		void LoadVertexData(const Mesh& mesh);
+		void SetupUboBuffer();
+		void CreateDescriptorPool();
 
 	private:
 		const VkDevice& device;
@@ -53,11 +62,16 @@ namespace sx
 		const std::size_t indexSize;
 
 		VkBuffer buffer;
-		VkBuffer uboBuffer;
 		VkDeviceMemory deviceMemory;
-		VkDeviceMemory uboMemory;
+		VkMappedMemoryRange memRange;
 
 		UniformBufferObject ubo;
+		VkBuffer uboBuffer;
+		VkDeviceMemory uboMemory;
+		VkMappedMemoryRange uboMemRange;
+
+		VkDescriptorPool descriptorPool;
+		VkDescriptorSet descriptorSet;
 	};
 }
 #endif
