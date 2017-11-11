@@ -133,13 +133,6 @@ namespace sx
 		vkMapMemory(device, deviceMemory, vertexSize, indexSize, 0, &data);
 		memcpy(data, mesh.indices.data(), indexSize);
 		vkUnmapMemory(device, deviceMemory);
-
-		/*VkMappedMemoryRange memRange = {};
-		memRange.memory = deviceMemory;
-		memRange.offset = 0;
-		memRange.sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE;
-		memRange.size = vertexSize + indexSize;
-		vkFlushMappedMemoryRanges(device, 1, &memRange);*/
 	}
 
 	void ModelVulkan::SetupUboBuffer()
