@@ -4,7 +4,7 @@
 #include "DeviceVulkan.hpp"
 #include "SurfaceVulkan.hpp"
 #include "SwapchainVulkan.hpp"
-#include "CastOperator.hpp"
+#include "utils/CastOperator.hpp"
 
 namespace sx
 {

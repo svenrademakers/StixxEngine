@@ -5,7 +5,7 @@
 #include "vulkan/vulkan.h"
 #include "DeviceVulkan.hpp"
 #include "SurfaceVulkan.hpp"
-#include "CastOperator.hpp"
+#include "utils/CastOperator.hpp"
 
 
 namespace sx

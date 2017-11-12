@@ -3,7 +3,7 @@
 
 #include <vector>
 #include "vulkan/vulkan.h"
-#include "CastOperator.hpp"
+#include "utils/CastOperator.hpp"
 
 namespace sx
 {

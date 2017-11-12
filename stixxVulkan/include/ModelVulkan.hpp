@@ -4,7 +4,7 @@
 #include <stdexcept>
 #include "vulkan/vulkan.h"
 #include "glm/glm.hpp"
-#include "util/Observer.hpp"
+#include "utils/Observer.hpp"
 #include "renderer/Model.hpp"
 #include "PipelineVulkan.hpp"
 

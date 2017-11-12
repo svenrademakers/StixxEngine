@@ -2,7 +2,7 @@
 #define DEVICE_VULKAN_HPP
 
 #include "vulkan/vulkan.h"
-#include "CastOperator.hpp"
+#include "utils/CastOperator.hpp"
 
 namespace sx
 {
