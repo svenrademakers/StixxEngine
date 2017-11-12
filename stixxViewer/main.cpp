@@ -10,6 +10,7 @@
 #include "RendererVulkan.hpp"
 #include "MeshLoaderAssimp.hpp"
 #include "ModelVulkan.hpp"
+#include "UiHandlerGlfw.hpp"
 
 class RotateModelInteractor
 {
@@ -40,24 +41,29 @@ private:
 
 int main(void)
 {
+	static sx::FileSystemStd fileSystem;
+
+	constexpr const char * appName = "StixxViewer";
+	static sx::WindowGlfw window(appName, 800, 600);
+	static sx::VulkanStack renderer(window);
+
+	window.Run();
+
 	sx::Mesh mesh = {};
-    static MeshLoaderAssimp meshLoader(R"(D:\Monkey.obj)");
-    meshLoader.Next(mesh);
+	static MeshLoaderAssimp meshLoader(R"(D:\Monkey.obj)");
+	meshLoader.Next(mesh);
 
-    static sx::FileSystemStd fileSystem;
-    static sx::WindowGlfw window("StixxViewer", 800, 600);
-	static sx::VulkanRendererFacade renderer(window, fileSystem);
-	sx::ModelVulkan model(renderer.device, renderer.pdevice, renderer.pipeline, mesh);
-	renderer.Load();
-
-	renderer.renderer.RecordDrawingCommands(model);
+	renderer.Load(fileSystem, appName, sx::WindowGlfw::InstanceExtensions());
+	
+	sx::ModelVulkan model(*renderer.device, *renderer.pdevice, *renderer.pipeline, mesh);
+	model.LoadDescriptors(renderer.pipeline->DescriptorSet());
+	renderer.renderer->RecordDrawingCommands(model);
 
 	static RotateModelInteractor rotate(model);
 
-    while (!window.ShouldClose()) {
-        window.Poll();
+    while (window.IsOpen()) {
 		rotate.UpdateRotation();
-        renderer.Draw();
+        renderer.renderer->Draw();
     }
 
     return 0;

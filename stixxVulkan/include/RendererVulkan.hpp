@@ -1,6 +1,7 @@
 #ifndef RENDERER_VULKAN_HPP
 #define RENDERER_VULKAN_HPP
 
+#include <optional>
 #include "renderer\Renderer.hpp"
 #include "InstanceVulkan.hpp"
 #include "DeviceVulkan.hpp"
@@ -9,6 +10,8 @@
 #include "SwapchainVulkan.hpp"
 #include "RenderPassVulkan.hpp"
 #include "PipelineVulkan.hpp"
+#include "Window.hpp"
+#include <mutex>
 
 namespace sx
 {
@@ -26,7 +29,6 @@ namespace sx
         virtual ~RendererVulkan();
 
         virtual void Draw() override;
-		virtual void Load() override;
 
 		void RecordDrawingCommands(ModelVulkan& m);
 
@@ -41,22 +43,26 @@ namespace sx
 		FileSystem& filesystem;
     };
 
-	struct VulkanRendererFacade
-		: public Renderer
+	struct VulkanStack
+		: public WindowObserver
 	{
 	public:
-		VulkanRendererFacade(Window& window, FileSystem& filesystem);
+		VulkanStack(Window& window);
 
-		virtual void Draw() override;
-		virtual void Load() override;
+		void Load(FileSystem& filesystem, const char * appName, std::vector<const char*> instanceExtensions);
+
+		virtual void WindowCreated(WindowHandle& handle) override;
 
 	public:
-		InstanceVulkan instance;
-		PhysicalDeviceVulkan pdevice;
-		SurfaceVulkan surface;
-		DeviceVulkan device;
-		PipelineVulkan pipeline;
-		RendererVulkan renderer;
+		std::optional<InstanceVulkan> instance;
+		std::optional<PhysicalDeviceVulkan> pdevice;
+		std::optional<DeviceVulkan> device;
+		std::optional<SurfaceVulkan> surface;
+		std::optional<PipelineVulkan> pipeline;
+		std::optional<RendererVulkan> renderer;
+		
+		std::mutex surfaceMutex;
+		std::condition_variable surfaceCondition;
 	};
 }
 #endif 

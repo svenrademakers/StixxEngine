@@ -3,9 +3,21 @@
 
 #include <GLFW/glfw3.h>
 #include "Window.hpp"
+#include "utils/CastOperator.hpp"
 
 namespace sx
 {
+	class WindowHandle
+		: public CastOperator<GLFWwindow*>
+	{
+	public:
+		WindowHandle& operator=(GLFWwindow* w)
+		{
+			handle = w;
+			return *this;
+		}
+	};
+
 	class WindowGlfw
 		: public Window
 	{
@@ -15,16 +27,20 @@ namespace sx
 
 		// Window
 		const char* Name() override;
-		bool Open() override;
-		std::vector<const char*> InstanceExtensions() override;
-		std::pair<uint32_t, uint32_t> Size() override;
+		bool IsOpen() override;
 		void Close() override;
-		void* GetHandle();
+		void Run() override;
+		WindowHandle& GetHandle() override;
+		Extent Size() override;
+
+		static std::vector<const char*> InstanceExtensions();
 
 	private:
-		GLFWwindow* window;
+		WindowHandle window;
 		const char* name;
+		uint16_t width;
+		uint16_t height;
 	};
 }
 
-#endif // 
+#endif

@@ -118,5 +118,8 @@ namespace sx
 		return pipelineLayout;
 	}
 
-
+	const VkDescriptorSetLayout& PipelineVulkan::DescriptorSet()
+	{
+		return descriptorSetLayout;
+	}
 }

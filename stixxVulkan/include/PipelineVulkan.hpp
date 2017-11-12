@@ -28,6 +28,7 @@ namespace sx
 
 		void Init(RenderPassVulkan& renderpass, SurfaceVulkan& surface, ShaderVertexVulkan& vertex, ShaderFragmentVulkan& fragment, VkViewport& viewport);
 		const VkPipelineLayout& Layout();
+		const VkDescriptorSetLayout& DescriptorSet();
 
 	private:
 		const VkDevice& device;

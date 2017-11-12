@@ -28,7 +28,10 @@ namespace sx
 		, vertexSize(sizeof(mesh.vertices[0]) * mesh.vertices.size())
 		, indicesCount(mesh.indices.size())
 		, indexSize(4 * static_cast<const std::size_t>(indicesCount))
+		, descriptorPool(nullptr)
+		, descriptorSet(nullptr)
 	{
+		CreateDescriptorPool();
 		LoadVertexData(mesh);
 		SetupUboBuffer();
 	}
@@ -87,7 +90,6 @@ namespace sx
 
 	void ModelVulkan::PipelineLayoutCreated(VkPipelineLayoutCreateInfo& info)
 	{
-		CreateDescriptorPool();
 		LoadDescriptors(*info.pSetLayouts);
 	}
 

@@ -6,7 +6,7 @@
 
 namespace sx
 {
-    class Window;
+    class WindowHandle;
 
     class Surface
     {
@@ -68,7 +68,6 @@ namespace sx
         typedef std::pair<ColorFormat, ColorSpace> SurfaceFormat;
 
     public:
-        virtual bool CreateSurface(Window& window) = 0;
         virtual uint32_t MaxImageCount() = 0;
         virtual bool isSupported(const PresentMode type) = 0;
         virtual SurfaceFormat Format() = 0;

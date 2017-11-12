@@ -37,24 +37,23 @@ namespace
 
 namespace sx
 {
-	InstanceVulkan::InstanceVulkan(const char* engineName, Window& window)
+	InstanceVulkan::InstanceVulkan(const char* engineName, const char* appName, std::vector<const char *> instanceExtensions)
 	{
+		instanceExtensions.push_back(VK_EXT_DEBUG_REPORT_EXTENSION_NAME);
+
 		VkApplicationInfo appInfo = {};
 		appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
-		appInfo.pApplicationName = window.Name();
+		appInfo.pApplicationName = appName;
 		appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
 		appInfo.pEngineName = engineName;
 		appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
 		appInfo.apiVersion = VK_API_VERSION_1_0;
 
-        auto extension = window.InstanceExtensions();
-        extension.push_back(VK_EXT_DEBUG_REPORT_EXTENSION_NAME);
-
 		VkInstanceCreateInfo InstanceInfo = {};
 		InstanceInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
 		InstanceInfo.pApplicationInfo = &appInfo;
-		InstanceInfo.enabledExtensionCount = static_cast<uint32_t>(extension.size());
-		InstanceInfo.ppEnabledExtensionNames = extension.data();
+		InstanceInfo.enabledExtensionCount = static_cast<uint32_t>(instanceExtensions.size());
+		InstanceInfo.ppEnabledExtensionNames = instanceExtensions.data();
 		InstanceInfo.enabledLayerCount = static_cast<uint32_t>(validationLayers.size());;
 		InstanceInfo.ppEnabledLayerNames = validationLayers.data();
 

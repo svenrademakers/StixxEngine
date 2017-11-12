@@ -13,7 +13,7 @@ namespace sx
         : public CastOperator<VkInstance>
 	{
 	public:
-		InstanceVulkan(const char* engineName, Window& window);
+		InstanceVulkan(const char* engineName, const char* appName, std::vector<const char*> instanceExtensions);
         InstanceVulkan(const InstanceVulkan& instance) = delete;
         const InstanceVulkan& operator = (const InstanceVulkan&) = delete;
 		virtual ~InstanceVulkan();

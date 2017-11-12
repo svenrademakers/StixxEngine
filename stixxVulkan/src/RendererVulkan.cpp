@@ -3,7 +3,6 @@
 #include "InstanceVulkan.hpp"
 #include "PhysicalDeviceVulkan.hpp"
 #include "DeviceVulkan.hpp"
-
 #include "ShaderVulkan.hpp"
 #include "PipelineVulkan.hpp"
 #include "SurfaceVulkan.hpp"
@@ -35,7 +34,36 @@ namespace sx
         , renderPass(device)
         , pipeline(pipeline)
 		, filesystem(filesystem)
-    {}
+    {
+		swapchain.Init(surface);
+		renderPass.Init(swapchain, surface);
+
+		VkViewport viewport = {};
+		viewport.width = static_cast<float>(surface.CurrentExtent().width);
+		viewport.height = static_cast<float>(surface.CurrentExtent().height);
+		viewport.minDepth = 0.0f;
+		viewport.maxDepth = 1.0f;
+
+		ShaderVertexVulkan vertexShader(device, filesystem);
+		ShaderFragmentVulkan fragmentShader(device, filesystem);
+		pipeline.Init(renderPass, surface, vertexShader, fragmentShader, viewport);
+
+		commandBuffers.resize(swapchain.NumberOfImages());
+		VkCommandBufferAllocateInfo commandBufferAllocateInfo = {};
+		commandBufferAllocateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
+		commandBufferAllocateInfo.pNext = nullptr;
+		commandBufferAllocateInfo.commandPool = device.CommandPool();
+		commandBufferAllocateInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
+		commandBufferAllocateInfo.commandBufferCount = static_cast<uint32_t>(swapchain.ImageViews().size());
+		vkAllocateCommandBuffers(device, &commandBufferAllocateInfo, commandBuffers.data());
+
+		VkSemaphoreCreateInfo semaphoreInfo = {};
+		semaphoreInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
+
+		if (vkCreateSemaphore(device, &semaphoreInfo, nullptr, &imageAvailableSemaphore) != VK_SUCCESS ||
+			vkCreateSemaphore(device, &semaphoreInfo, nullptr, &renderFinishedSemaphore) != VK_SUCCESS)
+			throw std::runtime_error("failed to create semaphores!");
+	}
 
     RendererVulkan::~RendererVulkan()
     {
@@ -76,38 +104,6 @@ namespace sx
         vkQueueWaitIdle(device.Queue());
     }
 
-	void RendererVulkan::Load()
-	{
-		swapchain.Init(surface);
-		renderPass.Init(swapchain, surface);
-
-		VkViewport viewport = {};
-		viewport.width = static_cast<float>(surface.CurrentExtent().width);
-		viewport.height = static_cast<float>(surface.CurrentExtent().height);
-		viewport.minDepth = 0.0f;
-		viewport.maxDepth = 1.0f;
-
-		ShaderVertexVulkan vertexShader(device, filesystem);
-		ShaderFragmentVulkan fragmentShader(device, filesystem);
-		pipeline.Init(renderPass, surface, vertexShader, fragmentShader, viewport);
-
-		commandBuffers.resize(swapchain.NumberOfImages());
-		VkCommandBufferAllocateInfo commandBufferAllocateInfo = {};
-		commandBufferAllocateInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-		commandBufferAllocateInfo.pNext = nullptr;
-		commandBufferAllocateInfo.commandPool = device.CommandPool();
-		commandBufferAllocateInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-		commandBufferAllocateInfo.commandBufferCount = static_cast<uint32_t>(swapchain.ImageViews().size());
-		vkAllocateCommandBuffers(device, &commandBufferAllocateInfo, commandBuffers.data());
-
-		VkSemaphoreCreateInfo semaphoreInfo = {};
-		semaphoreInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
-
-		if (vkCreateSemaphore(device, &semaphoreInfo, nullptr, &imageAvailableSemaphore) != VK_SUCCESS ||
-			vkCreateSemaphore(device, &semaphoreInfo, nullptr, &renderFinishedSemaphore) != VK_SUCCESS)
-			throw std::runtime_error("failed to create semaphores!");
-	}
-
 	void RendererVulkan::RecordDrawingCommands(ModelVulkan& m)
 	{
 		for (size_t i = 0; i < commandBuffers.size(); i++)
@@ -140,25 +136,36 @@ namespace sx
 		}
 	}
 
-	VulkanRendererFacade::VulkanRendererFacade(Window& window, FileSystem& filesystem)
-		: instance("Stixx-Engine", window)
-		, pdevice(instance)
-		, surface(instance, pdevice)
-		, device(pdevice)
-		, pipeline(device)
-		, renderer(pdevice, device, surface, pipeline, filesystem)
+
+	VulkanStack::VulkanStack(Window& window)
+		: WindowObserver(window)
 	{
-		if (!surface.CreateSurface(window) || !pdevice.PresentSupport(surface))
+		surfaceMutex.lock();
+	}
+
+	void VulkanStack::Load(FileSystem& filesystem, const char * appName, std::vector<const char*> instanceExtensions)
+	{
+		instance.emplace("Stixx-Engine", appName, instanceExtensions);
+		pdevice.emplace(*instance);
+		device.emplace(*pdevice);
+		pipeline.emplace(*device);
+
+		std::unique_lock<std::mutex> lk(surfaceMutex, std::adopt_lock);
+		surfaceCondition.wait(lk, [this] {return surface.has_value(); });
+
+		renderer.emplace(*pdevice, *device, *surface, *pipeline, filesystem);
+	}
+
+	void VulkanStack::WindowCreated(WindowHandle& handle)
+	{
+		{
+			std::lock_guard<std::mutex> lk(surfaceMutex);
+			surface.emplace(*instance, *pdevice, handle);
+		}
+
+		if (!pdevice->PresentSupport(*surface))
 			throw std::runtime_error("could not setup surface");
-	}
 
-	void VulkanRendererFacade::Draw()
-	{
-		renderer.Draw();
-	}
-
-	void VulkanRendererFacade::Load()
-	{
-		renderer.Load();
+		surfaceCondition.notify_all();
 	}
 }
