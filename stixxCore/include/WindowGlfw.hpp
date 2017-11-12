@@ -1,6 +1,7 @@
 #ifndef WINDOW_GLFW_HPP
 #define WINDOW_GLFW_HPP
 
+#include <atomic>
 #include <GLFW/glfw3.h>
 #include "Window.hpp"
 #include "utils/CastOperator.hpp"

@@ -45,7 +45,7 @@ int main(void)
 
 	constexpr const char * appName = "StixxViewer";
 	static sx::WindowGlfw window(appName, 800, 600);
-	static sx::VulkanStack renderer(window);
+	static sx::VulkanStack vulkan(window);
 
 	window.Run();
 
@@ -53,18 +53,14 @@ int main(void)
 	static MeshLoaderAssimp meshLoader(R"(D:\Monkey.obj)");
 	meshLoader.Next(mesh);
 
-	renderer.Load(fileSystem, appName, sx::WindowGlfw::InstanceExtensions());
+	vulkan.Load(fileSystem, appName, sx::WindowGlfw::InstanceExtensions());
 	
-	sx::ModelVulkan model(*renderer.device, *renderer.pdevice, *renderer.pipeline, mesh);
-	model.LoadDescriptors(renderer.pipeline->DescriptorSet());
-	renderer.renderer->RecordDrawingCommands(model);
-
-	static RotateModelInteractor rotate(model);
-
-    while (window.IsOpen()) {
-		rotate.UpdateRotation();
-        renderer.renderer->Draw();
-    }
+	sx::ModelVulkan model(*vulkan.device, *vulkan.pdevice, *vulkan.pipeline, mesh);
+	model.LoadDescriptors(vulkan.pipeline->DescriptorSet());
+	vulkan.renderer->RecordDrawingCommands(model);
+	
+	RotateModelInteractor rotate(model);
+	vulkan.Run([&rotate] {rotate.UpdateRotation(); });
 
     return 0;
 }

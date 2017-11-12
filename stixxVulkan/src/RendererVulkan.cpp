@@ -156,6 +156,17 @@ namespace sx
 		renderer.emplace(*pdevice, *device, *surface, *pipeline, filesystem);
 	}
 
+	void VulkanStack::Run(std::function<void()> temp)
+	{
+		running = true;
+
+		while (running)
+		{
+			temp();
+			renderer->Draw();
+		}
+	}
+
 	void VulkanStack::WindowCreated(WindowHandle& handle)
 	{
 		{
@@ -167,5 +178,10 @@ namespace sx
 			throw std::runtime_error("could not setup surface");
 
 		surfaceCondition.notify_all();
+	}
+
+	void VulkanStack::Closing()
+	{
+		running = false;
 	}
 }

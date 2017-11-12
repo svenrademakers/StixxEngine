@@ -1,7 +1,10 @@
 #ifndef RENDERER_VULKAN_HPP
 #define RENDERER_VULKAN_HPP
 
+#include <mutex>
+#include <atomic>
 #include <optional>
+
 #include "renderer\Renderer.hpp"
 #include "InstanceVulkan.hpp"
 #include "DeviceVulkan.hpp"
@@ -11,7 +14,6 @@
 #include "RenderPassVulkan.hpp"
 #include "PipelineVulkan.hpp"
 #include "Window.hpp"
-#include <mutex>
 
 namespace sx
 {
@@ -50,8 +52,10 @@ namespace sx
 		VulkanStack(Window& window);
 
 		void Load(FileSystem& filesystem, const char * appName, std::vector<const char*> instanceExtensions);
+		void Run(std::function<void()> temp);
 
 		virtual void WindowCreated(WindowHandle& handle) override;
+		virtual void Closing() override;
 
 	public:
 		std::optional<InstanceVulkan> instance;
@@ -63,6 +67,7 @@ namespace sx
 		
 		std::mutex surfaceMutex;
 		std::condition_variable surfaceCondition;
+		std::atomic<bool> running;
 	};
 }
 #endif 

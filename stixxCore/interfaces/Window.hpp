@@ -15,6 +15,7 @@ namespace sx
 		using Observer<WindowObserver>::Observer;
 
 		virtual void WindowCreated(WindowHandle& handle) = 0;
+		virtual void Closing() = 0;
 	};
 
 	class Window

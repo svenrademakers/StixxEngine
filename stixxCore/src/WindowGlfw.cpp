@@ -75,7 +75,11 @@ namespace sx
 			});
 
 			while (IsOpen())
-				glfwPollEvents();
+				glfwWaitEvents();
+
+			NotifyObservers([this](sx::WindowObserver& observer) {
+				observer.Closing();
+			});
 		});
 
 		worker.detach();
