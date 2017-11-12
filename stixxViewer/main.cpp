@@ -7,10 +7,9 @@
 
 #include "WindowGlfw.hpp"
 #include "FileSystem.hpp"
-#include "RendererVulkan.hpp"
+#include "VulkanStack.hpp"
 #include "MeshLoaderAssimp.hpp"
 #include "ModelVulkan.hpp"
-#include "UiHandlerGlfw.hpp"
 
 class RotateModelInteractor
 {
