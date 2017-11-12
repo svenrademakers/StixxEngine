@@ -16,7 +16,11 @@ add_library(StixxCore STATIC
 	${sources}
 	${headers}
 )
-set_property(TARGET StixxCore PROPERTY CXX_STANDARD 14)
+
+set_property(TARGET StixxCore PROPERTY CXX_STANDARD 17)
+if(MSVC)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17")
+endif(MSVC)
 
 target_include_directories(StixxCore
 	PUBLIC

@@ -8,4 +8,3 @@ target_include_directories(StixxMicroTests
 target_link_libraries(StixxMicroTests StixxCore gtest gmock)
 install(TARGETS StixxMicroTests DESTINATION bin)
 
-target_compile_features(StixxMicroTests PUBLIC cxx_override cxx_inheriting_constructors)
