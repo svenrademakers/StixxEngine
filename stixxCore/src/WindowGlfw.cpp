@@ -70,6 +70,7 @@ namespace sx
 			if (window == nullptr)
 				glfwTerminate();
 
+			
 			NotifyObservers([this](sx::WindowObserver& observer) {
 				observer.WindowCreated(window);
 			});

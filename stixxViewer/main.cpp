@@ -10,6 +10,8 @@
 #include "VulkanStack.hpp"
 #include "MeshLoaderAssimp.hpp"
 #include "ModelVulkan.hpp"
+#include "InputGlfw.hpp"
+#include "interactors/InputInteractor.hpp"
 
 class RotateModelInteractor
 {
@@ -41,19 +43,20 @@ private:
 int main(void)
 {
 	static sx::FileSystemStd fileSystem;
-
 	constexpr const char * appName = "StixxViewer";
-	static sx::WindowGlfw window(appName, 800, 600);
+	static sx::WindowGlfw window(appName, 1280, 800);
+	static sx::InputGlfw input(window); 
 	static sx::VulkanStack vulkan(window);
-
 	window.Run();
+
+	static sx::InputInteractor inputInteractor(input, input, window);
 
 	sx::Mesh mesh = {};
 	static MeshLoaderAssimp meshLoader(R"(D:\Monkey.obj)");
 	meshLoader.Next(mesh);
 
 	vulkan.Load(fileSystem, appName, sx::WindowGlfw::InstanceExtensions());
-	
+
 	sx::ModelVulkan model(*vulkan.device, *vulkan.pdevice, *vulkan.pipeline, mesh);
 	model.LoadDescriptors(vulkan.pipeline->DescriptorSet());
 	vulkan.renderer->RecordDrawingCommands(model);

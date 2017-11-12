@@ -1,7 +1,7 @@
 #ifndef INPUT_INTERACTOR_HPP
 #define INPUT_INTERACTOR_HPP
 
-#include "UiHandler.hpp"
+#include "Input.hpp"
 
 namespace sx
 {

@@ -1,5 +1,5 @@
-#ifndef UI_HANDLER_HPP
-#define UI_HANDLER_HPP
+#ifndef INPUT_HPP
+#define INPUT_HPP
 
 #include "utils/Observer.hpp"
 
@@ -36,6 +36,17 @@ namespace sx
 		virtual void MouseEvent(const MouseButton, ButtonState state) = 0;
 		virtual void MouseMoved(double x, double y) = 0;
 		virtual void Scroll(double xOffset, double yOffset) = 0;
+	};
+
+	class WindowHandle;
+
+	class Input
+		: public Subject<KeyboardObserver>
+		, public Subject<MouseObserver>
+	{
+	public:
+		virtual ~Input() {};
+		virtual void Attach(WindowHandle& handle) = 0;
 	};
 }
 
