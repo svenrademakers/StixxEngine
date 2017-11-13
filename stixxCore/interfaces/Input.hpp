@@ -45,6 +45,9 @@ namespace sx
 		, public Subject<MouseObserver>
 	{
 	public:
+		using Subject<KeyboardObserver>::NotifyObservers;
+		using Subject<MouseObserver>::NotifyObservers;
+
 		virtual ~Input() {};
 		virtual void Attach(WindowHandle& handle) = 0;
 	};
