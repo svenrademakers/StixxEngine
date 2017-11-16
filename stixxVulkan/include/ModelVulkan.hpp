@@ -5,7 +5,7 @@
 #include "vulkan/vulkan.h"
 #include "glm/glm.hpp"
 #include "utils/Observer.hpp"
-#include "renderer/Model.hpp"
+#include "interfaces/renderer/Model.hpp"
 #include "PipelineVulkan.hpp"
 
 namespace sx

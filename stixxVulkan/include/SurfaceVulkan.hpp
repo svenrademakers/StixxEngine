@@ -2,7 +2,7 @@
 #define SURFACE_VULKAN_HPP
 
 #include "vulkan/vulkan.h"
-#include "renderer/Surface.hpp"
+#include "interfaces/renderer/Surface.hpp"
 
 namespace sx
 {

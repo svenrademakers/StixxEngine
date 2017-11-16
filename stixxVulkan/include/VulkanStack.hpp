@@ -10,7 +10,7 @@
 #include "PhysicalDeviceVulkan.hpp"
 #include "SurfaceVulkan.hpp"
 #include "PipelineVulkan.hpp"
-#include "Window.hpp"
+#include "interfaces/Window.hpp"
 #include "RendererVulkan.hpp"
 
 namespace sx

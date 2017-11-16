@@ -1,5 +1,6 @@
 #include "interactors/InputInteractor.hpp"
-#include "Window.hpp"
+#include "interfaces/Window.hpp"
+#include "interfaces/Camera.hpp"
 #include <iostream>
 
 namespace sx
@@ -22,11 +23,11 @@ namespace sx
 
 	void InputInteractor::MouseMoved(double x, double y)
 	{
-		std::cout << "Mouse moved x:" << x << "y: " << y << "\n";
+		std::cout << "Mouse moved x:" << x << " y: " << y << "\n";
 	}
 
 	void InputInteractor::Scroll(double xOffset, double yOffset)
 	{
-		std::cout << "Scroll x:" << xOffset << "y: " << yOffset << "\n";
+		std::cout << "Scroll x:" << xOffset << " y: " << yOffset << "\n";
 	}
 }

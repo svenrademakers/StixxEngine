@@ -50,7 +50,7 @@ namespace sx
 	{
 		instance = this;
 		//glfwSetInputMode(handle, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-
+		glfwSetInputMode(handle, GLFW_STICKY_KEYS, 1);
 		glfwSetKeyCallback(handle, key_callback);
 		glfwSetCursorPosCallback(handle, cursor_position_callback);
 		glfwSetMouseButtonCallback(handle, mouse_button_callback);

@@ -1,6 +1,6 @@
 #include "ShaderVulkan.hpp"
 #include <stdexcept>
-#include "renderer/Mesh.hpp"
+#include "interfaces/renderer/Mesh.hpp"
 
 namespace sx
 {

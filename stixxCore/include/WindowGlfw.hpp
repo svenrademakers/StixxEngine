@@ -3,7 +3,7 @@
 
 #include <atomic>
 #include <GLFW/glfw3.h>
-#include "Window.hpp"
+#include "interfaces/Window.hpp"
 #include "utils/CastOperator.hpp"
 
 namespace sx

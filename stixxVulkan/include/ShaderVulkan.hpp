@@ -7,7 +7,7 @@
 #include "vulkan/vulkan.h"
 #include "DeviceVulkan.hpp"
 #include "utils/CastOperator.hpp"
-#include "FileSystem.hpp"
+#include "interfaces/FileSystem.hpp"
 
 #define SHADER_PATH "../StixxShaders"
 

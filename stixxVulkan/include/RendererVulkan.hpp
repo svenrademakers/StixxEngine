@@ -2,7 +2,7 @@
 #define RENDERER_VULKAN_HPP
 
 #include <vector>
-#include "renderer\Renderer.hpp"
+#include "interfaces/renderer/Renderer.hpp"
 #include "SwapchainVulkan.hpp"
 #include "RenderPassVulkan.hpp"
 

@@ -5,7 +5,7 @@
 #include "WindowGlfw.hpp"
 #include "InstanceVulkan.hpp"
 #include "DeviceVulkan.hpp"
-#include "Window.hpp"
+#include "interfaces/Window.hpp"
 
 namespace sx
 {

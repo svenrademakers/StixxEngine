@@ -1,6 +1,6 @@
 #include "PipelineVulkan.hpp"
 #include <stdexcept>
-#include "renderer/Mesh.hpp"
+#include "interfaces/renderer/Mesh.hpp"
 #include <array>
 
 namespace

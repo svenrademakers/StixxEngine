@@ -2,8 +2,8 @@
 #define INPUT_GLFW_HPP
 
 #include <atomic>
-#include "Input.hpp"
-#include "Window.hpp"
+#include "interfaces/Input.hpp"
+#include "interfaces/Window.hpp"
 
 namespace sx
 {
@@ -17,7 +17,7 @@ namespace sx
 		virtual void Closing() override;
 
 	private:
-		void Attach(WindowHandle& handle) override;
+		void Attach(WindowHandle& handle);
 	};
 }
 

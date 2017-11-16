@@ -7,8 +7,8 @@
 #include "PipelineVulkan.hpp"
 #include "SurfaceVulkan.hpp"
 #include "ModelVulkan.hpp"
-#include "renderer/Mesh.hpp"
-#include "FileSystem.hpp"
+#include "interfaces/renderer/Mesh.hpp"
+#include "interfaces/FileSystem.hpp"
 
 namespace
 {

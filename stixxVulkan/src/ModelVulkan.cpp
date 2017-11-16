@@ -1,5 +1,5 @@
 #include "ModelVulkan.hpp"
-#include "renderer/Mesh.hpp"
+#include "interfaces/renderer/Mesh.hpp"
 #include <iostream>
 
 namespace
