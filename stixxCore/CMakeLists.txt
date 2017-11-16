@@ -30,8 +30,8 @@ target_include_directories(StixxCore
  		$<INSTALL_INTERFACE:stixx>
 	PRIVATE
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>)
-
 		
+	
 target_link_libraries(StixxCore glfw glm ${ASSIMP_LIB})
 
 install(DIRECTORY include interfaces DESTINATION include)
