@@ -48,6 +48,9 @@ namespace sx
 
 	void InputGlfw::Attach(WindowHandle& handle)
 	{
+		static_assert(std::is_same<WindowHandle::value_type, GLFWwindow*>(), 
+			"input connected to wrong window.");
+
 		instance = this;
 		//glfwSetInputMode(handle, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		glfwSetInputMode(handle, GLFW_STICKY_KEYS, 1);

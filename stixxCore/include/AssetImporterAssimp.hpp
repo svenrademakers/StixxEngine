@@ -7,16 +7,17 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
-#include "interfaces/MeshLoader.hpp" 
+#include "interfaces/AssetImporter.hpp" 
 
-class MeshLoaderAssimp
-	: public sx::MeshLoader
+class AssetImporterAssimp
+	: public sx::AssetImporter
 {
 public:
-	MeshLoaderAssimp(const std::string& fileName);
-	virtual ~MeshLoaderAssimp();
+	AssetImporterAssimp() = default;
+	virtual ~AssetImporterAssimp();
 
 public:
+	void Load(const char * file) override;
 	bool Next(sx::Mesh& mesh) override;
 
 private:

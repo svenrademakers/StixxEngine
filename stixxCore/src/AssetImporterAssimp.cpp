@@ -1,26 +1,23 @@
-#include <MeshLoaderAssimp.hpp>
+#include "AssetImporterAssimp.hpp"
 #include <iostream>
 #include <vector>
 
-MeshLoaderAssimp::MeshLoaderAssimp(const std::string& fileName)
-	: scene(nullptr)
-	, index(0)
+AssetImporterAssimp::~AssetImporterAssimp()
+{}
+
+void AssetImporterAssimp::Load(const char * fileName)
 {
-	scene = importer.ReadFile( fileName,
-	aiProcess_CalcTangentSpace       |
-	aiProcess_Triangulate            |
-	aiProcess_JoinIdenticalVertices  |
-	aiProcess_SortByPType);
+	scene = importer.ReadFile(fileName,
+		aiProcess_CalcTangentSpace |
+		aiProcess_Triangulate |
+		aiProcess_JoinIdenticalVertices |
+		aiProcess_SortByPType);
 
 	if (!scene)
 		std::cerr << importer.GetErrorString();
 }
 
-MeshLoaderAssimp::~MeshLoaderAssimp()
-{
-}
-
-bool MeshLoaderAssimp::Next(sx::Mesh& mesh)
+bool AssetImporterAssimp::Next(sx::Mesh& mesh)
 {
 	if (index == scene->mNumMeshes)
 	return false;
@@ -30,7 +27,7 @@ bool MeshLoaderAssimp::Next(sx::Mesh& mesh)
     return true;
 }
 
-void MeshLoaderAssimp::processMesh(std::vector<sx::Vertex>& vertices, std::vector<unsigned int>& indices, std::vector<sx::Texture>& textures)
+void AssetImporterAssimp::processMesh(std::vector<sx::Vertex>& vertices, std::vector<unsigned int>& indices, std::vector<sx::Texture>& textures)
 {
     aiMesh* mesh = scene->mMeshes[index];
 
