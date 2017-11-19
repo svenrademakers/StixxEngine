@@ -12,12 +12,14 @@ namespace sx
 	class Window;
 	class ModelVulkan;
 	class PipelineVulkan;
+	class ShaderVertexVulkan;
+	class ShaderFragmentVulkan;
 
     class RendererVulkan
 		: public Renderer
     {
     public:
-        RendererVulkan(PhysicalDeviceVulkan& pdevice, DeviceVulkan& device, SurfaceVulkan& surface, PipelineVulkan& pipeline, FileSystem& filesystem);
+        RendererVulkan(PhysicalDeviceVulkan& pdevice, DeviceVulkan& device, SurfaceVulkan& surface, PipelineVulkan& pipeline, ShaderVertexVulkan& vertexShader, ShaderFragmentVulkan& fragmentShader);
         RendererVulkan(const RendererVulkan&) = delete;
         RendererVulkan& operator = (const RendererVulkan&) = delete;
         virtual ~RendererVulkan();
@@ -34,7 +36,6 @@ namespace sx
         DeviceVulkan& device;
         SwapchainVulkan swapchain;
         RenderPassVulkan renderPass;
-		FileSystem& filesystem;
     };
 
 }

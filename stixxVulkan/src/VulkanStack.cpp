@@ -15,15 +15,18 @@ namespace sx
 		device.emplace(*pdevice);
 		pipeline.emplace(*device);
 
+		ShaderVertexVulkan vertexShader(*device, filesystem);
+		ShaderFragmentVulkan fragmentShader(*device, filesystem);
+
 		std::unique_lock<std::mutex> lk(surfaceMutex, std::adopt_lock);
 		surfaceCondition.wait(lk, [this] {return surface.has_value(); });
 
-		renderer.emplace(*pdevice, *device, *surface, *pipeline, filesystem);
+		renderer.emplace(*pdevice, *device, *surface, *pipeline, vertexShader, fragmentShader);
 	}
 
 	void VulkanStack::Run()
 	{
-		running = true;
+		running.store(true, std::memory_order_relaxed);
 
 		while (running)
 			renderer->Draw();
@@ -44,6 +47,6 @@ namespace sx
 
 	void VulkanStack::Closing()
 	{
-		running = false;
+		running.store(false, std::memory_order_relaxed);
 	}
 }
