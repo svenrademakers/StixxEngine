@@ -22,7 +22,7 @@ namespace sx
 		VulkanStack(Window& window);
 
 		void Load(FileSystem& filesystem, const char * appName, std::vector<const char*> instanceExtensions);
-		void Run(std::function<void()> temp);
+		void Run();
 
 		virtual void WindowCreated(WindowHandle& handle) override;
 		virtual void Closing() override;

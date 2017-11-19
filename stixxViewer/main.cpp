@@ -8,24 +8,23 @@
 #include "WindowGlfw.hpp"
 #include "interfaces/FileSystem.hpp"
 #include "VulkanStack.hpp"
-#include "MeshLoaderAssimp.hpp"
+#include "AssetImporterAssimp.hpp"
 #include "ModelVulkan.hpp"
 #include "InputGlfw.hpp"
 #include "interactors/InputInteractor.hpp"
 
 class RotateModelInteractor
+	: public sx::HotLoopObserver
 {
 public:
-	RotateModelInteractor(sx::Model& model)
-		: model(model)
+	RotateModelInteractor(sx::Renderer& renderer, sx::Model& model)
+		: sx::HotLoopObserver(renderer)
+		, model(model)
 	{}
 
-	void UpdateRotation()
+	void Update(std::chrono::duration<float>& elapsedMs)
 	{
-		static auto startTime = std::chrono::high_resolution_clock::now();
-
-		auto currentTime = std::chrono::high_resolution_clock::now();
-		float time = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - startTime).count() / 1000.0f;
+		float time = (std::chrono::duration_cast<std::chrono::milliseconds>(elapsedMs).count() / 1000.0f);
 
 		sx::UniformBufferObject ubo = {};
 		ubo.model = glm::rotate(glm::mat4(1.0f), time * glm::radians(10.0f), glm::vec3(0.0f, 0.0f, 1.0f));
@@ -49,10 +48,9 @@ int main(void)
 	static sx::VulkanStack vulkan(window);
 	window.Run();
 
-	static sx::InputInteractor inputInteractor(input, input, window);
-
 	sx::Mesh mesh = {};
-	static MeshLoaderAssimp meshLoader(R"(D:\Monkey.obj)");
+	static AssetImporterAssimp meshLoader;
+	meshLoader.Load(R"(D:\Monkey.obj)");
 	meshLoader.Next(mesh);
 
 	vulkan.Load(fileSystem, appName, sx::WindowGlfw::InstanceExtensions());
@@ -61,8 +59,8 @@ int main(void)
 	model.LoadDescriptors(vulkan.pipeline->DescriptorSet());
 	vulkan.renderer->RecordDrawingCommands(model);
 	
-	RotateModelInteractor rotate(model);
-	vulkan.Run([&rotate] {rotate.UpdateRotation(); });
+	RotateModelInteractor rotate(*vulkan.renderer, model);
+	vulkan.Run();
 
     return 0;
 }

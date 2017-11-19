@@ -21,15 +21,12 @@ namespace sx
 		renderer.emplace(*pdevice, *device, *surface, *pipeline, filesystem);
 	}
 
-	void VulkanStack::Run(std::function<void()> temp)
+	void VulkanStack::Run()
 	{
 		running = true;
 
 		while (running)
-		{
-			temp();
 			renderer->Draw();
-		}
 	}
 
 	void VulkanStack::WindowCreated(WindowHandle& handle)

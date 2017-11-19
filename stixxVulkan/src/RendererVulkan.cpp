@@ -73,6 +73,13 @@ namespace sx
 
     void RendererVulkan::Draw()
     {
+		static std::chrono::time_point<std::chrono::high_resolution_clock> startTime = std::chrono::high_resolution_clock::now();
+
+		NotifyObservers([&](HotLoopObserver& ob) {
+			std::chrono::duration<float> time = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - startTime);
+			ob.Update(time);
+		});
+
         uint32_t imageIndex;
         vkAcquireNextImageKHR(device, swapchain, std::numeric_limits<uint64_t>::max(), imageAvailableSemaphore, VK_NULL_HANDLE, &imageIndex);
 
