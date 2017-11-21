@@ -58,7 +58,7 @@ namespace sx
 		std::stringstream fileName;
 		fileName << SHADER_PATH << "/" << name;
 
-		const std::vector<uint32_t> data = filesystem.LoadFile(fileName.str().c_str());
+		const std::vector<uint32_t> data = filesystem.ReadBinary(fileName.str().c_str());
 
 		VkShaderModuleCreateInfo shaderModuleCreateInfo = {};
 		shaderModuleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;

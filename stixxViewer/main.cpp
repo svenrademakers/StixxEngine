@@ -6,7 +6,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 
 #include "WindowGlfw.hpp"
-#include "interfaces/FileSystem.hpp"
+#include "platform/FileSystemImpl.hpp"
 #include "VulkanStack.hpp"
 #include "AssetImporterAssimp.hpp"
 #include "ModelVulkan.hpp"
@@ -41,7 +41,7 @@ private:
 
 int main(void)
 {
-	static sx::FileSystemStd fileSystem;
+	static sx::FileSystemImpl fileSystem;
 	constexpr const char * appName = "StixxViewer";
 	static sx::WindowGlfw window(appName, 1280, 800);
 	static sx::InputGlfw input(window); 

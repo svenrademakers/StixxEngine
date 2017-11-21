@@ -6,7 +6,7 @@
 #include "RenderPassVulkan.hpp"
 #include "SurfaceVulkan.hpp"
 #include "utils/CastOperator.hpp"
-#include "utils/Observer.hpp"
+#include "infra/Observer.hpp"
 
 namespace sx
 {
