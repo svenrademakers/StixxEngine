@@ -9,6 +9,7 @@ add_subdirectory(external/glfw)
 add_subdirectory(external/glm)
 add_subdirectory(external/googletest)
 
+SET(STIXX_ASSIMP ON CACHE BOOL "Enable build of assimp implementations")
 add_subdirectory(stixxCore)
 add_subdirectory(stixxVulkan)
 add_subdirectory(stixxShaders)
