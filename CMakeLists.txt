@@ -1,13 +1,6 @@
 cmake_minimum_required(VERSION 3.8.2)
 project (stixxEngine)
 
-if(WIN32)
-SET(gtest_force_shared_crt on CACHE BOOL "Use shared (DLL) run-time lib even when Google Test is built as static lib.") 
-endif()
-
-add_subdirectory(external/glm)
-add_subdirectory(external/googletest)
-
 SET(STIXX_ASSIMP ON CACHE BOOL "Enable build of assimp implementations")
 SET(STIXX_GLFW ON CACHE BOOL "Enable build of glfw implementation")
 add_subdirectory(stixx)
