@@ -8,7 +8,7 @@ namespace sx
 	class SpinLock
 	{
 	public:
-		SpinLock() = default;
+		SpinLock(bool setLock = false);
 		SpinLock(const SpinLock&) = delete;
 		SpinLock& operator=(const SpinLock&) = delete;
 		virtual ~SpinLock();
