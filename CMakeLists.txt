@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8.2)
-project (stixx)
+project (stixxEngine)
 
 if(WIN32)
 SET(gtest_force_shared_crt on CACHE BOOL "Use shared (DLL) run-time lib even when Google Test is built as static lib.") 
