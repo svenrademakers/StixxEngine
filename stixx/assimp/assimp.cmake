@@ -10,8 +10,8 @@ elseif(UNIX)
 	set(ASSIMP_LIB libassimp.so)
 endif()
 
-target_link_libraries(StixxCore ${ASSIMP_LIB})
-target_include_directories(StixxCore 
+target_link_libraries(Stixx ${ASSIMP_LIB})
+target_include_directories(Stixx
 	PUBLIC 
 		$<BUILD_INTERFACE:${ASSIMP_INCLUDE_DIRS}>
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/assimp/include>)

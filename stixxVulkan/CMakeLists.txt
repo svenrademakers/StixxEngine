@@ -30,7 +30,7 @@ elseif (WIN32)
 	set(Vulkan_Lib ${Vulkan_LIBRARY}/vulkan-1.lib)
 endif()
 
-target_link_libraries(StixxVulkan StixxCore ${Vulkan_Lib})
+target_link_libraries(StixxVulkan Stixx ${Vulkan_Lib})
 
 set_property(TARGET StixxVulkan PROPERTY CXX_STANDARD 17)
 if(MSVC)

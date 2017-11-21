@@ -5,6 +5,6 @@ target_include_directories(StixxMicroTests
 	PRIVATE
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
 
-target_link_libraries(StixxMicroTests StixxCore gtest gmock)
+target_link_libraries(StixxMicroTests Stixx gtest gmock)
 install(TARGETS StixxMicroTests DESTINATION bin)
 

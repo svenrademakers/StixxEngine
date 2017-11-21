@@ -1,5 +1,5 @@
 add_executable(StixxViewer main.cpp)
-target_link_libraries(StixxViewer StixxCore StixxVulkan)
+target_link_libraries(StixxViewer Stixx StixxVulkan)
 set_property(TARGET StixxViewer PROPERTY CXX_STANDARD 17)
 if(MSVC)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17")
