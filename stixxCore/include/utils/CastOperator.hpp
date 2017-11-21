@@ -7,9 +7,10 @@ namespace sx
     class CastOperator
     {
     public:
+		using value_type = T;
+
 		constexpr CastOperator() = default;
         operator const T &() const;
-
     protected:
         T handle;
     };

@@ -12,8 +12,6 @@ namespace sx
 		: public CastOperator<GLFWwindow*>
 	{
 	public:
-		using value_type =  GLFWwindow*;
-
 		WindowHandle& operator=(GLFWwindow* w)
 		{
 			handle = w;
