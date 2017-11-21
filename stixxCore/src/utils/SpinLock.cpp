@@ -2,12 +2,6 @@
 
 namespace sx
 {
-	SpinLock::SpinLock(bool setLock)
-	{
-		if (setLock)
-			lock.test_and_set(std::memory_order_relaxed);
-	}
-	
 	SpinLock::~SpinLock()
 	{
 		Unlock();
