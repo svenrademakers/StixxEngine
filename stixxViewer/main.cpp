@@ -12,6 +12,7 @@
 #include "ModelVulkan.hpp"
 #include "InputGlfw.hpp"
 #include "interactors/InputInteractor.hpp"
+#include "MemoryLoaderVulkan.hpp"
 
 class RotateModelInteractor
 	: public sx::HotLoopObserver
@@ -54,8 +55,10 @@ int main(void)
 	meshLoader.Next(mesh);
 
 	vulkan.Load(fileSystem, appName, sx::WindowGlfw::InstanceExtensions());
-
-	sx::ModelVulkan model(*vulkan.device, *vulkan.pdevice, *vulkan.pipeline, mesh);
+	
+	sx::MemoryLoaderVulkan writer(*vulkan.device, *vulkan.pdevice);
+	sx::ModelVulkan model(*vulkan.device, *vulkan.pdevice, *vulkan.pipeline, mesh, writer);
+	
 	model.LoadDescriptors(vulkan.pipeline->DescriptorSet());
 	vulkan.renderer->RecordDrawingCommands(model);
 	

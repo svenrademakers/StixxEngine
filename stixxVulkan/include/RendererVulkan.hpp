@@ -15,6 +15,10 @@ namespace sx
 	class ShaderVertexVulkan;
 	class ShaderFragmentVulkan;
 
+	class Buffer
+		: public CastOperator<VkBuffer>
+	{};
+
     class RendererVulkan
 		: public Renderer
     {

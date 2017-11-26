@@ -7,6 +7,7 @@
 #include "infra/Observer.hpp"
 #include "interfaces/renderer/Model.hpp"
 #include "PipelineVulkan.hpp"
+#include "RendererVulkan.hpp" 
 
 namespace sx
 {
@@ -17,7 +18,7 @@ namespace sx
 		, public Model
 	{
 	public:
-		ModelVulkan(const VkDevice& device, const VkPhysicalDevice& pdevice, PipelineVulkan& pipeline, const sx::Mesh& mesh);
+		ModelVulkan(const VkDevice& device, const VkPhysicalDevice& pdevice, PipelineVulkan& pipeline, const sx::Mesh& mesh, GPUMemoryLoader& loader);
 		virtual ~ModelVulkan();
 
 		void LoadDescriptors(const VkDescriptorSetLayout& descriptorSetLayout);
@@ -30,24 +31,7 @@ namespace sx
 		void UpdateUbo(UniformBufferObject& ubo) override;
 
 	private:
-		template<VkBufferUsageFlags flags>
-		void LoadBuffer(VkBuffer& buffer, const std::size_t size) const
-		{
-			VkBufferCreateInfo bufferInfo = {};
-			bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
-			bufferInfo.size = size;
-			bufferInfo.flags = 0;
-			bufferInfo.usage = flags;
-			bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
-			bufferInfo.queueFamilyIndexCount = 0;
-			bufferInfo.pQueueFamilyIndices = 0;
-
-			if (vkCreateBuffer(device, &bufferInfo, nullptr, &buffer) != VK_SUCCESS) {
-				throw std::runtime_error("failed to create buffer!");
-			}
-		}
-
-		VkDeviceMemory AttachMemory(VkBuffer& buffer) const;
+	
 		void LoadVertexData(const Mesh& mesh);
 		void SetupUboBuffer();
 		void CreateDescriptorPool();
@@ -60,9 +44,9 @@ namespace sx
 		const std::uint32_t indicesCount;
 		const std::size_t indexSize;
 
-		VkBuffer buffer;
-		VkDeviceMemory deviceMemory;
-		VkMappedMemoryRange memRange;
+		GPUMemoryLoader& memoryLoader;
+
+		Buffer buffer;
 
 		VkBuffer uboBuffer;
 		VkDeviceMemory uboMemory;
