@@ -11,7 +11,7 @@
 namespace sx
 {
 	class SwapchainVulkan
-		: public CastOperator<VkSwapchainKHR>
+		: public ObjectWrapper<VkSwapchainKHR>
 	{
 	public:
 		SwapchainVulkan(const VkDevice& device);

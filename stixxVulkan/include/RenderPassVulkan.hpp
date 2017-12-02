@@ -9,7 +9,7 @@
 namespace sx
 {
 	class RenderPassVulkan
-		: public CastOperator<VkRenderPass>
+		: public ObjectWrapper<VkRenderPass>
 	{
 	public:
 		RenderPassVulkan(const VkDevice& device);

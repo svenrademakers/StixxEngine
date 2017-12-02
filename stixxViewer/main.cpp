@@ -56,7 +56,7 @@ int main(void)
 
 	vulkan.Load(fileSystem, appName, sx::WindowGlfw::InstanceExtensions());
 	
-	sx::MemoryLoaderVulkan writer(*vulkan.device, *vulkan.pdevice);
+	sx::MemoryLoaderVulkan writer(*vulkan.device, *vulkan.pdevice, vulkan.device->CommandPool(), vulkan.device->Queue());
 	sx::ModelVulkan model(*vulkan.device, *vulkan.pdevice, *vulkan.pipeline, mesh, writer);
 	
 	model.LoadDescriptors(vulkan.pipeline->DescriptorSet());

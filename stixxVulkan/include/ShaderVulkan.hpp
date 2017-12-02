@@ -15,7 +15,7 @@ namespace sx
 {
 	template<VkShaderStageFlagBits shaderStageBit>
 	class ShaderVulkan
-		: public CastOperator<VkShaderModule>
+		: public ObjectWrapper<VkShaderModule>
 	{
 	public:
 		ShaderVulkan(const VkDevice& device, FileSystem& filesystem, const char * name);

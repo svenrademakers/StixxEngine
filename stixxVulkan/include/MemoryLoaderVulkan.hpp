@@ -11,11 +11,12 @@ namespace sx
 	{
 	public:
 		const int StagingSize = 1024*256;
-		MemoryLoaderVulkan(const VkDevice& device, const VkPhysicalDevice& pdevice);
-		
+		MemoryLoaderVulkan(const VkDevice& device, const VkPhysicalDevice& pdevice, const VkCommandPool& pool, const VkQueue& queue);
+		virtual ~MemoryLoaderVulkan();
+
 		//GPUMemoryLoader
 		uint32_t Alignment() const override;
-		void LoadDataToMemory(const BufferType type, const std::size_t size, std::function<void(void*)>&& WriteAvailable, std::function<void(const Buffer&)>&& onDone) const override;
+		Buffer LoadDataToMemory(const BufferType type, const std::size_t size, std::function<void(void*)>&& WriteAvailable) const override;
 
 	private:
 		VkBuffer CreateBuffer(const BufferType type, const std::size_t size) const;
@@ -43,10 +44,14 @@ namespace sx
 
 		const VkDevice& device;
 		const VkPhysicalDevice& pdevice;
+		const VkCommandPool& pool;
+		const VkQueue& queue;
+
 		VkPhysicalDeviceProperties pdevProperties;
 
 		VkBuffer stagingBuffer;
 		VkDeviceMemory stagingMemory;
+		VkFence transferFence;
 	};
 }
 

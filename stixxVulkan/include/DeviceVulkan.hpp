@@ -9,7 +9,7 @@ namespace sx
     class PhysicalDeviceVulkan;
 
 	class DeviceVulkan
-		: public CastOperator<VkDevice>
+		: public ObjectWrapper<VkDevice>
 	{
 	public:
 		DeviceVulkan(PhysicalDeviceVulkan& pdevice);

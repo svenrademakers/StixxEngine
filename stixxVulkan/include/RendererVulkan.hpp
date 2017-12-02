@@ -16,8 +16,12 @@ namespace sx
 	class ShaderFragmentVulkan;
 
 	class Buffer
-		: public CastOperator<VkBuffer>
-	{};
+		: public ObjectWrapper<VkBuffer>
+	{
+	public:
+		Buffer() = default;
+		Buffer(const VkBuffer&&);
+	};
 
     class RendererVulkan
 		: public Renderer
@@ -30,6 +34,7 @@ namespace sx
 
         virtual void Draw() override;
 
+		
 		void RecordDrawingCommands(ModelVulkan& m);
 
     private:

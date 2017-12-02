@@ -10,7 +10,7 @@ namespace sx
     class Window;
 
 	class InstanceVulkan
-        : public CastOperator<VkInstance>
+        : public ObjectWrapper<VkInstance>
 	{
 	public:
 		InstanceVulkan(const char* engineName, const char* appName, std::vector<const char*> instanceExtensions);

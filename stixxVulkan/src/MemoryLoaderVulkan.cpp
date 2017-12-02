@@ -1,4 +1,5 @@
 #include "MemoryLoaderVulkan.hpp"
+#include "RendererVulkan.hpp"
 
 namespace
 {
@@ -19,14 +20,29 @@ namespace
 
 namespace sx
 {
-	MemoryLoaderVulkan::MemoryLoaderVulkan(const VkDevice& device, const VkPhysicalDevice& pdevice)
+	MemoryLoaderVulkan::MemoryLoaderVulkan(const VkDevice& device, const VkPhysicalDevice& pdevice, const VkCommandPool& pool, const VkQueue& queue)
 		: device(device)
 		, pdevice(pdevice)
+		, pool(pool)
+		, queue(queue)
 	{
 		vkGetPhysicalDeviceProperties(pdevice, &pdevProperties);
 
 		stagingBuffer = CreateBuffer(BufferType::TransferSrc, StagingSize);
 		stagingMemory = AttachMemory<(VK_MEMORY_PROPERTY_HOST_COHERENT_BIT | VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT)>(stagingBuffer);
+
+		VkFenceCreateInfo createFence = {};
+		createFence.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
+		createFence.flags = 0;
+
+		vkCreateFence(device, &createFence, nullptr, &transferFence);
+	}
+
+	MemoryLoaderVulkan::~MemoryLoaderVulkan()
+	{
+		vkDestroyBuffer(device, stagingBuffer, nullptr);
+		vkDestroyFence(device, transferFence, nullptr);
+		vkFreeMemory(device, stagingMemory, nullptr);
 	}
 
 	uint32_t MemoryLoaderVulkan::Alignment() const
@@ -35,7 +51,7 @@ namespace sx
 		return static_cast<uint32_t>(pdevProperties.limits.minUniformBufferOffsetAlignment);
 	}
 
-	void MemoryLoaderVulkan::LoadDataToMemory(const BufferType type, const std::size_t size, std::function<void(void*)>&& WriteAvailable, std::function<void(const Buffer&)>&& onDone) const
+	Buffer MemoryLoaderVulkan::LoadDataToMemory(const BufferType type, const std::size_t size, std::function<void(void*)>&& WriteAvailable) const
 	{
  		assert(size < StagingSize);
 
@@ -47,6 +63,34 @@ namespace sx
 		auto buffer = CreateBuffer(static_cast<BufferType>(type | TransferDst), size);
 		VkDeviceMemory deviceMemory = AttachMemory<VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT>(buffer);
 
+		VkCommandBufferAllocateInfo allocInfo = {};
+		allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
+		allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
+		allocInfo.commandPool = pool;
+		allocInfo.commandBufferCount = 1;
+
+		VkCommandBuffer commandBuffer;
+		vkAllocateCommandBuffers(device, &allocInfo, &commandBuffer);
+
+		VkCommandBufferBeginInfo beginInfo = {};
+		beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+		beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
+
+		vkBeginCommandBuffer(commandBuffer, &beginInfo);
+		VkBufferCopy copyRegion = {};
+		copyRegion.size = size;
+		vkCmdCopyBuffer(commandBuffer, stagingBuffer, buffer, 1, &copyRegion);
+		vkEndCommandBuffer(commandBuffer);
+		
+		VkSubmitInfo submitInfo = {};
+		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+		submitInfo.commandBufferCount = 1;
+		submitInfo.pCommandBuffers = &commandBuffer;
+
+		vkQueueSubmit(queue, 1, &submitInfo, transferFence);
+		vkWaitForFences(device, 1, &transferFence, true, -1);
+		vkFreeCommandBuffers(device, pool, 1, &commandBuffer);
+		return buffer;
 	}
 
 	VkBuffer MemoryLoaderVulkan::CreateBuffer(const BufferType type, const std::size_t size) const

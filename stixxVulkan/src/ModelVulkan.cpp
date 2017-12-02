@@ -88,15 +88,12 @@ namespace sx
 	{
 		uint32_t vertexPadding = vertexSize % memoryLoader.Alignment();
  		uint32_t indicesPadding = indexSize % memoryLoader.Alignment();
-		auto totalSize = vertexSize + indexSize + indicesPadding;
+		auto totalSize = vertexSize + indexSize + indicesPadding + vertexPadding;
 
-		memoryLoader.LoadDataToMemory(static_cast<sx::BufferType>(VertexData | Indices), totalSize, [&](void* data) {
+		this->buffer = memoryLoader.LoadDataToMemory(static_cast<sx::BufferType>(VertexData | Indices), totalSize, [&](void* data) {
 			memcpy(data, mesh.vertices.data(), vertexSize);
 			data = static_cast<uint8_t*>(data) + vertexSize + vertexPadding;
 			memcpy(data, mesh.indices.data(), indexSize);
-
-		}, [this](const Buffer& buffer) {
-			this->buffer = buffer;
 		});
 	}
 
